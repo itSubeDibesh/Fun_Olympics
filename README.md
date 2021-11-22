@@ -1,5 +1,7 @@
 # **Fun Olympics**
 
+[![wakatime](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics.svg)](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics)
+
 The City of Yokyo had won the bid to host the next FunOlympic Games in 2019/20 but this had to be postponed due to a worldwide pandemic.  During the build-up to the planned games in 2019/20 the city had already invested hugely in IT infrastructure and systems to make sure that the games would have been well organized, staffed, attended, and accessible to everyone.
 
 Due to the pandemic restrictions, the FunOlympic committee have decided to run the 2020/21 games without the public attending the site. So now they have a number of additional projects which need to be completed before the delayed games start to ensure athletes remain healthy while attending the games and also that worldwide audiences can enjoy the games online.
