@@ -1,0 +1,29 @@
+{
+  "name": "fun_olympics",
+  "version": "1.0.0",
+  "description": "An online registration system for audiences to gain access to FunOlympic Games",
+  "main": "index.js",
+  "scripts": {
+    "serve": "",
+    "dev": "",
+    "build": "",
+    "test": "",
+    "lint": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itSubeDibesh/Fun_Olympics.git"
+  },
+  "keywords": [
+    "Online",
+    "Game",
+    "Stream",
+    "FunOlympics"
+  ],
+  "author": "Dibesh Raj Subedi <dibeshrsubedi@gmail.com>",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/itSubeDibesh/Fun_Olympics/issues"
+  },
+  "homepage": "https://github.com/itSubeDibesh/Fun_Olympics#readme"
+}
