@@ -2,14 +2,15 @@
   "name": "fun_olympics",
   "version": "1.0.0",
   "description": "An online registration system for audiences to gain access to FunOlympic Games",
-  "main": "index.js",
+  "main": "server.init.js",
   "scripts": {
-    "serve": "",
-    "dev": "",
-    "build": "",
+    "dev": "open-cli http://localhost:8080 && nodemon server.init",
+    "serve": "open-cli http://localhost:8080 && node server.init",
     "test": "",
-    "lint": ""
+    "lint": "",
+    "commit": ""
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itSubeDibesh/Fun_Olympics.git"
@@ -25,5 +26,24 @@
   "bugs": {
     "url": "https://github.com/itSubeDibesh/Fun_Olympics/issues"
   },
-  "homepage": "https://github.com/itSubeDibesh/Fun_Olympics#readme"
+  "homepage": "https://github.com/itSubeDibesh/Fun_Olympics#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.1",
+    "express-rate-limit": "^5.5.1",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.13.0",
+    "firebase": "^9.5.0",
+    "helmet": "^4.6.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "open-cli": "^7.0.1"
+  }
 }

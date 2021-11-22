@@ -1,0 +1,61 @@
+<nav class="navbar sticky-top navbar-expand-xl navbar-dark bg-dark">
+    <div class="container">
+        <div class="navbar-brand">
+            <h3><strong>{{ app_name }}</strong></h3>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-right" id="navbarNav">
+            <ul class="navbar-nav ms-auto flex-nowrap">
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" href="/"><strong> <i
+                                class="bi bi-house-fill"></i> Home</strong>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" href="/login"><strong> <i
+                                class="bi bi-unlock-fill"></i> Login</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/about"><strong> <i class="bi bi-info-circle-fill"></i>
+                            About</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" href="/register"><strong> <i
+                                class="bi bi-pen-fill"></i> Resister</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" aria-current="page" href="/contact"><strong> <i
+                                class="bi bi-phone-fill"></i> Contact</strong></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .navbar-brand {
+        font-family: 'Abril Fatface', cursive;
+    }
+
+    .router-link-exact-active {
+        color: #fff;
+        background-color: #00bcd4;
+        border-color: #00bcd4;
+        text-align: center;
+    }
+
+    .router-link-exact-active::after {
+        content: "👇"
+    }
+
+    .nav-link:hover {
+        color: #fff;
+        background-color: #d43c00;
+        border-color: #d43c00;
+    }
+</style>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="description" content="An online registration system for audiences to gain access to FunOlympic Games">
+    <meta name="keywords" content="Fun Olympics">
+    <meta name="keywords" content="Online registration system">
+    <meta name="author" content="Dibesh Raj Subedi">
+    <title>{{title}} | Fun Olympics</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+
+    {{!-- Importing Css Libraries  --}}
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+    </style>
+</head>
+<body>
+    {{>NavBar}}
+    <div class="container mt-2 mb-5">
+        {{{body}}}
+    </div>
+    {{>Footer}}
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Custom.js"></script>
+</body>
+</html>
