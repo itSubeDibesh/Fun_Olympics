@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,18 +14,21 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-icons.css">
 
-    {{!-- Importing Css Libraries  --}}
+    {{!-- Importing Css Libraries --}}
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
     </style>
 </head>
+
 <body>
     {{>NavBar}}
     <div class="container mt-2 mb-5">
+        {{>Alerts}}
         {{{body}}}
     </div>
     {{>Footer}}
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Custom.js"></script>
 </body>
+
 </html>

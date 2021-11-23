@@ -9,29 +9,28 @@
         </button>
         <div class="collapse navbar-collapse text-right" id="navbarNav">
             <ul class="navbar-nav ms-auto flex-nowrap">
+                {{#ifEquals status "LoggedIn"}}
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/"><strong> <i
-                                class="bi bi-house-fill"></i> Home</strong>
+                    <a class="nav-link text-light" aria-current="page" href="/settings"><strong> <i
+                                class="bi bi-gear-wide-connected"></i> Settings</strong>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/login"><strong> <i
-                                class="bi bi-unlock-fill"></i> Login</strong></a>
+                    <a class="nav-link text-light" aria-current="page" href="/logout"><strong> <i
+                                class="bi bi-box-arrow-right"></i> Logout</strong></a>
                 </li>
-
+                {{/ifEquals}}
+                {{#ifNotEquals status "LoggedIn"}}
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="/about"><strong> <i class="bi bi-info-circle-fill"></i>
-                            About</strong></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/register"><strong> <i
-                                class="bi bi-pen-fill"></i> Resister</strong></a>
+                    <a class="nav-link {{#ifEquals title 'Home'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/"><strong> <i class="bi bi-house-fill"></i> Home</strong>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/contact"><strong> <i
-                                class="bi bi-phone-fill"></i> Contact</strong></a>
+                    <a class="nav-link {{#ifEquals title 'Login'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/login"><strong> <i class="bi bi-unlock-fill"></i> Login</strong></a>
                 </li>
+                {{/ifNotEquals}}
             </ul>
         </div>
     </div>

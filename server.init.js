@@ -9,10 +9,7 @@ import Web_Routes from './Routes/Web_Routes.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cors from 'cors';
-import { initializeApp} from 'firebase/app'
-
-// Configuring Firebase
-initializeApp(config.firebaseConfig);
+import session from 'express-session'
 
 // Extracting directory path
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +50,17 @@ Application.use(cors({
     exposedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }))
 
+var MemoryStore = session.MemoryStore;
+
+// Setting Session
+Application.use(session({
+    name : 'app.sid',
+    secret: config.secret,
+    resave: true,
+    store: new MemoryStore(),
+    saveUninitialized: true
+}))
+
 // Parsing Url Encoded Data
 Application.use(config.express.urlencoded({extended: true}))
 
@@ -89,5 +97,5 @@ Application.get('*', (req, res) => {
 
 // Starting Server
 Application.listen(config.port, () => {
-    console.log(`Server is running on port ${config.port}, https://localhost:${config.port}`)
+    console.log(`Server is running on port ${config.port}, http://localhost:${config.port}`)
 })
