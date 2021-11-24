@@ -6,7 +6,7 @@ const authRouter = Config.express.Router();
 const auth = new Config.Auth_Firebase();
 
 authRouter.get('/', (req, res) => {
-    res.render('Pages/Home', Config.dataSet({ title: 'Home',login: req.session.login, status: req.session.status }));
+    res.render('Pages/Home', Config.dataSet({ title: 'Home', login: req.session.login, status: req.session.status }));
 });
 
 authRouter.get('/login', (req, res) => {
@@ -21,7 +21,7 @@ authRouter.get('/login', (req, res) => {
     }
 });
 
-authRouter.get('/logout',Config.isLoggedIn, (req, res) => {
+authRouter.get('/logout', Config.isLoggedIn, (req, res) => {
     // Error Check
     if (req.session.error) {
         // Redirect to Login Page
@@ -48,7 +48,7 @@ authRouter.post('/login', (req, res) => {
     if (req.session.error) {
         const error = req.session.error;
         req.session.error = null
-        res.render('Login', Config.dataSet({ title: 'Login', error}));
+        res.render('Login', Config.dataSet({ title: 'Login', error }));
     } else {
         // Validation Check
         if (email && password) {
@@ -72,8 +72,45 @@ authRouter.post('/login', (req, res) => {
 });
 
 authRouter.get('/register', (req, res) => {
-    res.render('Register', Config.dataSet({ title: 'Register' }));
+    if (req.session.login != undefined && req.session.status == "LoggedIn") {
+        res.redirect('/dashboard');
+    } else {
+        res.render('Register', Config.dataSet({ title: 'Register' }));
+    }
 });
+
+authRouter.post('/register', (req, res) => {
+    const { email, password, retype } = req.body;
+    // Redirect Error
+    if (req.session.error) {
+        const error = req.session.error;
+        req.session.error = null
+        res.render('Register', Config.dataSet({ title: 'Register', error }));
+    } else {
+        // Validation Check
+        if (email && password && retype) {
+            if (password == retype) {
+                // Register
+                auth.register(email, password).then(data => {
+                    // Redirect Success
+                    req.session.success = { "message": `Register Success, Please login ${data.user.email.split("@")[0]}!` };
+                    res.redirect('/login');
+                }).catch(err => {
+                    // Redirect Error
+                    res.render('Register', Config.dataSet({ title: 'Register', error: err }));
+                });
+            } else {
+                req.session.error = { "message": 'Password not match' };
+                res.render('Register', Config.dataSet({ title: 'Register', error: req.session.error }));
+            }
+        } else {
+            // Validation Error
+            req.session.error = { "message": 'Please enter email password and retype password' };
+            res.render('Register', Config.dataSet({ title: 'Register', error: req.session.error }));
+        }
+    }
+});
+
 
 authRouter.get('/reset', (req, res) => {
     res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password' }));
@@ -107,7 +144,7 @@ authRouter.post('/reset', (req, res) => {
 });
 
 
-authRouter.get('/dashboard',Config.isLoggedIn, (req, res) => {
+authRouter.get('/dashboard', Config.isLoggedIn, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;
