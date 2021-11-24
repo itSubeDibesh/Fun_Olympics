@@ -79,6 +79,34 @@ authRouter.get('/reset', (req, res) => {
     res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password' }));
 });
 
+authRouter.post('/reset', (req, res) => {
+    const { email } = req.body;
+    // Redirect Error
+    if (req.session.error) {
+        const error = req.session.error;
+        req.session.error = null
+        res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error }));
+    } else {
+        // Validation Check
+        if (email) {
+            // Reset Password
+            auth.resetPassword(email).then(data => {
+                // Redirect Success
+                req.session.success = { "message": `Reset Password Success, Please check your email!` };
+                res.redirect('/login');
+            }).catch(err => {
+                // Redirect Error
+                res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error: err }));
+            });
+        } else {
+            // Validation Error
+            req.session.error = { "message": 'Please enter email' };
+            res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error: req.session.error }));
+        }
+    }
+});
+
+
 authRouter.get('/dashboard',Config.isLoggedIn, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
@@ -90,7 +118,5 @@ authRouter.get('/dashboard',Config.isLoggedIn, (req, res) => {
 });
 
 export default authRouter;
-
-// Todo : Password Reset
 
 // ToDo : Register
