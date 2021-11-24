@@ -94,5 +94,3 @@ export default authRouter;
 // Todo : Password Reset
 
 // ToDo : Register
-
-// Todo : Middleware

@@ -14,7 +14,7 @@ export default{
         return value.toString().toUpperCase();
     },
     ToFirstUpper: function(value, options) {
-        return value.charAt(0).toUpperCase() + value.slice(1);
+        return value[0].toUpperCase() + value.slice(1);
     },
     EmailSplit: function(value, options) {
         value = value.toString();
