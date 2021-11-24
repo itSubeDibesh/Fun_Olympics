@@ -5,17 +5,35 @@
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseOne">
-                    Accordion Item #1
+                    Credentials
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
                 aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
-                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse
-                    plugin adds the appropriate classes that we use to style each element. These classes control the
-                    overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of
-                    this with custom CSS or overriding our default variables. It's also worth noting that just about any
-                    HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    <div class="row">
+                        {{!-- Email Not Verified --}}
+                        {{#ifEquals login.user.emailVerified false}}
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Verify Email <i class="bi bi-envelope-dash"></i> </h5>
+                                    <p class="card-text">Help us verify you are a valid user, click on verify button and you will receive verification email.</p>
+                                    <div class="span text-center"><a href="/email/verify" class="btn btn-success">Verify <i class="bi bi-envelope-check-fill"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/ifEquals}}
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Change Password <i class="bi bi-lock-fill"></i> </h5>
+                                    <p class="card-text">Change your password, click on change password button and you will receive password reset email.</p>
+                                    <div class="span text-center"><a href="/email/reset_logged_in" class="btn btn-success">Change Password <i class="bi bi-lock-fill"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

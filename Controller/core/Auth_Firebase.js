@@ -4,7 +4,8 @@ import {
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
     signOut, 
-    sendEmailVerification  
+    sendEmailVerification  ,
+    sendPasswordResetEmail
 } from "firebase/auth";
 
 export default class Authentication{
@@ -39,6 +40,10 @@ export default class Authentication{
 
     verifyEmail(){
         return sendEmailVerification(this.auth.currentUser);
+    }
+
+    resetPassword(email){
+        return sendPasswordResetEmail(this.auth,email);
     }
 
     register(email, password){
