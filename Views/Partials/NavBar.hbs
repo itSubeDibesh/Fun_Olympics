@@ -22,12 +22,12 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link {{#ifEquals title 'Settings'}}active{{/ifEquals}} text-light dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        {{EmailSplit login.user.email}}
+                        <strong> <i class="bi bi-people-circle"></i> {{EmailSplit login.user.email}}</strong>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>
+                        <li><a class="dropdown-item {{#ifEquals title 'Settings'}}router-link-exact-active{{/ifEquals}}" href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>
                             Settings</strong></a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -58,7 +58,7 @@
         font-family: 'Abril Fatface', cursive;
     }
 
-    .router-link-exact-active {
+    .router-link-exact-active, .active {
         color: #fff;
         background-color: #00bcd4;
         border-color: #00bcd4;
@@ -66,7 +66,7 @@
     }
 
     .router-link-exact-active::after {
-        content: "👇"
+        content: " 👇"
     }
 
     .nav-link:hover {

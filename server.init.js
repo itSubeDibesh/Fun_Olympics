@@ -26,8 +26,8 @@ Application.use(xss())
 
 // Preventing Brute Force Attacks
 Application.use(rate_limit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
+    windowMs: 30 * 60 * 1000, // 30 minutes
+    max: 5000 // limit each IP to 5000 requests per windowMs
 }))
 
 // Setting up Helmet
