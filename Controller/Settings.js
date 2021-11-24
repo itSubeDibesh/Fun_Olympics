@@ -6,7 +6,7 @@ const settingsRouter = Config.express.Router();
 const auth = new Config.Auth_Firebase();
 
 settingsRouter.get('/Settings', Config.isLoggedIn, (req, res) => {
-    res.render('Pages/Settings', Config.dataSet({ title: 'Settings' }));
+    res.render('Pages/Settings', Config.dataSet({ title: 'Settings',  login: req.session.login, status: req.session.status  }));
 });
 
 settingsRouter.get('/email/verify', Config.isLoggedIn, (req, res) => {

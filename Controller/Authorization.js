@@ -6,7 +6,7 @@ const authRouter = Config.express.Router();
 const auth = new Config.Auth_Firebase();
 
 authRouter.get('/', (req, res) => {
-    res.render('Pages/Home', Config.dataSet({ title: 'Home' }));
+    res.render('Pages/Home', Config.dataSet({ title: 'Home',login: req.session.login, status: req.session.status }));
 });
 
 authRouter.get('/login', (req, res) => {

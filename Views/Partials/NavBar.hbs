@@ -11,13 +11,30 @@
             <ul class="navbar-nav ms-auto flex-nowrap">
                 {{#ifEquals status "LoggedIn"}}
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/settings"><strong> <i
-                                class="bi bi-gear-wide-connected"></i> Settings</strong>
+                    <a class="nav-link {{#ifEquals title 'Home'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/"><strong> <i class="bi bi-house-fill"></i> Home</strong>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="/logout"><strong> <i
-                                class="bi bi-box-arrow-right"></i> Logout</strong></a>
+                    <a class="nav-link {{#ifEquals title 'Dashboard'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/dashboard"><strong> <i class="bi bi-speedometer2"></i>
+                            Dashboard</strong>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{EmailSplit login.user.email}}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>
+                            Settings</strong></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/logout"><strong> <i
+                                class="bi bi-box-arrow-right"></i> Logout</strong></a></li>
+                    </ul>
                 </li>
                 {{/ifEquals}}
                 {{#ifNotEquals status "LoggedIn"}}

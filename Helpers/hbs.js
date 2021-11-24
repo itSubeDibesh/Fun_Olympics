@@ -15,5 +15,10 @@ export default{
     },
     ToFirstUpper: function(value, options) {
         return value.charAt(0).toUpperCase() + value.slice(1);
+    },
+    EmailSplit: function(value, options) {
+        value = value.toString();
+        const split_email = value.split('@')[0];
+        return split_email[0].toUpperCase() + split_email.slice(1);;
     }
 }
