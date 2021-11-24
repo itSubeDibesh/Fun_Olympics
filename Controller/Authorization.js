@@ -70,7 +70,7 @@ authRouter.post('/login', (req, res) => {
 });
 
 authRouter.get('/register', (req, res) => {
-    res.render('Register', dataSet({ title: 'Resister' }));
+    res.render('Register', dataSet({ title: 'Register' }));
 });
 
 authRouter.get('/reset', (req, res) => {
@@ -78,8 +78,7 @@ authRouter.get('/reset', (req, res) => {
 });
 
 authRouter.get('/dashboard', (req, res) => {
-    if (req.session.login&& req.session.status=="LoggedIn") {
-        console.log(req.session.login);
+    if (req.session.login && req.session.status=="LoggedIn") {
         res.render('Pages/Dashboard', dataSet({ title: 'Dashboard', login: req.session.login, success: req.session.success, status:req.session.status }));
     } else {
         res.redirect('/login');
@@ -90,10 +89,6 @@ export default authRouter;
 
 // Todo : Email Verification
 // https://redfern.dev/articles/email-verification-firebase-vuejs/
-
-// Todo : Password Reset
-
-// Todo : Alert Timeout
 
 // Todo : Password Reset
 
