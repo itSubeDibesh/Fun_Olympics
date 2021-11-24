@@ -1,9 +1,27 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { initializeApp} from 'firebase/app'
+import {
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    signOut, 
+    sendEmailVerification  
+} from "firebase/auth";
 
 export default class Authentication{
-    constructor(initializeApp, firebaseConfig){
+    constructor(){
+        // Firebase Configuration
+        this.firebaseConfig = {
+            apiKey: "AIzaSyBQqwBkeoEdR0yyw1XYVNerAYTAr__HNL8",
+            authDomain: "fun-olympics-cet333-2021.firebaseapp.com",
+            projectId: "fun-olympics-cet333-2021",
+            storageBucket: "fun-olympics-cet333-2021.appspot.com",
+            messagingSenderId: "917002592142",
+            appId: "1:917002592142:web:95e828ef646ba6e1534edf"
+        };
+        // Setting up Firebase
+        this.initializeApp = initializeApp
         // Configuring Firebase
-        initializeApp(firebaseConfig);
+        this.initializeApp(this.firebaseConfig);
         this.auth = getAuth();
     }
 
@@ -16,7 +34,11 @@ export default class Authentication{
     }
 
     getCurrentUser(){
-        return this.auth.currentUser;
+        return this.auth.currentUser
+    }
+
+    verifyEmail(){
+        return sendEmailVerification(this.auth.currentUser);
     }
 
     register(email, password){

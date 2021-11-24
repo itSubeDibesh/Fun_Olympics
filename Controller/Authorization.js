@@ -1,16 +1,12 @@
 import Config from '../Config/Http.js';
-import Auth from './core/Auth_Firebase.js';
 
+// Setting Application Routes
 const authRouter = Config.express.Router();
-const auth = new Auth(Config.initializeApp, Config.firebaseConfig);
-
-function dataSet(data) {
-    data.app_name = Config.app_name;
-    return data;
-}
+// Setting Firebase Auth
+const auth = new Config.Auth_Firebase();
 
 authRouter.get('/', (req, res) => {
-    res.render('Pages/Home', dataSet({ title: 'Home' }));
+    res.render('Pages/Home', Config.dataSet({ title: 'Home' }));
 });
 
 authRouter.get('/login', (req, res) => {
@@ -21,26 +17,26 @@ authRouter.get('/login', (req, res) => {
         const error = req.session.error;
         req.session.success = null;
         req.session.error = null;
-        res.render('Login', dataSet({ title: 'Login', error, success }));
+        res.render('Login', Config.dataSet({ title: 'Login', error, success }));
     }
 });
 
-authRouter.get('/logout', (req, res) => {
+authRouter.get('/logout',Config.isLoggedIn, (req, res) => {
     // Error Check
-    if (req.error) {
+    if (req.session.error) {
         // Redirect to Login Page
-        res.render('Login', dataSet({ title: 'Login', error: req.error }));
+        res.render('Login', Config.dataSet({ title: 'Login', error: req.session.error }));
     } else {
         // Session Destroy
         req.session.destroy((err) => {
             // Redirect to Login Page
-            if (err) res.render('Login', dataSet({ title: 'Login', error: err }));
+            if (err) res.render('Login', Config.dataSet({ title: 'Login', error: err }));
             auth.logout().then(() => {
                 // Logout Success
                 res.redirect('/');
             }).catch((err) => {
                 // Logout Error
-                res.render('Login', dataSet({ title: 'Login', error: err }));
+                res.render('Login', Config.dataSet({ title: 'Login', error: err }));
             });
         })
     }
@@ -49,10 +45,10 @@ authRouter.get('/logout', (req, res) => {
 authRouter.post('/login', (req, res) => {
     const { email, password } = req.body;
     // Redirect Error
-    if (req.error) {
+    if (req.session.error) {
         const error = req.session.error;
         req.session.error = null
-        res.render('Login', dataSet({ title: 'Login', error}));
+        res.render('Login', Config.dataSet({ title: 'Login', error}));
     } else {
         // Validation Check
         if (email && password) {
@@ -65,38 +61,35 @@ authRouter.post('/login', (req, res) => {
                 res.redirect('/dashboard');
             }).catch(err => {
                 // Redirect Error
-                res.render('Login', dataSet({ title: 'Login', error: err }));
+                res.render('Login', Config.dataSet({ title: 'Login', error: err }));
             });
         } else {
             // Validation Error
             req.session.error = { "message": 'Please enter email and password' };
-            res.render('Login', dataSet({ title: 'Login', error: req.session.error }));
+            res.render('Login', Config.dataSet({ title: 'Login', error: req.session.error }));
         }
     }
 });
 
 authRouter.get('/register', (req, res) => {
-    res.render('Register', dataSet({ title: 'Register' }));
+    res.render('Register', Config.dataSet({ title: 'Register' }));
 });
 
 authRouter.get('/reset', (req, res) => {
-    res.render('ForgetPassword', dataSet({ title: 'Forget Password' }));
+    res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password' }));
 });
 
 authRouter.get('/dashboard',Config.isLoggedIn, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;
-        res.render('Pages/Dashboard', dataSet({ title: 'Dashboard', login: req.session.login, success, status: req.session.status }));
+        res.render('Pages/Dashboard', Config.dataSet({ title: 'Dashboard', login: req.session.login, success, status: req.session.status }));
     } else {
         res.redirect('/login');
     }
 });
 
 export default authRouter;
-
-// Todo : Email Verification
-// https://redfern.dev/articles/email-verification-firebase-vuejs/
 
 // Todo : Password Reset
 
