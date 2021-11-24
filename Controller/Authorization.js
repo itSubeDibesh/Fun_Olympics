@@ -14,14 +14,18 @@ authRouter.get('/', (req, res) => {
 });
 
 authRouter.get('/login', (req, res) => {
-    if (req.session.login != undefined && req.session.status=="LoggedIn") {
+    if (req.session.login != undefined && req.session.status == "LoggedIn") {
         res.redirect('/dashboard');
     } else {
-        res.render('Login', dataSet({ title: 'Login', error: req.session.error }));
+        const success = req.session.success;
+        const error = req.session.error;
+        req.session.success = null;
+        req.session.error = null;
+        res.render('Login', dataSet({ title: 'Login', error, success }));
     }
 });
 
-authRouter.get('/logout',(req,res)=>{
+authRouter.get('/logout', (req, res) => {
     // Error Check
     if (req.error) {
         // Redirect to Login Page
@@ -30,7 +34,7 @@ authRouter.get('/logout',(req,res)=>{
         // Session Destroy
         req.session.destroy((err) => {
             // Redirect to Login Page
-            if (err)  res.render('Login', dataSet({ title: 'Login', error: err }));
+            if (err) res.render('Login', dataSet({ title: 'Login', error: err }));
             auth.logout().then(() => {
                 // Logout Success
                 res.redirect('/');
@@ -46,7 +50,9 @@ authRouter.post('/login', (req, res) => {
     const { email, password } = req.body;
     // Redirect Error
     if (req.error) {
-        res.render('Login', dataSet({ title: 'Login', error: req.error }));
+        const error = req.session.error;
+        req.session.error = null
+        res.render('Login', dataSet({ title: 'Login', error}));
     } else {
         // Validation Check
         if (email && password) {
@@ -54,8 +60,8 @@ authRouter.post('/login', (req, res) => {
             auth.login(email, password).then(data => {
                 // Redirect Success
                 req.session.login = data;
-                req.session.status="LoggedIn"
-                req.session.success={"message" : `Login Success, Welcome ${data.user.email.split("@")[0]}!`};
+                req.session.status = "LoggedIn"
+                req.session.success = { "message": `Login Success, Welcome ${data.user.email.split("@")[0]}!` };
                 res.redirect('/dashboard');
             }).catch(err => {
                 // Redirect Error
@@ -63,7 +69,7 @@ authRouter.post('/login', (req, res) => {
             });
         } else {
             // Validation Error
-            req.session.error= {"message" :'Please enter email and password'};
+            req.session.error = { "message": 'Please enter email and password' };
             res.render('Login', dataSet({ title: 'Login', error: req.session.error }));
         }
     }
@@ -77,9 +83,11 @@ authRouter.get('/reset', (req, res) => {
     res.render('ForgetPassword', dataSet({ title: 'Forget Password' }));
 });
 
-authRouter.get('/dashboard', (req, res) => {
-    if (req.session.login && req.session.status=="LoggedIn") {
-        res.render('Pages/Dashboard', dataSet({ title: 'Dashboard', login: req.session.login, success: req.session.success, status:req.session.status }));
+authRouter.get('/dashboard',Config.isLoggedIn, (req, res) => {
+    if (req.session.login && req.session.status == "LoggedIn") {
+        const success = req.session.success;
+        req.session.success = null;
+        res.render('Pages/Dashboard', dataSet({ title: 'Dashboard', login: req.session.login, success, status: req.session.status }));
     } else {
         res.redirect('/login');
     }

@@ -7,8 +7,12 @@ function dataSet(data) {
     return data;
 }
 
-settingsRouter.get('/Settings', (req, res) => {
+settingsRouter.get('/Settings', Config.isLoggedIn, (req, res) => {
     res.render('Pages/Settings', dataSet({ title: 'Settings' }));
+});
+
+settingsRouter.get('/email/verify', Config.isLoggedIn, (req, res) => {
+    res.send('Email Verification');
 });
 
 export default settingsRouter;

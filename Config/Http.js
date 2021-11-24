@@ -2,12 +2,14 @@ import dotenv from 'dotenv';
 import {check, validationResult} from 'express-validator';
 import express from 'express';
 import { initializeApp} from 'firebase/app'
+import isLoggedIn from '../Middleware/IsLoggedIn.js'
+
 
 // Enabling dotenv
 dotenv.config();
 
 // Extracting env variables
-const {port,apiKey,authDomain,projectId,storageBucket,messagingSenderId,appId,secret, app_name, sessionMaxAge} = process.env;
+const {port,secret, app_name} = process.env;
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -27,6 +29,6 @@ export default {
     app_name,
     secret,
     firebaseConfig,
-    sessionMaxAge,
-    initializeApp
+    initializeApp,
+    isLoggedIn
 }
