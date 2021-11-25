@@ -1,5 +1,5 @@
 import admin from 'firebase-admin'
-import {service_account} from '../../Config/app/service-accountKey.js'
+import { service_account } from '../../Config/app/service-accountKey.js'
 
 
 class Admin_Firebase {
@@ -55,12 +55,12 @@ class Admin_Firebase {
     }
 }
 
-export default class Auth_Crud extends Admin_Firebase{
-    constructor(){
+export default class Auth_Crud extends Admin_Firebase {
+    constructor() {
         super()
     }
 
-    createUser(email, password, displayName, phoneNumber){
+    createUser(email, password, displayName, phoneNumber) {
         return this.getAuth().createUser({
             email: email,
             password: password,
@@ -71,17 +71,15 @@ export default class Auth_Crud extends Admin_Firebase{
         })
     }
 
-    updateUser(uid, email, password, displayName, phoneNumber, disabled){
+    updateUser(uid, displayName, phoneNumber=null, disabled = false) {
         return this.getAuth().updateUser(uid, {
-            email: email,
-            password: password,
             displayName: displayName,
             phoneNumber: phoneNumber,
             disabled: disabled,
         })
     }
 
-    deleteUser(uid){
+    deleteUser(uid) {
         return this.getAuth().deleteUser(uid)
     }
 
@@ -90,27 +88,27 @@ export default class Auth_Crud extends Admin_Firebase{
      * @return {Promise} 
      * @memberof Auth_Crud
      */
-    deleteMultiUsers(uids){
+    deleteMultiUsers(uids) {
         return this.getAuth().deleteUsers(uids)
     }
 
-    getUser(uid){
+    getUser(uid) {
         return this.getAuth().getUser(uid)
     }
 
-    getUserByEmail(email){
+    getUserByEmail(email) {
         return this.getAuth().getUserByEmail(email)
     }
 
-    getUserByPhoneNumber(phoneNumber){
+    getUserByPhoneNumber(phoneNumber) {
         return this.getAuth().getUserByPhoneNumber(phoneNumber)
     }
 
-    getUserByProviderId(providerId){
+    getUserByProviderId(providerId) {
         return this.getAuth().getUserByProviderId(providerId)
     }
 
-    listAllUsers(nextPageToken){
+    listAllUsers(nextPageToken) {
         return this.getAuth().listUsers(1000, nextPageToken)
     }
 

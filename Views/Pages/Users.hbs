@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                <a class="btn btn-primary" type="button" href="#"><strong>Add User <i class="bi bi-person-plus-fill"></i> </strong></a>
+                <a class="btn btn-primary" type="button" href="/users/add"><strong>Add User <i
+                            class="bi bi-person-plus-fill"></i> </strong></a>
             </div>
             <div class="card">
                 <div class="card-header">
@@ -25,16 +26,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each users.users}}
+                            {{#each users}}
                             <tr>
                                 <th scope="row">{{SN @index}}</th>
                                 <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
                                 <td>{{this.displayName}}</td>
-                                <td>{{#if this.phoneNumber}}<a href="tel:{{this.phoneNumber}}" class="btn btn-primary">{{this.phoneNumber}}</a>{{else}}N/a{{/if}}</td>
+                                <td>{{#if this.phoneNumber}}<a href="tel:{{this.phoneNumber}}"
+                                        class="btn btn-primary">{{this.phoneNumber}}</a>{{else}}N/a{{/if}}</td>
                                 <td>{{FirstWord this.emailVerified}}</td>
                                 <td>{{FirstWord this.disabled}}</td>
-                                <td><a class="btn btn-sm btn-secondary" type="button" href="#"><strong><i class="bi bi-pencil-square"></i></strong></a></td>
-                                <td><a class="btn btn-sm btn-danger" type="button" href="#"><strong><i class="bi bi-person-x-fill"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-secondary" type="button"
+                                        href="/users/edit?email={{this.email}}"><strong><i
+                                                class="bi bi-pencil-square"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-danger" type="button" href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
+                                                class="bi bi-person-x-fill"></i></strong></a></td>
                             </tr>
                             {{/each}}
                         </tbody>

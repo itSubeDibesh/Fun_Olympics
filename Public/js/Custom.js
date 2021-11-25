@@ -26,7 +26,7 @@ function htmlToElem(html) {
 }
 
 // Show Hide Password 
-if (page_title == 'login' || page_title == 'register') {
+if (page_title == 'login' || page_title == 'register' || page_title == 'users - add') {
     document.getElementById("showPassword").addEventListener("click", () => {
         let existingId = []
         for (let i = 0; i < config.password_field.length; i++) {
@@ -42,6 +42,13 @@ if (page_title == 'login' || page_title == 'register') {
                 element.type = "password";
             }
         });
+    });
+}
+
+if(page_title == 'users - edit'){
+    const disabled = document.getElementById('disabled');
+    disabled.addEventListener("click", () => {
+       disabled.checked ? disabled.value = 'true' : disabled.value = 'false';
     });
 }
 

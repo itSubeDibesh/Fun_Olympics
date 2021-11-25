@@ -8,6 +8,9 @@ import Admin_Firebase from '../Controller/core/Admin_Firebase.js'
 // Enabling dotenv
 dotenv.config();
 
+// Firebase Configuration
+const firebase_admin = new Admin_Firebase();
+
 // Extracting env variables
 const {port,secret, app_name} = process.env;
 
@@ -15,6 +18,10 @@ const {port,secret, app_name} = process.env;
 function dataSet(data) {
     data.app_name = app_name;
     return data;
+}
+
+function returnBool(data){
+    return data == 'true'
 }
 
 export default {
@@ -27,5 +34,7 @@ export default {
     isLoggedIn,
     Auth_Firebase,
     Admin_Firebase,
-    dataSet
+    dataSet,
+    returnBool,
+    firebase_admin
 }

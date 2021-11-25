@@ -1,10 +1,10 @@
 export default{
     ifEquals: function(a, b, options) {
-        if (a === b) return options.fn(this);
+        if (a == b) return options.fn(this);
         return options.inverse(this);
     },
     ifNotEquals: function(a, b, options) {
-        if (a !== b) return options.fn(this);
+        if (a != b) return options.fn(this);
         return options.inverse(this);
     },
     SN: function(value, options) {

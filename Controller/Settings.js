@@ -4,9 +4,11 @@ import Config from '../Config/Http.js';
 const settingsRouter = Config.express.Router();
 // Setting Firebase Auth
 const auth = new Config.Auth_Firebase();
+// Setting Firebase Auth
+const admin = Config.firebase_admin;
 
 settingsRouter.get('/Settings', Config.isLoggedIn, (req, res) => {
-    res.render('Pages/Settings', Config.dataSet({ title: 'Settings', login: req.session.login, status: req.session.status }));
+    res.render('Pages/Settings', Config.dataSet({ title: 'Settings', login: req.session.login, status: req.session.status, success: req.session.success, error: req.session.error, warning: req.session.warning }));
 });
 
 settingsRouter.get('/email/verify', Config.isLoggedIn, (req, res) => {
@@ -45,7 +47,7 @@ settingsRouter.get('/email/reset_logged_in', Config.isLoggedIn, (req, res) => {
 
 
 settingsRouter.post('/profile/update', Config.isLoggedIn, (req, res) => {
-    const { email, name } = req.body;
+    const { email, name, phoneNumber, uid } = req.body;
     if (req.session.login) {
         // Validation Check
         if (!email || !name) {
@@ -54,13 +56,13 @@ settingsRouter.post('/profile/update', Config.isLoggedIn, (req, res) => {
         } else {
             if (email == req.session.login.user.email) {
                 // Update Profile
-                auth.updateProfile(name).then((data) => {
+                admin.updateUser(uid, name, phoneNumber, false).then((data) => {
                     req.session.login = data
                     req.session.success = { message: "Profile updated." };
-                    res.redirect('/settings');
+                    res.redirect('/logout');
                 }).catch((err) => {
                     const error = {
-                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
                     req.session.error = error;

@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                <a class="btn btn-primary" type="button" href="/users"><strong><i class="bi bi-caret-left-fill"></i> Go
+                        to Users</strong></a>
+            </div>
+            {{#if action}}
+            <div class="card">
+                <div class="card-header">
+                    <h5> {{action}} User <i class="bi bi-person-fill"></i></h5>
+                </div>
+                <div class="card-body">
+                    <form class="form" action="/users/entry" method="post">
+                        <input type="hidden" name="action" value="{{action}}">
+                        {{#ifEquals action 'Edit'}}
+                        <input type="hidden" name="uid" value="{{user.uid}}">
+                        {{/ifEquals }}
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" name="email" required
+                                placeholder="name@example.com" {{#if user.email}}disabled{{/if}} value="{{user.email}}">
+                            <label for="email">Email address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="displayName" name="displayName" required
+                                placeholder="John Doe" value="{{user.displayName}}">
+                            <label for="displayName">Full Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                placeholder="98151555" value="{{user.phoneNumber}}">
+                            <label for="phoneNumber">Phone Number</label>
+                        </div>
+                        {{#ifEquals action 'Edit'}}
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="{{#if user.disabled}}{{user.disabled}}{{/if}}" name="disabled" id="disabled"
+                                {{#if user.disabled}}checked{{/if}}>
+                            <label class="form-check-label" for="disabled">
+                                Disable user
+                            </label>
+                        </div>
+                        {{/ifEquals }}
+                        {{#ifEquals action 'Add'}}
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" name="password" required
+                                placeholder="Password" data-toggle="password">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="showPassword">
+                            <label class="form-check-label" for="showPassword">Show Password</label>
+                        </div>
+                        {{/ifEquals}}
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary text-center"><i
+                                    class="bi bi-pencil-square"></i> {{#ifEquals
+                                action 'Add' }}Submit{{/ifEquals}}{{#ifEquals action 'Edit'
+                                }}Update{{/ifEquals}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

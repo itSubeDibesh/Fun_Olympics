@@ -61,11 +61,17 @@
                                 <h5 class="card-header">Update Profile <i class="bi bi-person-check-fill"></i> </h5>
                                 <div class="card-body">
                                     <form action="/profile/update" method="post">
+                                        <input type="hidden" name="uid" value="{{login.user.uid}}">
                                         <input type="hidden" name="email" value="{{ login.user.email }}">
                                         <div class="form-floating mb-3">
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="name@example.com" value="{{login.user.email}}" disabled>
                                             <label for="email">Email address</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                                placeholder="98151555" value="{{login.user.phoneNumber}}">
+                                            <label for="phoneNumber">Phone Number</label>
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="checkbox" value=""
