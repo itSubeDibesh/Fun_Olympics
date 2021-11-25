@@ -61,7 +61,11 @@ authRouter.post('/login', (req, res) => {
                 res.redirect('/dashboard');
             }).catch(err => {
                 // Redirect Error
-                res.render('Login', Config.dataSet({ title: 'Login', error: err }));
+                const error = {
+                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                    "code": err.code
+                }
+                res.render('Login', Config.dataSet({ title: 'Login', error: error }));
             });
         } else {
             // Validation Error
@@ -97,7 +101,11 @@ authRouter.post('/register', (req, res) => {
                     res.redirect('/login');
                 }).catch(err => {
                     // Redirect Error
-                    res.render('Register', Config.dataSet({ title: 'Register', error: err }));
+                    const error = {
+                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                        "code": err.code
+                    }
+                    res.render('Register', Config.dataSet({ title: 'Register', error: error }));
                 });
             } else {
                 req.session.error = { "message": 'Password not match' };
@@ -133,7 +141,11 @@ authRouter.post('/reset', (req, res) => {
                 res.redirect('/login');
             }).catch(err => {
                 // Redirect Error
-                res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error: err }));
+                const error = {
+                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                    "code": err.code
+                }
+                res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error: error }));
             });
         } else {
             // Validation Error

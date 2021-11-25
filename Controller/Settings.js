@@ -58,8 +58,12 @@ settingsRouter.post('/profile/update', Config.isLoggedIn, (req, res) => {
                     req.session.login = data
                     req.session.success = { message: "Profile updated." };
                     res.redirect('/settings');
-                }).catch((error) => {
-                    req.session.error = { message: error.message };
+                }).catch((err) => {
+                    const error = {
+                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                        "code": err.code
+                    }
+                    req.session.error = error;
                     res.redirect('/settings');
                 });
             } else {
