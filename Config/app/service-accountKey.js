@@ -1,0 +1,12 @@
+export const service_account = {
+  "type": "service_account",
+  "project_id": "fun-olympics-cet333-2021",
+  "private_key_id": "678098c01406cecaffe64b3ad278c5e3755b5913",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCuHq6AvdC8zm/R\nPEo2ICYZ9NOA8livr3vLZE+U7rtLNiANimdMT6dXqqKgPiX8N9xHg863Ojc20keg\n0tJ/y7fQRgn5lY+5Bv4MYaZf6CHGPB5rLbRN5IVF5g5ngILRlkLAp8+iGN6AeWtX\n5c3zXFGqCvro8rIqvRiIdLsjoy/Dr0maJJOTkRscYUTph5lXlsTetyY/Kt9el/5g\nStRV+kYmN6thVUVDA+50YVC0z3iak/KRsU36XbCvslyfEFlc9h2eJa0fSHwAYFvB\njSEvY6Cf5coJeDhPHywqzOceNvDf3zqxg9sMJbv9687XKEp5c51W/l7J8Ap94fa1\nkQj2qWCdAgMBAAECggEABBdselH7ibRAJGaKR+NRgeKi5bDMLLSu8ASXaiSB+i53\naloKO1zTzdeQortTIS4e2v9Z6CxSB9PBIyJRF/ethhNfQKInEm37okbZJf/Ka2IW\nROZ6CiqIhy/0vrHiYRJq1yQaWPDEqbgwsYwQ3tsYgCpp4vdxAFgZL3uuuhOnl62I\n3E6Tv0eZgYgA5GlJR+A0RPidQJ/mDrNB3UuarOWUgwYL4DE1CWKDBfu25xsgYxnL\ndLltPzGf0wwKKA6hHdxfzG7j7BJlPCO+x60BkxfH3zw3ZdUNqWEYk/FY7XZdIWQ4\nH59BK6kGAV7HTuapPBCH9FjuOw/T2ZRabG1oI6+5gQKBgQDYe/QK0Ke2BBo/nvIr\nwlNVAZKdw3m1vCdUcTJQRZoQO9W3eKbRq1CK4TzMFdaRlTnNyeju5OtnZMVIJCKH\nrCwtOgks8p++v+TIKPVSTMyY/c35oe+YwGuIYw/PPi+0e8EblHlgOEjz1z61MY2z\ndsxvyXtbreE8LI2jiuViqylqWQKBgQDN5xfsMWZFp6cIjAzVyOGq2QGWPalnCp3J\nGBPdvzYV5fe/AcTa5D5K489CUtUUh/tMQfvon0aQVEH92zbET3XhoNafmVK+00U7\nQYWlpIaUGRoJP5AFjZQP/fF6e72peyqA4qFJzYNnVmvS4nNWDv5IARA2+c3SvQPe\nAiM+YiFX5QKBgQDTE6jTkrazhjSBq9y8RfEyhSILqTjWteozL1u7YOHiyjSLe5xL\n+xnBD/RTmUdpE3MU77WqmJHecibZPEJevsUkI94mcTrIphnP//+Si0dCNNXMfNQ8\nwAEZLl2P2DZzZ+bVmWLvKnIXLtv5l6NuRHr41B7vOQ7PuTExMJCQMAtloQKBgHAy\n/VY3lQNf2CVQK65TSKVQmwzDjQwZPOHXvPuYtmA4cEglLqAYv9kPSmFZwcLuVoG3\ncw3PvSPoxg0O50kSA6pveoR9iBl0BsXDbpBUlwEcrJNdj513CLeuKWgVBcTU2NRi\nqoEM/A3Tie3gd/jtMqMJ8UwD06SCWxkfERVtY74BAoGARkRIdu9FefQPCYLSzHbN\nVu6yloz9Pjl1lhI4c4DSCmshtNZya8GqhTvni6wJiXJDg4LYUqUXiZnQVURZMUtU\n9nR8VheBwnUFSSln1jZyvRexoLk9gz2+OZ02F2DkmQqQnaJIRgIeAE3FZzufdOk+\nOQAa+mzZWLZ69PcliUhZzO0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-mo22u@fun-olympics-cet333-2021.iam.gserviceaccount.com",
+  "client_id": "108434282816571632586",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-mo22u%40fun-olympics-cet333-2021.iam.gserviceaccount.com"
+}

@@ -3,6 +3,7 @@ import {check, validationResult} from 'express-validator';
 import express from 'express';
 import isLoggedIn from '../Middleware/IsLoggedIn.js'
 import Auth_Firebase from '../Controller/core/Auth_Firebase.js';
+import Admin_Firebase from '../Controller/core/Admin_Firebase.js'
 
 // Enabling dotenv
 dotenv.config();
@@ -25,5 +26,6 @@ export default {
     secret,
     isLoggedIn,
     Auth_Firebase,
+    Admin_Firebase,
     dataSet
 }

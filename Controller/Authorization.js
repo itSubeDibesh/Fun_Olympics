@@ -155,5 +155,3 @@ authRouter.get('/dashboard', Config.isLoggedIn, (req, res) => {
 });
 
 export default authRouter;
-
-// ToDo : Register
