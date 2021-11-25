@@ -16,6 +16,11 @@ export default{
     ToFirstUpper: function(value, options) {
         return value[0].toUpperCase() + value.slice(1);
     },
+    FirstWord: function(value, options) {
+        value = value.toString();
+        const split_name = value.split(' ')[0];
+        return split_name[0].toUpperCase() + split_name.slice(1);
+    },
     EmailSplit: function(value, options) {
         value = value.toString();
         const split_email = value.split('@')[0];

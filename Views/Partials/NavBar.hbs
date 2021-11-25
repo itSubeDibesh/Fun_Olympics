@@ -24,7 +24,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link {{#ifEquals title 'Settings'}}active{{/ifEquals}} text-light dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <strong> <i class="bi bi-people-circle"></i> {{EmailSplit login.user.email}}</strong>
+                        <strong> <i class="bi bi-people-circle"></i> {{#if login.user.displayName}} {{FirstWord login.user.displayName}} {{else}} {{EmailSplit login.user.email}} {{/if}}</strong>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item {{#ifEquals title 'Settings'}}router-link-exact-active{{/ifEquals}}" href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>

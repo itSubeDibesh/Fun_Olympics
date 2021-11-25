@@ -14,22 +14,77 @@
                     <div class="row">
                         {{!-- Email Not Verified --}}
                         {{#ifEquals login.user.emailVerified false}}
-                        <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="col-sm-12 col-md-3 col-lg-3 mr-2 mb-2">
                             <div class="card" style="width: 18rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary">Verify Email <i class="bi bi-envelope-dash"></i> </h5>
-                                    <p class="card-text">Help us verify you are a valid user, click on verify button and you will receive verification email.</p>
-                                    <div class="span text-center"><a href="/email/verify" class="btn btn-success">Verify <i class="bi bi-envelope-check-fill"></i></a></div>
+                                    <h5 class="card-title text-dark">Verify Email <i class="bi bi-envelope-dash"></i>
+                                    </h5>
+                                    <p class="card-text">Help us verify you are a valid user, click on verify button and
+                                        you will receive verification email.</p>
+                                    <div class="span text-center"><a href="/email/verify" class="btn btn-success">Verify
+                                            <i class="bi bi-envelope-check-fill"></i></a></div>
                                 </div>
                             </div>
                         </div>
                         {{/ifEquals}}
-                        <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="col-sm-12 col-md-3 col-lg-3 mr-2 mb-2">
                             <div class="card" style="width: 18rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary">Change Password <i class="bi bi-lock-fill"></i> </h5>
-                                    <p class="card-text">Change your password, click on change password button and you will receive password reset email.</p>
-                                    <div class="span text-center"><a href="/email/reset_logged_in" class="btn btn-success">Change Password <i class="bi bi-lock-fill"></i></a></div>
+                                    <h5 class="card-title text-dark">Change Password <i class="bi bi-lock-fill"></i>
+                                    </h5>
+                                    <p class="card-text">Change your password, click on change password button and you
+                                        will receive password reset email.</p>
+                                    <div class="span text-center"><a href="/email/reset_logged_in"
+                                            class="btn btn-primary">Change Password <i class="bi bi-lock-fill"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item mt-2">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseTwo">
+                    <strong>Profile</strong>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 mr-2 mb-2">
+                            <div class="card">
+                                <h5 class="card-header">Update Profile <i class="bi bi-person-check-fill"></i> </h5>
+                                <div class="card-body">
+                                    <form action="/profile/update" method="post">
+                                        <input type="hidden" name="email" value="{{ login.user.email }}">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="name@example.com" value="{{login.user.email}}" disabled>
+                                            <label for="email">Email address</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckChecked" {{#if login.user.emailVerified}}checked{{/if}}
+                                                disabled>
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Email Verified
+                                            </label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="John Doe" value="{{login.user.displayName}}">
+                                            <label for="name">Full Name</label>
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <button type="submit" value="Login" class="btn btn-success"><i
+                                                    class="bi bi-pencil-square"></i> Update</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
