@@ -1,3 +1,11 @@
+$(document).ready(function () {
+    $('.table').DataTable(
+        {
+            responsive: true
+        }
+    );
+});
+
 // Static Config Elements
 let config = {
     timeout: 5e3,

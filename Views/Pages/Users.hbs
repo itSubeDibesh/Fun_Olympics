@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                <a class="btn btn-primary" type="button" href="#"><strong>Add User <i class="bi bi-person-plus-fill"></i> </strong></a>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5> Users <i class="bi bi-people-fill"></i></h5>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover caption-top">
+                        <caption class="text-center"><strong>User's List <i class="bi bi-people-fill"></i></strong>
+                        </caption>
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col"><i class="bi bi-envelope-check-fill"></i> Verified</th>
+                                <th scope="col">Account Disabled</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users.users}}
+                            <tr>
+                                <th scope="row">{{SN @index}}</th>
+                                <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
+                                <td>{{this.displayName}}</td>
+                                <td>{{#if this.phoneNumber}}<a href="tel:{{this.phoneNumber}}" class="btn btn-primary">{{this.phoneNumber}}</a>{{else}}N/a{{/if}}</td>
+                                <td>{{FirstWord this.emailVerified}}</td>
+                                <td>{{FirstWord this.disabled}}</td>
+                                <td><a class="btn btn-sm btn-secondary" type="button" href="#"><strong><i class="bi bi-pencil-square"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-danger" type="button" href="#"><strong><i class="bi bi-person-x-fill"></i></strong></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
