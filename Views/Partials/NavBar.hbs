@@ -7,7 +7,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto flex-nowrap">
                 {{#ifEquals status "LoggedIn"}}
                 <li class="nav-item">
@@ -21,20 +21,44 @@
                             Dashboard</strong>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#ifEquals title 'Stream'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/stream"><strong> <i class="bi bi-cast"></i>
+                            Stream</strong>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#ifEquals title 'Users'}}router-link-exact-active{{/ifEquals}} text-light"
+                        aria-current="page" href="/users"><strong> <i class="bi bi-people-fill"></i>
+                            Users</strong>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link {{#ifEquals title 'Settings'}}active{{/ifEquals}} text-light dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <strong> <i class="bi bi-people-circle"></i> {{#if login.user.displayName}} {{FirstWord login.user.displayName}} {{else}} {{EmailSplit login.user.email}} {{/if}}</strong>
+                    <a class="nav-link {{#ifEquals title 'Settings'}}active{{/ifEquals}} text-light dropdown-toggle"
+                        href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong> <i class="bi bi-people-circle"></i> {{#if login.user.displayName}} {{FirstWord
+                            login.user.displayName}} {{else}} {{EmailSplit login.user.email}} {{/if}}</strong> <i
+                            class="bi bi-person-workspace"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item {{#ifEquals title 'Settings'}}router-link-exact-active{{/ifEquals}}" href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>
-                            Settings</strong></a></li>
+                        <li><a class="dropdown-item {{#ifEquals title 'Settings'}}router-link-exact-active{{/ifEquals}}"
+                                href="/settings"><strong> <i class="bi bi-gear-wide-connected"></i>
+                                    Settings</strong></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/logout"><strong> <i
-                                class="bi bi-box-arrow-right"></i> Logout</strong></a></li>
+                        <li><a class="dropdown-item" href="/logout"><strong> <i class="bi bi-box-arrow-right"></i>
+                                    Logout</strong></a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{#ifEquals title 'Notice'}}router-link-exact-active{{/ifEquals}} text-light position-relative"
+                        aria-current="page" href="/notice"><strong> <i class="bi  bi-bell-fill"></i>
+                            Notice
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">5</span>
+                        </strong>
+                    </a>
                 </li>
                 {{/ifEquals}}
                 {{#ifNotEquals status "LoggedIn"}}
@@ -58,7 +82,8 @@
         font-family: 'Abril Fatface', cursive;
     }
 
-    .router-link-exact-active, .active {
+    .router-link-exact-active,
+    .active {
         color: #fff;
         background-color: #00bcd4;
         border-color: #00bcd4;
