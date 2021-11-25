@@ -23,6 +23,7 @@
                                 <th scope="col">Account Disabled</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
+                                <th scope="col">Reset</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +41,7 @@
                                                 class="bi bi-pencil-square"></i></strong></a></td>
                                 <td><a class="btn btn-sm btn-danger" type="button" href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
                                                 class="bi bi-person-x-fill"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-success" type="button" href="/users/reset?email={{this.email}}"><strong><i class="bi bi-unlock-fill"></i></strong></a></td>
                             </tr>
                             {{/each}}
                         </tbody>
