@@ -71,13 +71,47 @@ export default class Auth_Crud extends Admin_Firebase{
         })
     }
 
-    updateUser(uid, email, password, displayName,phoneNumber, disabled){
+    updateUser(uid, email, password, displayName, phoneNumber, disabled){
         return this.getAuth().updateUser(uid, {
             email: email,
             password: password,
             displayName: displayName,
-            phoneNumber:phoneNumber,
+            phoneNumber: phoneNumber,
             disabled: disabled,
         })
     }
+
+    deleteUser(uid){
+        return this.getAuth().deleteUser(uid)
+    }
+
+    /**
+     * @param {array} uids
+     * @return {Promise} 
+     * @memberof Auth_Crud
+     */
+    deleteMultiUsers(uids){
+        return this.getAuth().deleteUsers(uids)
+    }
+
+    getUser(uid){
+        return this.getAuth().getUser(uid)
+    }
+
+    getUserByEmail(email){
+        return this.getAuth().getUserByEmail(email)
+    }
+
+    getUserByPhoneNumber(phoneNumber){
+        return this.getAuth().getUserByPhoneNumber(phoneNumber)
+    }
+
+    getUserByProviderId(providerId){
+        return this.getAuth().getUserByProviderId(providerId)
+    }
+
+    listAllUsers(nextPageToken){
+        return this.getAuth().listUsers(1000, nextPageToken)
+    }
+
 }
