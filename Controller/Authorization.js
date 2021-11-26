@@ -3,7 +3,7 @@ import Config from '../Config/Http.js';
 // Setting Application Routes
 const authRouter = Config.express.Router();
 // Setting Firebase Auth
-const auth = new Config.Auth_Firebase();
+const auth = Config.firebase_auth;
 
 authRouter.get('/', (req, res) => {
     res.render('Pages/Home', Config.dataSet({ title: 'Home', login: req.session.login, status: req.session.status }));

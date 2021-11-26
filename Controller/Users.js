@@ -4,6 +4,7 @@ import Config from '../Config/Http.js';
 const usersRouter = Config.express.Router();
 // Setting Firebase Auth
 const admin = Config.firebase_admin;
+const auth = Config.firebase_auth;
 
 usersRouter.get('/users', Config.isLoggedIn, (req, res) => {
     admin.listAllUsers().then(users => {
@@ -14,10 +15,10 @@ usersRouter.get('/users', Config.isLoggedIn, (req, res) => {
                 list.push(element);
             }
         }
-        res.render('Pages/Users', Config.dataSet({ 
-            title: 'Users', 
-            login: req.session.login, 
-            status: req.session.status, 
+        res.render('Pages/Users', Config.dataSet({
+            title: 'Users',
+            login: req.session.login,
+            status: req.session.status,
             users: list,
             success: req.session.success,
             error: req.session.error,
@@ -29,15 +30,40 @@ usersRouter.get('/users', Config.isLoggedIn, (req, res) => {
                 "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                 "code": err.code
             }
-            res.render('Pages/Users', Config.dataSet({ 
-                title: 'Users', 
-                login: req.session.login, 
-                status: req.session.status, 
-                error: error ,
+            res.render('Pages/Users', Config.dataSet({
+                title: 'Users',
+                login: req.session.login,
+                status: req.session.status,
+                error: error,
                 success: req.session.success,
                 warning: req.session.warning
             }));
         });
+});
+
+usersRouter.get('/users/reset', Config.isLoggedIn, (req, res) => {
+    const { email } = req.query;
+    if (email && email != req.session.login.user.email) {
+        auth.resetPassword(email).then(() => {
+            req.session.success = {
+                message: "Reset request approved, email sent for reset."
+            }
+            res.redirect('/users');
+        })
+            .catch(err => {
+                const error = {
+                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                    "code": err.code
+                }
+                req.session.error = error;
+                res.redirect('/users');
+            });
+    }else{
+        req.session.error = {
+            "message": "Fun Olympics, Unauthorized Request."
+        }
+        res.redirect('/users');
+    }
 });
 
 usersRouter.get('/users/:action', Config.isLoggedIn, (req, res) => {
@@ -112,7 +138,7 @@ usersRouter.post('/users/entry', Config.isLoggedIn, (req, res) => {
         }
     } else if (action == "Edit") {
         if (email != req.session.login.user.email) {
-            admin.updateUser(uid, displayName, phoneNumber||null, Config.returnBool(disabled)||false).then(user => {
+            admin.updateUser(uid, displayName, phoneNumber || null, Config.returnBool(disabled) || false).then(user => {
                 req.session.success = { "message": "Fun Olympics: User updated successfully!" };
                 res.redirect('/users');
             })
@@ -139,7 +165,7 @@ usersRouter.post('/users/entry', Config.isLoggedIn, (req, res) => {
     }
 });
 
-usersRouter.get('/users/user/delete',Config.isLoggedIn, (req, res) => {
+usersRouter.get('/users/user/delete', Config.isLoggedIn, (req, res) => {
     const { email, uid } = req.query;
     console.log(email, uid);
     if (email && uid) {
@@ -153,7 +179,7 @@ usersRouter.get('/users/user/delete',Config.isLoggedIn, (req, res) => {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
-                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error}));
+                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
                 });
         } else {
             const error = {
@@ -167,5 +193,3 @@ usersRouter.get('/users/user/delete',Config.isLoggedIn, (req, res) => {
 
 
 export default usersRouter;
-
-// ToDo: Reset Request For users

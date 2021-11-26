@@ -11,6 +11,9 @@ dotenv.config();
 // Firebase Configuration
 const firebase_admin = new Admin_Firebase();
 
+// Setting Firebase Auth
+const firebase_auth = new Auth_Firebase();
+
 // Extracting env variables
 const {port,secret, app_name} = process.env;
 
@@ -32,9 +35,8 @@ export default {
     app_name,
     secret,
     isLoggedIn,
-    Auth_Firebase,
-    Admin_Firebase,
     dataSet,
     returnBool,
-    firebase_admin
+    firebase_admin,
+    firebase_auth
 }

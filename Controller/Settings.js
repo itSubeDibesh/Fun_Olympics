@@ -3,7 +3,7 @@ import Config from '../Config/Http.js';
 // Setting Application Routes
 const settingsRouter = Config.express.Router();
 // Setting Firebase Auth
-const auth = new Config.Auth_Firebase();
+const auth = Config.firebase_auth;
 // Setting Firebase Auth
 const admin = Config.firebase_admin;
 
