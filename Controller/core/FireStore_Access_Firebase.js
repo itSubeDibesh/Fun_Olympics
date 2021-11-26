@@ -49,5 +49,29 @@ export default class FireStore extends FIREBASE_ADMIN {
     getByQuery(field, condition, value) {
         return this.collection.where(field, condition, value).get()
     }
+    
+    observe(docId, callback) {
+        return this.collection.doc(docId).onSnapshot(callback)
+    }
+
+    observeByQuery(field, condition, value, callback) {
+        return this.collection.where(field, condition, value).onSnapshot(callback)
+    }
+
+    observeAll(callback) {
+        return this.collection.onSnapshot(callback)
+    }
+
+    detach(docId) {
+        return this.collection.doc(docId).onSnapshot(() => {})
+    }
+
+    detachByQuery(field, condition, value) {
+        return this.collection.where(field, condition, value).onSnapshot(() => {})
+    }
+
+    detachAll() {
+        return this.collection.onSnapshot(() => {})
+    }
 
 }
