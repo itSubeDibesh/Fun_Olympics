@@ -99,3 +99,5 @@ Application.get('*', (req, res) => {
 Application.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}, http://localhost:${config.port}`)
 })
+
+export default Application
