@@ -21,6 +21,7 @@
                                 <th scope="col">Phone Number</th>
                                 <th scope="col"><i class="bi bi-envelope-check-fill"></i> Verified</th>
                                 <th scope="col">Account Disabled</th>
+                                <th scope="col">View</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                                 <th scope="col">Reset</th>
@@ -36,12 +37,18 @@
                                         class="btn btn-primary">{{this.phoneNumber}}</a>{{else}}N/a{{/if}}</td>
                                 <td>{{FirstWord this.emailVerified}}</td>
                                 <td>{{FirstWord this.disabled}}</td>
-                                <td><a class="btn btn-sm btn-secondary" type="button"
+                                <td><a class="btn btn-sm btn-primary" type="button"
+                                        href="/users/view?email={{this.email}}"><strong><i
+                                                class="bi bi-eye"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-dark" type="button"
                                         href="/users/edit?email={{this.email}}"><strong><i
                                                 class="bi bi-pencil-square"></i></strong></a></td>
-                                <td><a class="btn btn-sm btn-danger" type="button" href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
+                                <td><a class="btn btn-sm btn-danger" type="button"
+                                        href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
                                                 class="bi bi-person-x-fill"></i></strong></a></td>
-                                <td><a class="btn btn-sm btn-success" type="button" href="/users/reset?email={{this.email}}"><strong><i class="bi bi-unlock-fill"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-success" type="button"
+                                        href="/users/reset?email={{this.email}}"><strong><i
+                                                class="bi bi-unlock-fill"></i></strong></a></td>
                             </tr>
                             {{/each}}
                         </tbody>
