@@ -109,6 +109,31 @@ usersRouter.get('/users/:action', Config.isLoggedIn, (req, res) => {
             login: req.session.login,
             status: req.session.status
         }));
+    } else if(action == 'view') {
+        if (email !== req.session.login.user.email) {
+            admin.getUserByEmail(email).then(user => {
+                res.render('Pages/Users-AddEdit', Config.dataSet({
+                    title: 'Users',
+                    action: "View",
+                    login: req.session.login,
+                    status: req.session.status,
+                    user: user,
+                }));
+            })
+                .catch(err => {
+                    const error = {
+                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                        "code": err.code
+                    }
+                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                });
+        } else {
+            const error = {
+                "message": "Fun Olympics: Unauthorized Request!"
+            }
+            req.session.error = error;
+            res.redirect('/users')
+        }
     } else {
         res.redirect('/users')
     }
