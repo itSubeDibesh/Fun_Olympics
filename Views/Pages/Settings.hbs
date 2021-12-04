@@ -1,15 +1,67 @@
-<div class="container">
-    <div class="accordion">
+<div class="container py-lg-3 mt-lg-3">
+    <div class="accordion" id="accordionExample">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                    aria-controls="panelsStayOpen-collapseOne">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <strong>Profile</strong>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 mr-2 mb-2">
+                            <div class="card">
+                                <h5 class="card-header">Update Profile <i class="bi bi-person-check-fill"></i> </h5>
+                                <div class="card-body">
+                                    <form action="/profile/update" method="post">
+                                        <input type="hidden" name="uid" value="{{login.user.uid}}">
+                                        <input type="hidden" name="email" value="{{ login.user.email }}">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="name@example.com" value="{{login.user.email}}" disabled>
+                                            <label for="email">Email address</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                                placeholder="98151555" value="{{login.user.phoneNumber}}">
+                                            <label for="phoneNumber">Phone Number</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="emailVerified" {{#if login.user.emailVerified}}checked{{/if}}
+                                                disabled>
+                                            <label class="form-check-label" for="emailVerified">
+                                                Email Verified
+                                            </label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="John Doe" value="{{login.user.displayName}}">
+                                            <label for="name">Full Name</label>
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <button type="submit" value="Login" class="btn btn-success"><i
+                                                    class="bi bi-pencil-square"></i> Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     <strong>Credentials</strong>
                 </button>
             </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                aria-labelledby="panelsStayOpen-headingOne">
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <div class="row">
                         {{!-- Email Not Verified --}}
@@ -37,60 +89,6 @@
                                     <div class="span text-center"><a href="/email/reset_logged_in"
                                             class="btn btn-primary">Change Password <i class="bi bi-lock-fill"></i></a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item mt-2">
-            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
-                    aria-controls="panelsStayOpen-collapseTwo">
-                    <strong>Profile</strong>
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
-                aria-labelledby="panelsStayOpen-headingTwo">
-                <div class="accordion-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 mr-2 mb-2">
-                            <div class="card">
-                                <h5 class="card-header">Update Profile <i class="bi bi-person-check-fill"></i> </h5>
-                                <div class="card-body">
-                                    <form action="/profile/update" method="post">
-                                        <input type="hidden" name="uid" value="{{login.user.uid}}">
-                                        <input type="hidden" name="email" value="{{ login.user.email }}">
-                                        <div class="form-floating mb-3">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="name@example.com" value="{{login.user.email}}" disabled>
-                                            <label for="email">Email address</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
-                                                placeholder="98151555" value="{{login.user.phoneNumber}}">
-                                            <label for="phoneNumber">Phone Number</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked" {{#if login.user.emailVerified}}checked{{/if}}
-                                                disabled>
-                                            <label class="form-check-label" for="flexCheckChecked">
-                                                Email Verified
-                                            </label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="John Doe" value="{{login.user.displayName}}">
-                                            <label for="name">Full Name</label>
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <button type="submit" value="Login" class="btn btn-success"><i
-                                                    class="bi bi-pencil-square"></i> Update</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>

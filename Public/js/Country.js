@@ -255,15 +255,19 @@ var countries = [
     { "name": "Zimbabwe", "code": "ZW", "id": 252, "phone": 263, "symbol": "$", "capital": "Harare", "currency": "ZWL", "continent": "Africa", "continent_code": "AF", "alpha_3": "ZWE" }
 ];
 
-function country_dropdown(user_country_code='') {
+function country_dropdown(user_country_code = '') {
     let option = '';
-    for (let i = 0; i < countries.length; i++) {
-        var selected = (countries[i].code == user_country_code) ? ' selected' : '';
-        let value = countries[i].code;
-        let text = countries[i].name;
-        option += '<option value="'+value+'"'+selected+'>'+text+'</option>';
+    const country = document.getElementById('country');
+    if (country) {
+
+        for (let i = 0; i < countries.length; i++) {
+            var selected = (countries[i].code == user_country_code) ? ' selected' : '';
+            let value = countries[i].code;
+            let text = countries[i].name;
+            option += '<option value="' + value + '"' + selected + '>' + text + '</option>';
+        }
+        country.innerHTML = option;
     }
-    document.getElementById('country').innerHTML = option;
 }
 
 country_dropdown('NP');

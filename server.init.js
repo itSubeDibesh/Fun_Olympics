@@ -44,10 +44,9 @@ const hbs = expressHBS.create({
 
 // Setting Cors options
 Application.use(cors({
-    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    exposedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    exposedHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
 
 var MemoryStore = session.MemoryStore;
@@ -68,18 +67,22 @@ Application.use(config.express.urlencoded({extended: true}))
 Application.use(config.express.json())
 
 // Setting up Static Folder
-Application.use(config.express.static(__dirname + '/Public'))
+Application.use(config.express.static(__dirname + '\\Public'))
 // Extracting Static Folder
-const nodeModulePath = __dirname + '/node_modules/'
+const nodeModulePath = __dirname + '\\node_modules\\'
 const StaticPaths = {
-    "css":['bootstrap/dist/css','bootstrap-icons/font'],
-    "js":['bootstrap/dist/js']
+    "css":['bootstrap\\dist\\css','bootstrap-icons\\font'],
+    "js":['bootstrap\\dist\\js'],
+    'vendors':['lightbox2\\dist']
 }
 StaticPaths['css'].forEach(path => {
     Application.use('/css/',config.express.static(nodeModulePath + path))
 })
 StaticPaths['js'].forEach(path => {
     Application.use('/js/',config.express.static(nodeModulePath + path))
+})
+StaticPaths['vendors'].forEach(path => {
+    Application.use('/vendors/',config.express.static(nodeModulePath + path))
 })
 
 // Setting up View Engine

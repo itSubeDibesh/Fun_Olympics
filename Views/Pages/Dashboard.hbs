@@ -1,15 +1,161 @@
 {{!-- Email Not Verified --}}
 {{#ifEquals login.user.emailVerified false}}
 <div class="alert alert-warning alert-fixed alert-dismissible fade show d-flex align-items-center" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-            class="bi bi-info-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-            <path
-                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </svg>
-        <div>
-            <strong>Warning!</strong> Your email <i class="bi bi-envelope-exclamation-fill"></i> address is not verified. <a href="/email/verify" class="alert-link">Click Me to verify.</a> 
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        class="bi bi-info-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </svg>
+    <div>
+        <strong>Warning!</strong> Your email <i class="bi bi-envelope-exclamation-fill"></i> address is not verified. <a
+            href="/email/verify" class="alert-link">Click Me to verify.</a>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/ifEquals}}
 
+<div class="container py-lg-3 mt-lg-3">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    <strong> <i class="bi bi-person-fill text-primary"></i> User Stats</strong>
+                </div>
+                <div class="card-body text-dark">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Total</div>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Admin</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Users</div>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Disabled</div>
+                            </div>
+                            <span class="badge bg-warning rounded-pill text-dark">14</span>
+                        </li>
+                        <ul />
+                        <div class="div text-center">
+                            <a href="/users" class="btn link-success"><b> Users List</b></a>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    <strong> <i class="bi bi-camera-video-fill text-danger"></i> Stream Stats</strong>
+                </div>
+                <div class="card-body text-dark">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Total</div>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Archived</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Upcoming</div>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Live</div>
+                            </div>
+                            <span class="badge bg-warning rounded-pill text-dark">14</span>
+                        </li>
+                        <ul />
+                        <div class="div text-center">
+                            <a href="/users" class="btn link-success"><b> Streams</b></a>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    <strong> <i class="bi bi-slash-square-fill text-success"></i> Recent profanity</strong>
+                </div>
+                <div class="card-body text-dark">
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Xyz@gmail.com</div>
+                                F****
+                            </div>
+                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Xyz@gmail.com</div>
+                                B****
+                            </div>
+                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Xyz@gmail.com</div>
+                                A****
+                            </div>
+                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <strong> <i class="bi bi-newspaper text-success"></i> Recent comments</strong>
+                </div>
+                <div class="card-body">
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">What a match, i need user.</div>
+                                Manchester United vs Liverpool
+                                <span class="badge bg-danger rounded-pill">king@inss.com</span>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">2 min ago</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Subheading</div>
+                                Content for list item
+                            </div>
+                            <span class="badge bg-primary rounded-pill">2 min ago</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Subheading</div>
+                                Content for list item
+                            </div>
+                            <span class="badge bg-primary rounded-pill">2 min ago</span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </div>

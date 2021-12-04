@@ -41,6 +41,7 @@
     "firebase": "^9.5.0",
     "firebase-admin": "^10.0.0",
     "helmet": "^4.6.0",
+    "lightbox2": "^2.11.3",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {

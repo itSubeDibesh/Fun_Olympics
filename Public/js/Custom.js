@@ -1,10 +1,13 @@
-$(document).ready(function () {
-    $('.table').DataTable(
-        {
-            responsive: true
-        }
-    );
-});
+const table = document.getElementsByTagName("table");
+if(table){
+    $(document).ready(function () {
+        $('table').DataTable(
+            {
+                responsive: true
+            }
+        );
+    });
+}
 
 // Static Config Elements
 let config = {
