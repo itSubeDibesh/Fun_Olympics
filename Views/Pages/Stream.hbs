@@ -1,158 +1,247 @@
 <div class="container py-lg-3 mt-lg-3">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+        <a class="btn btn-primary" type="button" href="/users/add"><strong>Add Stream <i
+                    class="bi bi-tv-fill"></i> </strong></a>
+    </div>
     <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <div class="accordion" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <strong>Upcoming <i class="bi bi-person-video2"></i></strong>
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                        data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            <strong>Live
-                                <div class="spinner-grow spinner-grow-sm text-danger" role="status">
-                                    <span class="visually-hidden">Live</span>
+        <div class="col-sm-12 col-md-8 col-lg-8 mb-2">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <div class="row">
+                                    <span class="col-sm-12 col-md-6 col-lg-6">
+                                        <strong>
+                                            Now Playing:
+                                        </strong>
+                                        <span class="text-danger">Football</span>
+                                    </span>
+                                    <span class="col-sm-12 col-md-6 col-lg-6 text-end">
+                                        Live {{>Live}}
+                                    </span>
                                 </div>
-                            </strong>
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse show"
-                        aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-start bg-dark text-light">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">Watching</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                            </ol>
+                            </h5>
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseThree" aria-expanded="false"
-                            aria-controls="flush-collapseThree">
-                            <strong>Archived <i class="bi bi-projector-fill"></i></strong>
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                        aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
+                        <div class="card-body">
+                            <div id="player" class="border border-primary mb-2">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/QsAQkMoGTn0?rel=0" title="YouTube video"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here"
+                                                id="comment" style="width: 100%; resize:none;"></textarea>
+                                            <label for="comment">Comment</label>
+                                        </div>
                                     </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
+                                    <div class="col-sm-2 mt-3">
+                                        <button type="submit" class="btn btn-success"> <i class="bi bi-send"></i>
+                                            Submit</button>
                                     </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                            </ol>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-8 col-lg-8">
+        <div class="col-sm-12 col-md-4 col-lg-4 mb-2">
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 ">
-                    <div id="player">
+                <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                    <div class="accordion" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    <strong>Upcoming <i class="bi bi-person-video2"></i></strong>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body overflow-auto">
+                                    <ol class="list-group list-group-numbered list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Manchester Vs Laila</div>
+                                                Football
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-primary rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Set Reminder</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-primary rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Set Reminder</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-primary rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Set Reminder</span></a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                    <strong>Live
+                                        {{>Live}}
+                                    </strong>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse show"
+                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body overflow-auto">
+                                    <ol class="list-group list-group-numbered list-group-flush">
+                                        <li
+                                            class="list-group-item d-flex justify-content-between align-items-start bg-dark text-light">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Manchester Vs Laila</div>
+                                                Football
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-danger rounded-pill">Watching</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Watch Now</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Watch Now</span></a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                    <strong>Archived <i class="bi bi-projector-fill"></i></strong>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body overflow-auto">
+                                    <ol class="list-group list-group-numbered list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Manchester Vs Laila</div>
+                                                Football
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-danger rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Watch Now</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-danger rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Watch Now</span></a>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">Subheading</div>
+                                                Content for list item
+                                            </div>
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-danger rounded-pill">14/01/2021</span></a>
+                                            &nbsp;
+                                            <a href="/login" class="text-decoration-none"><span
+                                                    class="badge bg-success rounded-pill">Watch Now</span></a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 ">
-
+                <div class="col-sm-12 col-md-12 col-lg-12 mb-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <div class="row">
+                                    <span class="col-sm-12 col-md-6 col-lg-6">
+                                        <strong>
+                                            Comment
+                                        </strong>
+                                    </span>
+                                    <span class="col-sm-12 col-md-6 col-lg-6 text-end">
+                                        Live {{>Live}}
+                                    </span>
+                                </div>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush overflow-auto">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Manchester Vs Laila</div>
+                                        Football
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">14/01/2021</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Subheading</div>
+                                        Content for list item
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">14/01/2021</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Subheading</div>
+                                        Content for list item
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">14/01/2021</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

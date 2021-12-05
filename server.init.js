@@ -31,7 +31,12 @@ Application.use(rate_limit({
 }))
 
 // Setting up Helmet
-Application.use(helmet())
+Application.use(helmet(
+    {
+        contentSecurityPolicy: false,
+    }
+))
+
 
 // Setting up Handlebars
 const hbs = expressHBS.create({
@@ -44,6 +49,7 @@ const hbs = expressHBS.create({
 
 // Setting Cors options
 Application.use(cors({
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     exposedHeaders: ['Content-Type', 'Authorization', 'Accept'],
