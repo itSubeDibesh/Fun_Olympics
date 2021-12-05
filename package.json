@@ -45,7 +45,9 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "express-list-endpoints": "^6.0.0",
     "nodemon": "^2.0.15",
+    "npm": "^8.2.0",
     "open-cli": "^7.0.1"
   }
 }

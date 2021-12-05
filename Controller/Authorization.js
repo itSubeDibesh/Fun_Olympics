@@ -6,10 +6,17 @@ const authRouter = Config.express.Router();
 const auth = Config.firebase_auth;
 
 authRouter.get('/', (req, res) => {
-    res.render('Pages/Home', Config.dataSet({ title: 'Home', login: req.session.login, status: req.session.status }));
+    const error = req.session.error;
+    req.session.error = null;
+    const warning = req.session.warning;
+    req.session.warning = null;
+    const success = req.session.success;
+    req.session.success = null;
+    req.session.role = "Guest"
+    res.render('Pages/Home', Config.dataSet({ title: 'Home', login: req.session.login, status: req.session.status, error, warning, success }));
 });
 
-authRouter.get('/login', (req, res) => {
+authRouter.get('/login', Config.HasAccess, (req, res) => {
     if (req.session.login != undefined && req.session.status == "LoggedIn") {
         res.redirect('/dashboard');
     } else {
@@ -21,7 +28,7 @@ authRouter.get('/login', (req, res) => {
     }
 });
 
-authRouter.get('/logout', Config.isLoggedIn, (req, res) => {
+authRouter.get('/logout', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     // Error Check
     if (req.session.error) {
         // Redirect to Login Page
@@ -42,7 +49,7 @@ authRouter.get('/logout', Config.isLoggedIn, (req, res) => {
     }
 })
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', Config.HasAccess, (req, res) => {
     const { email, password } = req.body;
     // Redirect Error
     if (req.session.error) {
@@ -62,7 +69,7 @@ authRouter.post('/login', (req, res) => {
             }).catch(err => {
                 // Redirect Error
                 const error = {
-                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                     "code": err.code
                 }
                 res.render('Login', Config.dataSet({ title: 'Login', error: error }));
@@ -75,7 +82,7 @@ authRouter.post('/login', (req, res) => {
     }
 });
 
-authRouter.get('/register', (req, res) => {
+authRouter.get('/register', Config.HasAccess, (req, res) => {
     if (req.session.login != undefined && req.session.status == "LoggedIn") {
         res.redirect('/dashboard');
     } else {
@@ -83,7 +90,7 @@ authRouter.get('/register', (req, res) => {
     }
 });
 
-authRouter.post('/register', (req, res) => {
+authRouter.post('/register', Config.HasAccess, (req, res) => {
     const { email, password, retype } = req.body;
     // Redirect Error
     if (req.session.error) {
@@ -102,7 +109,7 @@ authRouter.post('/register', (req, res) => {
                 }).catch(err => {
                     // Redirect Error
                     const error = {
-                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
                     res.render('Register', Config.dataSet({ title: 'Register', error: error }));
@@ -120,11 +127,11 @@ authRouter.post('/register', (req, res) => {
 });
 
 
-authRouter.get('/reset', (req, res) => {
+authRouter.get('/reset', Config.HasAccess, (req, res) => {
     res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password' }));
 });
 
-authRouter.post('/reset', (req, res) => {
+authRouter.post('/reset', Config.HasAccess, (req, res) => {
     const { email } = req.body;
     // Redirect Error
     if (req.session.error) {
@@ -142,7 +149,7 @@ authRouter.post('/reset', (req, res) => {
             }).catch(err => {
                 // Redirect Error
                 const error = {
-                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/",""),
+                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                     "code": err.code
                 }
                 res.render('ForgetPassword', Config.dataSet({ title: 'Forget Password', error: error }));
@@ -156,7 +163,7 @@ authRouter.post('/reset', (req, res) => {
 });
 
 
-authRouter.get('/dashboard', Config.isLoggedIn, (req, res) => {
+authRouter.get('/dashboard', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;

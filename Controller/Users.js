@@ -6,7 +6,7 @@ const usersRouter = Config.express.Router();
 const admin = Config.firebase_admin;
 const auth = Config.firebase_auth;
 
-usersRouter.get('/users', Config.isLoggedIn, (req, res) => {
+usersRouter.get('/users', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     admin.listAllUsers().then(users => {
         let list = [];
         for (let index = 0; index < users.users.length; index++) {
@@ -41,7 +41,7 @@ usersRouter.get('/users', Config.isLoggedIn, (req, res) => {
         });
 });
 
-usersRouter.get('/users/reset', Config.isLoggedIn, (req, res) => {
+usersRouter.get('/users/reset', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     const { email } = req.query;
     if (email && email != req.session.login.user.email) {
         auth.resetPassword(email).then(() => {
@@ -66,7 +66,7 @@ usersRouter.get('/users/reset', Config.isLoggedIn, (req, res) => {
     }
 });
 
-usersRouter.get('/users/:action', Config.isLoggedIn, (req, res) => {
+usersRouter.get('/users/:action', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     const { action } = req.params;
     const { email } = req.query;
     if (action == "edit") {
@@ -139,7 +139,7 @@ usersRouter.get('/users/:action', Config.isLoggedIn, (req, res) => {
     }
 });
 
-usersRouter.post('/users/entry', Config.isLoggedIn, (req, res) => {
+usersRouter.post('/users/entry', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     let { email, uid, action, displayName, phoneNumber, disabled, password } = req.body;
     if (action == "Add") {
         if (email && displayName && password) {
@@ -190,7 +190,7 @@ usersRouter.post('/users/entry', Config.isLoggedIn, (req, res) => {
     }
 });
 
-usersRouter.get('/users/user/delete', Config.isLoggedIn, (req, res) => {
+usersRouter.get('/users/user/delete', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     const { email, uid } = req.query;
     console.log(email, uid);
     if (email && uid) {
