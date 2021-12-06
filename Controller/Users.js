@@ -219,13 +219,4 @@ usersRouter.get('/users/user/delete', Config.isLoggedIn, Config.HasAccess, (req,
     }
 });
 
-usersRouter.get('/test',(req,res)=>{
-    user.get().then(users=>{
-        if(!users.empty){
-            res.send(users.docs.map(doc=>doc.data()));
-        }
-    }
-    )
-})
-
 export default usersRouter;

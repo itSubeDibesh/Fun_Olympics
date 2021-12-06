@@ -25,7 +25,11 @@ authRouter.get('/', (req, res) => {
 authRouter.get('/login', HasAccess, (req, res) => {
     if (req.session.role == undefined) req.session.role = "Guest"
     if (req.session.login != undefined && req.session.status == "LoggedIn") {
-        res.redirect('/dashboard');
+        // Redirect to According to Privilege
+        if (req.session.login.roleDetails.includes("Moderate"))
+            res.redirect('/dashboard');
+        else
+            res.redirect('/');
     } else {
         const success = req.session.success;
         const error = req.session.error;
@@ -38,6 +42,7 @@ authRouter.get('/login', HasAccess, (req, res) => {
 authRouter.get('/logout', isLoggedIn, HasAccess, (req, res) => {
     // Error Check
     if (req.session.error) {
+        req.session.role = "Guest"
         // Redirect to Login Page
         res.render('Login', dataSet({ title: 'Login', error: req.session.error }));
     } else {
@@ -56,6 +61,7 @@ authRouter.get('/logout', isLoggedIn, HasAccess, (req, res) => {
     }
 })
 
+
 authRouter.post('/login', HasAccess, (req, res) => {
     const { email, password } = req.body;
     // Redirect Error
@@ -69,16 +75,27 @@ authRouter.post('/login', HasAccess, (req, res) => {
             // Login
             auth.login(email, password).then(data => {
                 // Fetch User data
-                user.getByQuery('email','==',email).then(userData => {
+                user.getByQuery('email', '==', email).then(userData => {
+                    // User Dataset 
+                    let userDataset = userData.docs[0].data(),
+                        // Appending User Dataset to Session
+                        dataset = data
+                    dataset.userDetails = userDataset
+                    dataset.roleDetails = Config.Privilege[userDataset['role']];
 
-                    console.log(userData)
+                    // Setting User Role in Session
+                    req.session.role = userDataset['role'];
 
                     // Redirect Success
-                    req.session.login = data;
+                    req.session.login = dataset;
                     req.session.status = "LoggedIn"
                     req.session.success = { "message": `Login Success, Welcome ${data.user.email.split("@")[0]}!` };
-                    res.redirect('/dashboard');
 
+                    // Redirect to According to Privilege
+                    if (dataset.roleDetails.includes("Moderate"))
+                        res.redirect('/dashboard');
+                    else
+                        res.redirect('/');
                 }).catch(err => {
                     // Redirect Error
                     const error = {
@@ -106,7 +123,11 @@ authRouter.post('/login', HasAccess, (req, res) => {
 authRouter.get('/register', HasAccess, (req, res) => {
     if (req.session.role == undefined) req.session.role = "Guest"
     if (req.session.login != undefined && req.session.status == "LoggedIn") {
-        res.redirect('/dashboard');
+        // Redirect to According to Privilege
+        if (req.session.login.roleDetails.includes("Moderate"))
+            res.redirect('/dashboard');
+        else
+            res.redirect('/');
     } else {
         const error = req.session.error;
         req.session.error = null;
@@ -145,7 +166,6 @@ authRouter.post('/register', HasAccess,
             // Creating New Auth User
             admin.createUser(email, password, name, phoneNumber.toString())
                 .then(data => {
-                    console.log("AUTH", data);
                     flag = true
                     // Creating New User
                     user.add({
@@ -156,8 +176,6 @@ authRouter.post('/register', HasAccess,
                     })
                         .then(data => {
                             flag = true
-                            console.log("USER", data);
-                            req.session.success = { "message": `Registration Success, Welcome ${email.split("@")[0]}!` };
                         })
                         .catch(err => {
                             if (err) {
@@ -182,47 +200,14 @@ authRouter.post('/register', HasAccess,
                 })
                 .finally(() => {
                     if (flag) {
+                        req.session.success = { "message": `Registration Success, Welcome ${email.split("@")[0]}!` };
                         res.redirect('/login')
                     } else {
+                        req.session.error = req.session.error;
                         res.redirect('/register')
                     }
                 })
-
         }
-        /*
-        // Redirect Error
-        if (req.session.error) {
-            const error = req.session.error;
-            req.session.error = null
-            res.render('Register', dataSet({ title: 'Register', error }));
-        } else {
-            // Validation Check
-            if (email && password && retype) {
-                if (password == retype) {
-                    // Register
-                    auth.register(email, password).then(data => {
-                        // Redirect Success
-                        req.session.success = { "message": `Register Success, Please login ${data.user.email.split("@")[0]}!` };
-                        res.redirect('/login');
-                    }).catch(err => {
-                        // Redirect Error
-                        const error = {
-                            "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
-                            "code": err.code
-                        }
-                        res.render('Register', dataSet({ title: 'Register', error: error }));
-                    });
-                } else {
-                    req.session.error = { "message": 'Password not match' };
-                    res.render('Register', dataSet({ title: 'Register', error: req.session.error }));
-                }
-            } else {
-                // Validation Error
-                req.session.error = { "message": 'Please enter email password and retype password' };
-                res.render('Register', dataSet({ title: 'Register', error: req.session.error }));
-            }
-        }
-        */
     });
 
 

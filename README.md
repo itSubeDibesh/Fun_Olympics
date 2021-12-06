@@ -1,6 +1,6 @@
 # **Fun Olympics**
 
-[![wakatime](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics.svg)](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics)
+[![Automated Testing Fun Olympics](https://github.com/itSubeDibesh/Fun_Olympics/actions/workflows/node.test.yml/badge.svg?branch=main)](https://github.com/itSubeDibesh/Fun_Olympics/actions/workflows/node.test.yml) [![wakatime](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics.svg)](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics)
 
 ## **Table of Contents**
 
@@ -19,8 +19,6 @@
       - [**Moderate**](#moderate)
       - [**Advanced**](#advanced)
     - [**Access**](#access)
-
----
 
 ## **Scenario**
 

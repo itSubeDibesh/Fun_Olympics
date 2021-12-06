@@ -15,34 +15,41 @@
                         aria-current="page" href="/"><strong> <i class="bi bi-house-fill"></i> Home</strong>
                     </a>
                 </li>
+                {{#Includes 'Moderate' login.userDetails.role}}
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'Dashboard'}}router-link-exact-active{{/ifEquals}} text-light"
                         aria-current="page" href="/dashboard"><strong> <i class="bi bi-speedometer2"></i>
                             Dashboard</strong>
                     </a>
                 </li>
+                {{/Includes}}
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'Stream'}}router-link-exact-active{{/ifEquals}} text-light"
                         aria-current="page" href="/stream"><strong> <i class="bi bi-cast"></i>
                             Stream</strong>
                     </a>
                 </li>
+                {{#Includes 'Moderate' login.userDetails.role}}
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'Users'}}router-link-exact-active{{/ifEquals}} text-light"
                         aria-current="page" href="/users"><strong> <i class="bi bi-people-fill"></i>
                             Users</strong>
                     </a>
                 </li>
+                {{/Includes}}
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'FAQ'}}router-link-exact-active{{/ifEquals}} text-light"
                         aria-current="page" href="/faq"><strong> <i class="bi bi-question-circle-fill"></i> FAQ</strong>
                     </a>
                 </li>
+                {{#Includes 'Moderate' login.userDetails.role}}
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'Profanity'}}router-link-exact-active{{/ifEquals}} text-light"
-                        aria-current="page" href="/profanity"><strong> <i class="bi bi-type-strikethrough"></i> Profanity</strong>
+                        aria-current="page" href="/profanity"><strong> <i class="bi bi-type-strikethrough"></i>
+                            Profanity</strong>
                     </a>
                 </li>
+                {{/Includes}}
                 <li class="nav-item dropdown">
                     <a class="nav-link {{#ifEquals title 'Settings'}}active{{/ifEquals}} text-light dropdown-toggle"
                         href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,13 +95,32 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{#ifEquals title 'Register'}}router-link-exact-active{{/ifEquals}} text-light"
-                        aria-current="page" href="/register"><strong> <i class="bi bi-ui-checks"></i> Register</strong></a>
+                        aria-current="page" href="/register"><strong> <i class="bi bi-ui-checks"></i>
+                            Register</strong></a>
                 </li>
                 {{/ifNotEquals}}
             </ul>
         </div>
     </div>
 </nav>
+
+{{!-- Email Not Verified --}}
+{{#ifEquals login.user.emailVerified false}}
+<div class="container mt-2">
+    <div class="alert alert-warning alert-fixed alert-dismissible fade show d-flex align-items-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-info-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+            <path
+                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <div>
+            <strong>Warning!</strong> Your email <i class="bi bi-envelope-exclamation-fill"></i> address is not
+            verified. <a href="/email/verify" class="alert-link">Click Me to verify.</a>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{{/ifEquals}}
 
 <style>
     .navbar-brand {

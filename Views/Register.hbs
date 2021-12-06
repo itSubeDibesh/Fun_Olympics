@@ -41,30 +41,30 @@
                     <form class="form" action="/register" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="Email" name="email"
+                            <input type="email" class="form-control" id="email" placeholder="xyz@abc.com" aria-describedby="Email" name="email"
                                 required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="Full Name" name="name"
+                            <input type="text" class="form-control" id="name" placeholder="Bob doe" aria-describedby="Full Name" name="name"
                                 required>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phoneNumber" placeholder="+977 98XXXXXXXX" aria-describedby="Phone Number" name="phoneNumber"
+                            <input type="tel" class="form-control" id="phoneNumber" placeholder="+97798XXXXXXXX" aria-describedby="Phone Number" name="phoneNumber"
                                 required>
                         </div>
                         <div class="mb-3">
                             <label for="country" class="form-label">Country</label>
-                            <select class="form-select" id="country" name="country" required></select>
+                            <select class="form-select" id="country" name="country"  active_value="NP" required></select>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password" placeholder="********" name="password" required>
                         </div>
                         <div class="mb-3">
                             <label for="retype" class="form-label">Retype Password</label>
-                            <input type="password" class="form-control" name="retype" id="retype" required>
+                            <input type="password" class="form-control"  placeholder="********" name="retype" id="retype" required>
                         </div>
                         <div class="mb-3 form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="showPassword">
