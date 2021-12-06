@@ -17,6 +17,18 @@ const firebase_admin = new Admin();
 // Setting Firebase Auth
 const firebase_auth = new Auth();
 
+// Setting Firebase individual tables
+const Db_Collection =
+{
+    Video: new Video(),
+    User: new User(),
+    Profanity: new Profanity(),
+    Role: new Role(),
+    Comments: new Comments(),
+    Archive: new Archive(),
+    Notice: new Notice()
+}
+
 // Extracting env variables
 const { port, secret, app_name } = process.env;
 
@@ -34,7 +46,5 @@ export default {
     returnBool,
     firebase_admin,
     firebase_auth,
-    Db_Collection: {
-        Video, User, Profanity, Role, Comments, Archive, Notice
-    }
+    Db_Collection
 }

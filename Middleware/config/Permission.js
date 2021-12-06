@@ -166,9 +166,7 @@ function get_role_permission(role = "Admin") {
             }
         })
     })
-
     return user_permission || null;
-
 }
 
 export {

@@ -6,6 +6,9 @@ const usersRouter = Config.express.Router();
 const admin = Config.firebase_admin;
 const auth = Config.firebase_auth;
 
+// Setting Firebase DB
+const user = Config.Db_Collection.User;
+
 usersRouter.get('/users', Config.isLoggedIn, Config.HasAccess, (req, res) => {
     admin.listAllUsers().then(users => {
         let list = [];
@@ -216,5 +219,13 @@ usersRouter.get('/users/user/delete', Config.isLoggedIn, Config.HasAccess, (req,
     }
 });
 
+usersRouter.get('/test',(req,res)=>{
+    user.get().then(users=>{
+        if(!users.empty){
+            res.send(users.docs.map(doc=>doc.data()));
+        }
+    }
+    )
+})
 
 export default usersRouter;

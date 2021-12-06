@@ -1,6 +1,10 @@
 import admin from 'firebase-admin'
-import { FieldValue } from 'firebase-admin/firestore'
 import { service_account } from '../../Config/app/service-accountKey.js'
+
+// Initialize Firebase
+admin.initializeApp({
+    credential:admin.credential.cert(service_account)
+})
 
 
 export default class FIREBASE_ADMIN {
@@ -9,11 +13,7 @@ export default class FIREBASE_ADMIN {
         this.service_account = service_account
         // Setting up Firebase
         this.admin = admin
-        // Initialize Firebase
-        this.admin.initializeApp({
-            credential: this.admin.credential.cert(this.service_account)
-        })
-        this.FieldValue = FieldValue
+        this.FieldValue = admin.firestore.FieldValue
     }
 
     // Get Firebase Admin

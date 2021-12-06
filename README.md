@@ -2,8 +2,6 @@
 
 [![wakatime](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics.svg)](https://wakatime.com/badge/github/itSubeDibesh/Fun_Olympics)
 
----
-
 ## **Table of Contents**
 
 - [**Fun Olympics**](#fun-olympics)

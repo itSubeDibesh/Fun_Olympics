@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "open-cli http://localhost:8080 && nodemon --ignore Public/ --ignore Tests/ server.init",
     "serve": "open-cli http://localhost:8080 && node server.init",
-    "test": "",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "",
     "commit": ""
   },
@@ -45,7 +47,11 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "express-list-endpoints": "^6.0.0",
+    "jest": "^27.4.3",
     "nodemon": "^2.0.15",
     "npm": "^8.2.0",
     "open-cli": "^7.0.1"
