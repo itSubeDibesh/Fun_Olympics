@@ -1,39 +1,60 @@
 import Config from '../Config/Http.js';
 
-// Setting Application Routes
-const usersRouter = Config.express.Router();
-// Setting Firebase Auth
-const admin = Config.firebase_admin;
-const auth = Config.firebase_auth;
+const {
+    express,
+    firebase_admin,
+    firebase_auth,
+    Db_Collection,
+    isLoggedIn,
+    HasAccess,
+    dataSet
+} = Config,
+    // Setting Application Routes
+    usersRouter = express.Router(),
+    // Setting Firebase Auth
+    admin = firebase_admin,
+    auth = firebase_auth,
+    // Setting Firebase DB
+    User = Db_Collection.User;
 
-// Setting Firebase DB
-const user = Config.Db_Collection.User;
-
-usersRouter.get('/users', Config.isLoggedIn, Config.HasAccess, (req, res) => {
-    admin.listAllUsers().then(users => {
-        let list = [];
-        for (let index = 0; index < users.users.length; index++) {
-            const element = users.users[index];
-            if (element.email != req.session.login.user.email) {
-                list.push(element);
-            }
-        }
-        res.render('Pages/Users', Config.dataSet({
-            title: 'Users',
-            login: req.session.login,
-            status: req.session.status,
-            users: list,
-            success: req.session.success,
-            error: req.session.error,
-            warning: req.session.warning
-        }));
-    })
+usersRouter.get('/users', isLoggedIn, HasAccess, (req, res) => {
+    admin
+        .listAllUsers()
+        .then(usersAuth => {
+            User
+                .get()
+                .then(usersData => {
+                    let usersDataSet = usersData.docs
+                    let list = [];
+                    for (let index = 0; index < usersAuth.users.length; index++) {
+                        const authData = usersAuth.users[index];
+                        for (let i = 0; i < usersDataSet.length; i++) {
+                            const otherData = usersDataSet[i].data()
+                            if (authData.email != req.session.login.user.email && otherData.email != req.session.login.user.email)
+                                if (otherData.email == authData.email) {
+                                    authData.country = otherData.country;
+                                    authData.role = otherData.role;
+                                    list.push(authData);
+                                }
+                        }
+                    }
+                    res.render('Pages/Users', dataSet({
+                        title: 'Users',
+                        login: req.session.login,
+                        status: req.session.status,
+                        users: list,
+                        success: req.session.success,
+                        error: req.session.error,
+                        warning: req.session.warning
+                    }));
+                })
+        })
         .catch(err => {
             const error = {
                 "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                 "code": err.code
             }
-            res.render('Pages/Users', Config.dataSet({
+            res.render('Pages/Users', dataSet({
                 title: 'Users',
                 login: req.session.login,
                 status: req.session.status,
@@ -44,7 +65,7 @@ usersRouter.get('/users', Config.isLoggedIn, Config.HasAccess, (req, res) => {
         });
 });
 
-usersRouter.get('/users/reset', Config.isLoggedIn, Config.HasAccess, (req, res) => {
+usersRouter.get('/users/reset', isLoggedIn, HasAccess, (req, res) => {
     const { email } = req.query;
     if (email && email != req.session.login.user.email) {
         auth.resetPassword(email).then(() => {
@@ -61,7 +82,7 @@ usersRouter.get('/users/reset', Config.isLoggedIn, Config.HasAccess, (req, res) 
                 req.session.error = error;
                 res.redirect('/users');
             });
-    }else{
+    } else {
         req.session.error = {
             "message": "Fun Olympics, Unauthorized Request."
         }
@@ -69,27 +90,52 @@ usersRouter.get('/users/reset', Config.isLoggedIn, Config.HasAccess, (req, res) 
     }
 });
 
-usersRouter.get('/users/:action', Config.isLoggedIn, Config.HasAccess, (req, res) => {
+usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
     const { action } = req.params;
     const { email } = req.query;
     if (action == "edit") {
         if (email) {
             if (email !== req.session.login.user.email) {
-                admin.getUserByEmail(email).then(user => {
-                    res.render('Pages/Users-AddEdit', Config.dataSet({
-                        title: 'Users',
-                        action: "Edit",
-                        login: req.session.login,
-                        status: req.session.status,
-                        user: user,
-                    }));
-                })
+                admin
+                    .getUserByEmail(email)
+                    .then(user_auth_details => {
+                        User
+                            .getByDoc(email)
+                            .then(user_data => {
+                                const data = user_data.data();
+                                user_auth_details.country = data.country;
+                                user_auth_details.role = data.role;
+                                res.render('Pages/Users-AddEdit', dataSet({
+                                    title: 'Users',
+                                    action: "Edit",
+                                    login: req.session.login,
+                                    status: req.session.status,
+                                    user: user_auth_details,
+                                }));
+                            }).catch(err => {
+                                const error = {
+                                    "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                                    "code": err.code
+                                }
+                                res.render('Pages/Users', dataSet({
+                                    title: 'Users',
+                                    login: req.session.login,
+                                    status: req.session.status,
+                                    error: error
+                                }));
+                            });
+                    })
                     .catch(err => {
                         const error = {
                             "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                             "code": err.code
                         }
-                        res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                        res.render('Pages/Users', dataSet({
+                            title: 'Users',
+                            login: req.session.login,
+                            status: req.session.status,
+                            error: error
+                        }));
                     });
             } else {
                 const error = {
@@ -106,29 +152,54 @@ usersRouter.get('/users/:action', Config.isLoggedIn, Config.HasAccess, (req, res
             res.redirect('/users')
         }
     } else if (action == "add") {
-        res.render('Pages/Users-AddEdit', Config.dataSet({
+        res.render('Pages/Users-AddEdit', dataSet({
             title: 'Users',
             action: "Add",
             login: req.session.login,
             status: req.session.status
         }));
-    } else if(action == 'view') {
+    } else if (action == 'view') {
         if (email !== req.session.login.user.email) {
-            admin.getUserByEmail(email).then(user => {
-                res.render('Pages/Users-AddEdit', Config.dataSet({
-                    title: 'Users',
-                    action: "View",
-                    login: req.session.login,
-                    status: req.session.status,
-                    user: user,
-                }));
-            })
+            admin
+                .getUserByEmail(email)
+                .then(user_auth_details => {
+                    User
+                        .getByDoc(email)
+                        .then(user_data => {
+                            const data = user_data.data();
+                            user_auth_details.country = data.country;
+                            user_auth_details.role = data.role;
+                            res.render('Pages/Users-AddEdit', dataSet({
+                                title: 'Users',
+                                action: "View",
+                                login: req.session.login,
+                                status: req.session.status,
+                                user: user_auth_details,
+                            }));
+                        }).catch(err => {
+                            const error = {
+                                "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                                "code": err.code
+                            }
+                            res.render('Pages/Users', dataSet({
+                                title: 'Users',
+                                login: req.session.login,
+                                status: req.session.status,
+                                error: error
+                            }));
+                        });
+                })
                 .catch(err => {
                     const error = {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
-                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                    res.render('Pages/Users', dataSet({
+                        title: 'Users',
+                        login: req.session.login,
+                        status: req.session.status,
+                        error: error
+                    }));
                 });
         } else {
             const error = {
@@ -142,20 +213,47 @@ usersRouter.get('/users/:action', Config.isLoggedIn, Config.HasAccess, (req, res
     }
 });
 
-usersRouter.post('/users/entry', Config.isLoggedIn, Config.HasAccess, (req, res) => {
-    let { email, uid, action, displayName, phoneNumber, disabled, password } = req.body;
+usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
+    let { email, uid, action, displayName, phoneNumber, disabled, password, country, role } = req.body;
     if (action == "Add") {
         if (email && displayName && password) {
-            admin.createUser(email, password, displayName, phoneNumber).then(user => {
-                req.session.success = { "message": "Fun Olympics: User created successfully!" };
-                res.redirect('/users');
-            })
+            admin
+                .createUser(email, password, displayName, phoneNumber)
+                .then(() => {
+                    User
+                        .set(email, {
+                            email,
+                            country: country || "NP",
+                            role: role || "Guest"
+                        }, "add")
+                        .then(() => {
+                            req.session.success = { "message": "Fun Olympics: User created successfully!" };
+                            res.redirect('/users');
+                        })
+                        .catch(err => {
+                            const error = {
+                                "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                                "code": err.code
+                            }
+                            res.render('Pages/Users', dataSet({
+                                title: 'Users',
+                                login: req.session.login,
+                                status: req.session.status,
+                                error: error
+                            }));
+                        });
+                })
                 .catch(err => {
                     const error = {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
-                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                    res.render('Pages/Users', dataSet({
+                        title: 'Users',
+                        login: req.session.login,
+                        status: req.session.status,
+                        error: error
+                    }));
                 });
         } else {
             const error = {
@@ -166,16 +264,42 @@ usersRouter.post('/users/entry', Config.isLoggedIn, Config.HasAccess, (req, res)
         }
     } else if (action == "Edit") {
         if (email != req.session.login.user.email) {
-            admin.updateUser(uid, displayName, phoneNumber || null, Config.returnBool(disabled) || false).then(user => {
-                req.session.success = { "message": "Fun Olympics: User updated successfully!" };
-                res.redirect('/users');
-            })
+            admin
+                .updateUser(uid, displayName, phoneNumber || null, Config.returnBool(disabled) || false)
+                .then(() => {
+                    User
+                        .set(email, {
+                            email,
+                            country: country,
+                            role: role
+                        }, "Update")
+                        .then(() => {
+                            req.session.success = { "message": "Fun Olympics: User updated successfully!" };
+                            res.redirect('/users');
+                        }).catch(err => {
+                            const error = {
+                                "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                                "code": err.code
+                            }
+                            res.render('Pages/Users', dataSet({
+                                title: 'Users',
+                                login: req.session.login,
+                                status: req.session.status,
+                                error: error
+                            }));
+                        });
+                })
                 .catch(err => {
                     const error = {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
-                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                    res.render('Pages/Users', dataSet({
+                        title: 'Users',
+                        login: req.session.login,
+                        status: req.session.status,
+                        error: error
+                    }));
                 });
         } else {
             const error = {
@@ -193,21 +317,43 @@ usersRouter.post('/users/entry', Config.isLoggedIn, Config.HasAccess, (req, res)
     }
 });
 
-usersRouter.get('/users/user/delete', Config.isLoggedIn, Config.HasAccess, (req, res) => {
+usersRouter.get('/users/user/delete', isLoggedIn, HasAccess, (req, res) => {
     const { email, uid } = req.query;
-    console.log(email, uid);
     if (email && uid) {
         if (email !== req.session.login.user.email) {
-            admin.deleteUser(uid).then(user => {
-                req.session.success = { "message": "Fun Olympics: User deleted successfully!" };
-                res.redirect('/users');
-            })
+            admin
+                .deleteUser(uid)
+                .then(data => {
+                    User
+                        .deleteDoc(email)
+                        .then(() => {
+                            req.session.success = { "message": "Fun Olympics: User deleted successfully!" };
+                            res.redirect('/users');
+                        })
+                        .catch(err => {
+                            const error = {
+                                "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                                "code": err.code
+                            }
+                            res.render('Pages/Users', dataSet({
+                                title: 'Users',
+                                login: req.session.login,
+                                status: req.session.status,
+                                error: error
+                            }));
+                        });
+                })
                 .catch(err => {
                     const error = {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                         "code": err.code
                     }
-                    res.render('Pages/Users', Config.dataSet({ title: 'Users', login: req.session.login, status: req.session.status, error: error }));
+                    res.render('Pages/Users', dataSet({
+                        title: 'Users',
+                        login: req.session.login,
+                        status: req.session.status,
+                        error: error
+                    }));
                 });
         } else {
             const error = {

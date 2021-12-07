@@ -188,9 +188,10 @@ authRouter.post('/register', HasAccess,
                     flag = true
                     // Creating New User
                     user.set(email, {
+                        email: email,
                         country: country,
                         role: "User"
-                    })
+                    }, "add")
                         .then(data => {
                             flag = true
                         })

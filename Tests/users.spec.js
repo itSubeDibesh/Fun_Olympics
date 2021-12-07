@@ -26,7 +26,6 @@ describe('User - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-
     describe("User - Read 📖", () => {
         it("should return all the user data", () => {
             return User
@@ -51,21 +50,18 @@ describe('User - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-
     describe("User - Update 🔧", () => {
         it('should update existing user', () => {
             return User
                 .set(DummyUpdateData.email, DummyUpdateData)
                 .then(
                     user => {
-                        console.log(user)
                         expect(user).not.toBeNull();
                         expect(user).toHaveProperty('_writeTime')
                     }
                 )
         })
     })
-
     describe("User - Delete ❌", () => {
         it('should delete field from user', () => {
             return User

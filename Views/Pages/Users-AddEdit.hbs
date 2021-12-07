@@ -17,6 +17,7 @@
                         {{/ifNotEquals}}
                         {{#ifEquals action 'Edit'}}
                         <input type="hidden" name="uid" value="{{user.uid}}">
+                        <input type="hidden" name="email" value="{{user.email}}">
                         {{/ifEquals }}
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="email" name="email" required {{#ifEquals
@@ -35,6 +36,25 @@
                                 action 'View' }}disabled{{/ifEquals}} placeholder="98151555"
                                 value="{{user.phoneNumber}}">
                             <label for="phoneNumber">Phone Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="country" name="country" active_value="{{user.country}}"
+                                {{#ifEquals action 'View' }}disabled{{/ifEquals}}></select>
+                            <label for="country" class="form-label">Country</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="role" name="role" {{#ifEquals action 'View'
+                                }}disabled{{/ifEquals}}>
+                                <option disabled>Select Role</option>
+                                <option value="Guest" {{#ifEquals user.role 'Guest' }}selected{{/ifEquals}}>Guest
+                                </option>
+                                <option value="User" {{#ifEquals user.role 'User' }}selected{{/ifEquals}}>User</option>
+                                <option value="Admin" {{#ifEquals user.role 'Admin' }}selected{{/ifEquals}}>Admin
+                                </option>
+                                <option value="Developer" {{#ifEquals user.role 'Developer' }}selected{{/ifEquals}}>
+                                    Developer</option>
+                            </select>
+                            <label for="role" class="form-label">Role</label>
                         </div>
                         {{#ifEquals action 'Edit'}}
                         <div class="form-check mb-3">

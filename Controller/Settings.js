@@ -77,9 +77,10 @@ settingsRouter.post('/profile/update', isLoggedIn, HasAccess, (req, res) => {
                 admin.updateUser(uid, name, phoneNumber, false).then((data) => {
                     // Update User
                     user.set(email, {
+                        email,
                         country,
                         role: req.session.role
-                    }).then(data_login => {
+                    },"Update").then(data_login => {
                         // Fetch data
                         res.redirect('/logout');
                     }).catch(err => {

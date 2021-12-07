@@ -18,13 +18,15 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Full Name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Country</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col"><i class="bi bi-envelope-check-fill"></i> Verified</th>
                                 <th scope="col">Account Disabled</th>
                                 <th scope="col">View</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
-                                <th scope="col">Reset</th>
+                                <th scope="col">Reset ✉</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +35,8 @@
                                 <th scope="row">{{SN @index}}</th>
                                 <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
                                 <td>{{this.displayName}}</td>
+                                <td>{{this.role}}</td>
+                                <td class="countries" country_code="{{this.country}}"></td>
                                 <td>{{#if this.phoneNumber}}<a href="tel:{{this.phoneNumber}}"
                                         class="btn btn-primary">{{this.phoneNumber}}</a>{{else}}N/a{{/if}}</td>
                                 <td>{{FirstWord this.emailVerified}}</td>

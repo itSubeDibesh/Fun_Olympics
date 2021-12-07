@@ -269,4 +269,22 @@ function country_dropdown() {
     }
 }
 
+function get_country_name(country_code){
+    for (let i = 0; i < countries.length; i++) {
+        if (countries[i].code == country_code) {
+            return countries[i].name;
+        }
+    }
+}
+
+function replace_country_code(){
+    const country_name = document.getElementsByClassName('countries');
+    if(country_name){
+        for (let i = 0; i < country_name.length; i++) {
+            country_name[i].innerHTML = get_country_name(country_name[i].attributes["country_code"].value);
+        }
+    }
+}
+
 country_dropdown();
+replace_country_code()
