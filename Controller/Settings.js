@@ -65,8 +65,7 @@ settingsRouter.get('/email/reset_logged_in', isLoggedIn, HasAccess, (req, res) =
 
 
 settingsRouter.post('/profile/update', isLoggedIn, HasAccess, (req, res) => {
-    const { email, name, phoneNumber, uid, country, role } = req.body;
-    console.log(req.body, req.session.login.userDetails);
+    const { email, name, phoneNumber, uid, country } = req.body;
     if (req.session.login) {
         // Validation Check
         if (!email || !name) {
@@ -77,16 +76,13 @@ settingsRouter.post('/profile/update', isLoggedIn, HasAccess, (req, res) => {
                 // Update Profile
                 admin.updateUser(uid, name, phoneNumber, false).then((data) => {
                     // Update User
-                    user.update('email', {
+                    user.set(email, {
                         country,
-                        email,
-                        role
+                        role: req.session.role
                     }).then(data_login => {
-                        req.session.role = 'Guest';
-                        req.session.success = { message: "Profile updated." };
+                        // Fetch data
                         res.redirect('/logout');
                     }).catch(err => {
-                        console.log(err);
                         const error = {
                             "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                             "code": err.code

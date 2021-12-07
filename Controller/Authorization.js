@@ -91,33 +91,34 @@ authRouter.post('/login', HasAccess, (req, res) => {
             // Login
             auth.login(email, password).then(data => {
                 // Fetch User data
-                user.getByQuery('email', '==', email).then(userData => {
-                    let
-                        // User Dataset 
-                        userDataset = userData.docs[0].data(),
-                        // Appending User Dataset to Session
-                        dataset = data;
-                    dataset.userDetails = userDataset
-                    dataset.roleDetails = Config.Privilege[userDataset['role']];
-                    // Setting User Role in Session
-                    req.session.role = userDataset['role'];
-                    // Redirect Success
-                    req.session.login = dataset;
-                    req.session.status = "LoggedIn"
-                    req.session.success = { "message": `Login Success, Welcome ${data.user.email.split("@")[0]}!` };
-                    // Redirect to According to Privilege
-                    if (dataset.roleDetails.includes("Moderate"))
-                        res.redirect('/dashboard');
-                    else
-                        res.redirect('/');
-                }).catch(err => {
-                    // Redirect Error
-                    const error = {
-                        "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
-                        "code": err.code
-                    }
-                    res.render('Login', dataSet({ title: 'Login', error: error }));
-                })
+                user.getByDoc(email)
+                    .then(userData => {
+                        let
+                            // User Dataset 
+                            userDataset = userData.data(),
+                            // Appending User Dataset to Session
+                            dataset = data;
+                        dataset.userDetails = userDataset
+                        dataset.roleDetails = Config.Privilege[userDataset['role']];
+                        // Setting User Role in Session
+                        req.session.role = userDataset['role'];
+                        // Redirect Success
+                        req.session.login = dataset;
+                        req.session.status = "LoggedIn"
+                        req.session.success = { "message": `Login Success, Welcome ${data.user.email.split("@")[0]}!` };
+                        // Redirect to According to Privilege
+                        if (dataset.roleDetails.includes("Moderate"))
+                            res.redirect('/dashboard');
+                        else
+                            res.redirect('/');
+                    }).catch(err => {
+                        // Redirect Error
+                        const error = {
+                            "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                            "code": err.code
+                        }
+                        res.render('Login', dataSet({ title: 'Login', error: error }));
+                    })
             }).catch(err => {
                 // Redirect Error
                 const error = {
@@ -186,8 +187,7 @@ authRouter.post('/register', HasAccess,
                 .then(data => {
                     flag = true
                     // Creating New User
-                    user.add({
-                        email: email,
+                    user.set(email, {
                         country: country,
                         role: "User"
                     })
