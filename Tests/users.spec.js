@@ -3,12 +3,12 @@ import Config from '../Config/Http.js';
 const
     User = Config.Db_Collection.User,
     DummyEntryData = {
-        email: 'mockData@ismt.edu.np',
+        email: 'amockData@ismt.edu.np',
         country: 'NP',
         role: "User"
     },
     DummyUpdateData = {
-        email: 'mockData@ismt.edu.np',
+        email: 'amockData@ismt.edu.np',
         country: 'UK',
         role: "Admin"
     }
@@ -44,9 +44,9 @@ describe('User - CRUD 🛠🎯🧪', () => {
         })
         it("fetch user data using respective email", () => {
             return User
-                .getByQuery('email', '==', 'dsubedi@ismt.edu.np')
+                .getByQuery('email', '==', 'amockData@ismt.edu.np')
                 .then(users => {
-                    expect(users.docs[0].data().email).toEqual('dsubedi@ismt.edu.np')
+                    expect(users.docs[0].data().email).toEqual('amockData@ismt.edu.np')
                 })
         })
     })
