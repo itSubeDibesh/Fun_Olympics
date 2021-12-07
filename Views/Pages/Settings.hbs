@@ -13,6 +13,7 @@
                     <form action="/profile/update" method="post">
                         <input type="hidden" name="uid" value="{{login.user.uid}}">
                         <input type="hidden" name="email" value="{{ login.user.email }}">
+                        <input type="hidden" name="role" value="{{ login.userDetails.role }}">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-floating text-light mb-3">
@@ -22,7 +23,7 @@
                                     <label for="email">Email address</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required
                                         placeholder="98151555" value="{{login.user.phoneNumber}}">
                                     <label for="phoneNumber">Phone Number</label>
                                 </div>
@@ -35,7 +36,7 @@
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="name" name="name" placeholder="John Doe"
-                                        value="{{login.user.displayName}}">
+                                        value="{{login.user.displayName}}" required>
                                     <label for="name">Full Name</label>
                                 </div>
                             </div>

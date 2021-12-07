@@ -1,15 +1,24 @@
 import Config from '../Config/Http.js';
 
-const { check, validationResult, HasAccess, isLoggedIn, Db_Collection, dataSet } = Config
-
-// Setting Application Routes
-const authRouter = Config.express.Router();
-// Setting Firebase Admin
-const admin = Config.firebase_admin;
-// Setting Firebase Auth
-const auth = Config.firebase_auth;
-// Setting Firebase DB
-const user = Db_Collection.User;
+const {
+    check,
+    validationResult,
+    HasAccess,
+    isLoggedIn,
+    Db_Collection,
+    dataSet,
+    express,
+    firebase_admin,
+    firebase_auth
+} = Config,
+    // Setting Application Routes
+    authRouter = express.Router(),
+    // Setting Firebase Admin
+    admin = firebase_admin,
+    // Setting Firebase Auth
+    auth = firebase_auth,
+    // Setting Firebase DB
+    user = Db_Collection.User;
 
 authRouter.get('/', (req, res) => {
     const error = req.session.error;
@@ -19,7 +28,14 @@ authRouter.get('/', (req, res) => {
     const success = req.session.success;
     req.session.success = null;
     if (req.session.role == undefined) req.session.role = "Guest"
-    res.render('Pages/Home', dataSet({ title: 'Home', login: req.session.login, status: req.session.status, error, warning, success }));
+    res.render('Pages/Home', dataSet({
+        title: 'Home',
+        login: req.session.login,
+        status: req.session.status,
+        error,
+        warning,
+        success
+    }));
 });
 
 authRouter.get('/login', HasAccess, (req, res) => {
@@ -76,21 +92,19 @@ authRouter.post('/login', HasAccess, (req, res) => {
             auth.login(email, password).then(data => {
                 // Fetch User data
                 user.getByQuery('email', '==', email).then(userData => {
-                    // User Dataset 
-                    let userDataset = userData.docs[0].data(),
+                    let
+                        // User Dataset 
+                        userDataset = userData.docs[0].data(),
                         // Appending User Dataset to Session
-                        dataset = data
+                        dataset = data;
                     dataset.userDetails = userDataset
                     dataset.roleDetails = Config.Privilege[userDataset['role']];
-
                     // Setting User Role in Session
                     req.session.role = userDataset['role'];
-
                     // Redirect Success
                     req.session.login = dataset;
                     req.session.status = "LoggedIn"
                     req.session.success = { "message": `Login Success, Welcome ${data.user.email.split("@")[0]}!` };
-
                     // Redirect to According to Privilege
                     if (dataset.roleDetails.includes("Moderate"))
                         res.redirect('/dashboard');
@@ -158,9 +172,13 @@ authRouter.post('/register', HasAccess,
         // Data Validation
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            const error = { message: "Fun Olympics - Validation Error, Please check your inputs", };
+            const error = { "message": "Fun Olympics - Validation Error, Please check your inputs" };
             req.session.error = error;
-            res.render('Register', dataSet({ title: 'Register', validation: errors.array(), error }));
+            res.render('Register', dataSet({
+                title: 'Register',
+                validation: errors.array(),
+                error
+            }));
         } else {
             let flag = false
             // Creating New Auth User
@@ -171,8 +189,7 @@ authRouter.post('/register', HasAccess,
                     user.add({
                         email: email,
                         country: country,
-                        role: "User",
-                        phoneNumber: phoneNumber.toString(),
+                        role: "User"
                     })
                         .then(data => {
                             flag = true
@@ -200,7 +217,9 @@ authRouter.post('/register', HasAccess,
                 })
                 .finally(() => {
                     if (flag) {
-                        req.session.success = { "message": `Registration Success, Welcome ${email.split("@")[0]}!` };
+                        req.session.success = {
+                            "message": `Registration Success, Welcome ${email.split("@")[0]}!`
+                        };
                         res.redirect('/login')
                     } else {
                         req.session.error = req.session.error;
@@ -213,7 +232,9 @@ authRouter.post('/register', HasAccess,
 
 authRouter.get('/reset', HasAccess, (req, res) => {
     if (req.session.role == undefined) req.session.role = "Guest"
-    res.render('ForgetPassword', dataSet({ title: 'Forget Password' }));
+    res.render('ForgetPassword', dataSet({
+        title: 'Forget Password'
+    }));
 });
 
 authRouter.post('/reset', HasAccess, (req, res) => {
@@ -222,14 +243,19 @@ authRouter.post('/reset', HasAccess, (req, res) => {
     if (req.session.error) {
         const error = req.session.error;
         req.session.error = null
-        res.render('ForgetPassword', dataSet({ title: 'Forget Password', error }));
+        res.render('ForgetPassword', dataSet({
+            title: 'Forget Password',
+            error
+        }));
     } else {
         // Validation Check
         if (email) {
             // Reset Password
             auth.resetPassword(email).then(data => {
                 // Redirect Success
-                req.session.success = { "message": `Reset Password Success, Please check your email!` };
+                req.session.success = {
+                    "message": `Reset Password Success, Please check your email!`
+                };
                 res.redirect('/login');
             }).catch(err => {
                 // Redirect Error
@@ -237,12 +263,18 @@ authRouter.post('/reset', HasAccess, (req, res) => {
                     "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
                     "code": err.code
                 }
-                res.render('ForgetPassword', dataSet({ title: 'Forget Password', error: error }));
+                res.render('ForgetPassword', dataSet({
+                    title: 'Forget Password',
+                    error: error
+                }));
             });
         } else {
             // Validation Error
             req.session.error = { "message": 'Please enter email' };
-            res.render('ForgetPassword', dataSet({ title: 'Forget Password', error: req.session.error }));
+            res.render('ForgetPassword', dataSet({
+                title: 'Forget Password',
+                error: req.session.error
+            }));
         }
     }
 });
@@ -252,7 +284,12 @@ authRouter.get('/dashboard', isLoggedIn, HasAccess, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;
-        res.render('Pages/Dashboard', dataSet({ title: 'Dashboard', login: req.session.login, success, status: req.session.status }));
+        res.render('Pages/Dashboard', dataSet({
+            title: 'Dashboard',
+            login: req.session.login,
+            success,
+            status: req.session.status
+        }));
     } else {
         res.redirect('/login');
     }

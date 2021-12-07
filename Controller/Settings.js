@@ -1,17 +1,35 @@
 import Config from '../Config/Http.js';
 
-// Setting Application Routes
-const settingsRouter = Config.express.Router();
-// Setting Firebase Auth
-const auth = Config.firebase_auth;
-// Setting Firebase Auth
-const admin = Config.firebase_admin;
+const {
+    firebase_auth,
+    firebase_admin,
+    Db_Collection,
+    express,
+    isLoggedIn,
+    HasAccess,
+    dataSet
+} = Config,
+    // Setting Application Routes
+    settingsRouter = express.Router(),
+    // Setting Firebase Auth
+    auth = firebase_auth,
+    // Setting Firebase Auth
+    admin = firebase_admin,
+    // Setting Firebase DB
+    user = Db_Collection.User;
 
-settingsRouter.get('/settings', Config.isLoggedIn, Config.HasAccess, (req, res) => {
-    res.render('Pages/Settings', Config.dataSet({ title: 'Settings', login: req.session.login, status: req.session.status, success: req.session.success, error: req.session.error, warning: req.session.warning }));
+settingsRouter.get('/settings', isLoggedIn, HasAccess, (req, res) => {
+    res.render('Pages/Settings', dataSet({
+        title: 'Settings',
+        login: req.session.login,
+        status: req.session.status,
+        success: req.session.success,
+        error: req.session.error,
+        warning: req.session.warning
+    }));
 });
 
-settingsRouter.get('/email/verify', Config.isLoggedIn, Config.HasAccess, (req, res) => {
+settingsRouter.get('/email/verify', isLoggedIn, HasAccess, (req, res) => {
     if (req.session.login) {
         // Verify Email
         auth.verifyEmail(req.session.login.user.email).then((data) => {
@@ -28,7 +46,7 @@ settingsRouter.get('/email/verify', Config.isLoggedIn, Config.HasAccess, (req, r
     }
 });
 
-settingsRouter.get('/email/reset_logged_in', Config.isLoggedIn, Config.HasAccess, (req, res) => {
+settingsRouter.get('/email/reset_logged_in', isLoggedIn, HasAccess, (req, res) => {
     if (req.session.login) {
         // Reset email
         auth.resetPassword(req.session.login.user.email).then((data) => {
@@ -46,8 +64,9 @@ settingsRouter.get('/email/reset_logged_in', Config.isLoggedIn, Config.HasAccess
 });
 
 
-settingsRouter.post('/profile/update', Config.isLoggedIn, Config.HasAccess, (req, res) => {
-    const { email, name, phoneNumber, uid } = req.body;
+settingsRouter.post('/profile/update', isLoggedIn, HasAccess, (req, res) => {
+    const { email, name, phoneNumber, uid, country, role } = req.body;
+    console.log(req.body, req.session.login.userDetails);
     if (req.session.login) {
         // Validation Check
         if (!email || !name) {
@@ -57,9 +76,24 @@ settingsRouter.post('/profile/update', Config.isLoggedIn, Config.HasAccess, (req
             if (email == req.session.login.user.email) {
                 // Update Profile
                 admin.updateUser(uid, name, phoneNumber, false).then((data) => {
-                    req.session.login = data
-                    req.session.success = { message: "Profile updated." };
-                    res.redirect('/logout');
+                    // Update User
+                    user.update('email', {
+                        country,
+                        email,
+                        role
+                    }).then(data_login => {
+                        req.session.role = 'Guest';
+                        req.session.success = { message: "Profile updated." };
+                        res.redirect('/logout');
+                    }).catch(err => {
+                        console.log(err);
+                        const error = {
+                            "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),
+                            "code": err.code
+                        }
+                        req.session.error = error;
+                        res.redirect('/settings');
+                    })
                 }).catch((err) => {
                     const error = {
                         "message": err.message.replace("Firebase", "Fun Olympics").replace("auth/", ""),

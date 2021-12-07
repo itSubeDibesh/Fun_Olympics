@@ -11,18 +11,43 @@ export default class FireStore extends FIREBASE_ADMIN {
         this.collectionName = collectionName
         this.firestore = this.getFirestore()
         this.collection = this.firestore.collection(this.collectionName)
+        this.fsCollection = this.firestore.collection
+        this.fsDoc = this.firestore.doc
     }
 
     /**
      * @param {object} data
      * @return {Promise} 
      * @memberof FireStore
+     * @deprecated This method is deprecated. Use set() instead.
      */
     add(data) {
         data.createdAt = this.FieldValue.serverTimestamp()
         return this.collection.add(data)
     }
 
+    /**
+     * @param {String} uniqueDocId
+     * @param {Object} data
+     * @param {String} [method="add"||'update'] 
+     * @return {Promise} 
+     * @memberof FireStore
+     */
+    set(uniqueDocId, data, method = "add") {
+        if(method.toLowerCase() == "add")
+            data.createdAt = this.FieldValue.serverTimestamp()
+        else 
+            data.updatedAt = this.FieldValue.serverTimestamp()
+        return this.collection.doc(uniqueDocId).set(data)
+    }
+
+    /**
+     * @param {*} docId
+     * @param {*} data
+     * @return {*} 
+     * @memberof FireStore
+     * @deprecated This method is deprecated. Use set() instead.
+     */
     update(docId, data) {
         data.updatedAt = this.FieldValue.serverTimestamp()
         return this.collection.doc(docId).update(data)
