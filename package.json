@@ -6,11 +6,7 @@
   "scripts": {
     "dev": "open-cli http://localhost:8080 && nodemon --ignore Public/ --ignore Tests/ server.init",
     "serve": "open-cli http://localhost:8080 && node server.init",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "",
-    "commit": ""
+    "test": "jest"
   },
   "type": "module",
   "repository": {

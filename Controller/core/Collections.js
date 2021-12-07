@@ -7,3 +7,4 @@ export class Video extends FireStore { constructor() { super('Video'); } }
 export class Notice extends FireStore { constructor() { super('Notice'); } }
 export class Archive extends FireStore { constructor() { super('Archive'); } }
 export class Profanity extends FireStore { constructor() { super('Profanity'); } }
+export class FAQ extends FireStore { constructor() { super('FAQ'); } }

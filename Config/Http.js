@@ -5,7 +5,7 @@ import isLoggedIn from '../Middleware/IsLoggedIn.js'
 import { HasAccess, get_role_permission, Privilege, Roles, Access } from '../Middleware/HasAccess.js'
 import Auth from '../Controller/core/Auth_Access_Firebase.js';
 import Admin from '../Controller/core/Admin_Access_Firebase.js'
-import { Video, User, Profanity, Role, Comments, Archive, Notice } from '../Controller/core/Collections.js'
+import { Video, User, Profanity, Role, Comments, Archive, Notice, FAQ } from '../Controller/core/Collections.js'
 import { dataSet, returnBool } from './helper.js'
 
 // Enabling dotenv
@@ -26,7 +26,8 @@ const Db_Collection =
     Role: new Role(),
     Comments: new Comments(),
     Archive: new Archive(),
-    Notice: new Notice()
+    Notice: new Notice(),
+    FAQ: new FAQ()
 }
 
 // Extracting env variables

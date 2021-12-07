@@ -18,6 +18,9 @@ export default {
     ToFirstUpper: function (value, options) {
         return value[0].toUpperCase() + value.slice(1);
     },
+    ToString: function (value, options) {
+        return value.toString();
+    },
     FirstWord: function (value, options) {
         value = value.toString();
         const split_name = value.split(' ')[0];

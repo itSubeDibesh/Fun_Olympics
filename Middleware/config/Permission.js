@@ -135,6 +135,24 @@ const
             type: ["Minor"],
         },
         {
+            path: "/faq/:action",
+            name: "faq_action",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/faq/entry",
+            name: "faq_entry",
+            methods: ["POST"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/faq/delete",
+            name: "faq_delete",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
             path: "/profanity",
             name: "profanity",
             methods: ["GET"],

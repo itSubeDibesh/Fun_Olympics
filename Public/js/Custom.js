@@ -1,5 +1,5 @@
 const table = document.getElementsByTagName("table");
-if(table){
+if (table) {
     $(document).ready(function () {
         $('table').DataTable(
             {
@@ -48,10 +48,10 @@ if (page_title == 'login' || page_title == 'register' || page_title == 'users - 
     });
 }
 
-if(page_title == 'users - edit'){
+if (page_title == 'users - edit') {
     const disabled = document.getElementById('disabled');
     disabled.addEventListener("click", () => {
-       disabled.checked ? disabled.value = 'true' : disabled.value = 'false';
+        disabled.checked ? disabled.value = 'true' : disabled.value = 'false';
     });
 }
 
