@@ -9,6 +9,14 @@ if (table) {
     });
 }
 
+// Implementing Ckeditor
+let ckEditor = document.getElementsByClassName("editor");
+if (ckEditor !== null) {
+    for (let i = 0; i < ckEditor.length; i++) {
+        ClassicEditor.create(ckEditor[i]);
+    }
+}
+
 // Static Config Elements
 let config = {
     timeout: 5e3,

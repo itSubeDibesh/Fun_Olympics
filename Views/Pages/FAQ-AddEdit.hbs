@@ -42,7 +42,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="answer" class="form-label">Answer</label>
-                            <textarea class="form-control" id="answer" name="answer" style="height: 250px" required
+                            <textarea class="form-control editor" id="answer" name="answer" style="height: 250px" required
                                 {{#ifEquals action 'View' }}disabled{{/ifEquals}}>{{faq.answer}}</textarea>
                         </div>
                         {{#ifNotEquals action 'View'}}
