@@ -62,9 +62,6 @@ faqRouter.get('/faq', HasAccess, (req, res) => {
                 error: req.session.error
             }));
         });
-
-
-
 });
 
 faqRouter.get('/faq/:action', HasAccess, isLoggedIn, (req, res) => {

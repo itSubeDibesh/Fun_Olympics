@@ -156,7 +156,19 @@ const
             path: "/profanity",
             name: "profanity",
             methods: ["GET"],
-            type: ["Basic"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/profanity/:action",
+            name: "profanity_action",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/profanity/entry",
+            name: "profanity_entry",
+            methods: ["POST"],
+            type: ["Moderate"],
         },
         {
             path: "*",

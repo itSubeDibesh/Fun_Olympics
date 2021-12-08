@@ -39,14 +39,22 @@ usersRouter.get('/users', isLoggedIn, HasAccess, (req, res) => {
                                 }
                         }
                     }
+
+                    const success = req.session.success,
+                        error = req.session.error,
+                        warning = req.session.warning;
+                    req.session.success = null;
+                    req.session.error = null;
+                    req.session.warning = null;
+
                     res.render('Pages/Users', dataSet({
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
                         users: list,
-                        success: req.session.success,
-                        error: req.session.error,
-                        warning: req.session.warning
+                        success,
+                        error,
+                        warning
                     }));
                 })
         })

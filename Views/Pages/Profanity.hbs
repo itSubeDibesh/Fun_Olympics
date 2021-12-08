@@ -1,8 +1,45 @@
 <div class="container py-lg-3 mt-lg-3">
     <div class="row">
+        {{#if action}}
+        <div class="modal fade" id="AddWordModal" tabindex="-1" aria-labelledby="AddWordModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="AddWordModalLabel">{{action}} Blocked Word
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/profanity/entry" method="post">
+                            <input type="hidden" name="action" value="{{action}}">
+                            {{#ifEquals action 'Edit'}}
+                            <input type="hidden" name="id" value="{{profanity.id}}">
+                            {{/ifEquals}}
+                            <div class="mb-3">
+                                <label for="word" class="col-form-label">Word</label>
+                                <input type="text" class="form-control" id="word" name="word"
+                                    value="{{#ifEquals action 'Edit'}}{{profanity.word}}{{/ifEquals}}" required>
+                            </div>
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> <i
+                                        class="bi bi-x-lg"></i> Close</button>
+                                <button type="submit"
+                                    class="btn {{#ifEquals action 'add'}}btn-success {{else}}btn-primary{{/ifEquals}}   text-center"><i
+                                        class="bi bi-pencil-square"></i> {{#ifEquals
+                                    action 'Add' }}Submit{{/ifEquals}}{{#ifEquals action 'Edit'
+                                    }}Update{{/ifEquals}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                <a class="btn btn-primary" type="button" href="/users/add"><strong>Add Word <i
+                <a class="btn btn-primary" type="button" href="/profanity/add"><strong>Add Word <i
                             class="bi bi-person-plus-fill"></i> </strong></a>
             </div>
             <div class="card">
@@ -20,15 +57,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each profanity}}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Hate Trump</td>
-                                <td><a class="btn btn-sm btn-dark" type="button" href="/users/edit?email="><strong><i
+                                <th scope="row">{{SN @index}}</th>
+                                <td>{{HideMiddleWords this.word}}</td>
+                                <td><a class="btn btn-sm btn-dark" type="button" href="/profanity/edit?id={{this.id}}"><strong><i
                                                 class="bi bi-pencil-square"></i></strong></a></td>
                                 <td><a class="btn btn-sm btn-danger" type="button"
-                                        href="/users/user/delete?email=&uid="><strong><i
+                                        href="/profanity/delete?id={{this.id}}"><strong><i
                                                 class="bi bi-person-x-fill"></i></strong></a></td>
                             </tr>
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>

@@ -9,6 +9,24 @@ if (table) {
     });
 }
 
+
+// Profanity Section
+const modal = document.getElementById("AddWordModal");
+
+if (modal) {
+    let myModal = new bootstrap.Modal(modal, {
+        keyboard: false
+    })
+    const url = window.location.href;
+    const action = url.substring(url.lastIndexOf('/') + 1);
+    if (action.includes('add') || action.includes('edit')) {
+        myModal.show()
+    }
+    modal.addEventListener('hidden.bs.modal', function (e) {
+        window.location.replace('/profanity')
+    });
+}
+
 // Implementing Ckeditor
 let ckEditor = document.getElementsByClassName("editor");
 if (ckEditor !== null) {

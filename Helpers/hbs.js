@@ -1,4 +1,4 @@
-import {Privilege} from '../Middleware/config/Permission.js'
+import { Privilege } from '../Middleware/config/Permission.js'
 
 export default {
     ifEquals: function (a, b, options) {
@@ -35,5 +35,9 @@ export default {
         const user = Privilege[user_privilege];
         if (user.includes(privilege)) return options.fn(this);
         return options.inverse(this);
+    },
+    HideMiddleWords: function (value, options) {
+        if (value)
+            return value[0].toUpperCase() + '*'.repeat(value.slice(1, value.length - 2).length) + value[value.length - 1];
     }
 }
