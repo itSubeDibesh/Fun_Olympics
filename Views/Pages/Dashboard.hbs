@@ -5,36 +5,48 @@
                 <div class="card-header">
                     <strong> <i class="bi bi-person-fill text-primary"></i> User Stats</strong>
                 </div>
-                <div class="card-body text-dark">
-                    <ul class="list-group list-group-flush">
+                <div class="card-body text-dark overflow-auto" style="height: 18rem;">
+                    <div class="div text-center">
+                        <a href="/users" class="btn link-success"><b> Users List</b></a>
+                    </div>
+                    <ul class="list-group list-group-flush ">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Total</div>
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill">{{user_stats.total_count}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Developer</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">{{user_stats.developer_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Admin</div>
                             </div>
-                            <span class="badge bg-success rounded-pill">14</span>
+                            <span class="badge bg-success rounded-pill">{{user_stats.admin_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Users</div>
                             </div>
-                            <span class="badge bg-danger rounded-pill">14</span>
+                            <span class="badge bg-danger rounded-pill">{{user_stats.user_count}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">Guest</div>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">{{user_stats.guest_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Disabled</div>
                             </div>
-                            <span class="badge bg-warning rounded-pill text-dark">14</span>
+                            <span class="badge bg-warning rounded-pill text-dark">{{user_stats.disabled_count}}</span>
                         </li>
                         <ul />
-                        <div class="div text-center">
-                            <a href="/users" class="btn link-success"><b> Users List</b></a>
-                        </div>
                 </div>
             </div>
         </div>
@@ -43,7 +55,10 @@
                 <div class="card-header">
                     <strong> <i class="bi bi-camera-video-fill text-danger"></i> Stream Stats</strong>
                 </div>
-                <div class="card-body text-dark">
+                <div class="card-body text-dark overflow-auto" style="height: 18rem;">
+                    <div class="div text-center">
+                        <a href="/users" class="btn link-success"><b> Streams</b></a>
+                    </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
@@ -70,9 +85,6 @@
                             <span class="badge bg-warning rounded-pill text-dark">14</span>
                         </li>
                         <ul />
-                        <div class="div text-center">
-                            <a href="/users" class="btn link-success"><b> Streams</b></a>
-                        </div>
                 </div>
             </div>
         </div>
@@ -81,7 +93,7 @@
                 <div class="card-header">
                     <strong> <i class="bi bi-slash-square-fill text-success"></i> Recent profanity</strong>
                 </div>
-                <div class="card-body text-dark">
+                <div class="card-body text-dark overflow-auto" style="height: 18rem;">
                     <ol class="list-group list-group-numbered">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
@@ -113,7 +125,7 @@
                 <div class="card-header">
                     <strong> <i class="bi bi-newspaper text-success"></i> Recent comments</strong>
                 </div>
-                <div class="card-body">
+                <div class="card-body overflow-auto" style="height: 20rem;">
                     <ol class="list-group list-group-numbered">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">

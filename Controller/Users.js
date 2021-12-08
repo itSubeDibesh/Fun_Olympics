@@ -7,7 +7,8 @@ const {
     Db_Collection,
     isLoggedIn,
     HasAccess,
-    dataSet
+    dataSet,
+    returnBool
 } = Config,
     // Setting Application Routes
     usersRouter = express.Router(),
@@ -224,7 +225,8 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
                         .set(email, {
                             email,
                             country: country || "NP",
-                            role: role || "Guest"
+                            role: role || "Guest",
+                            disabled: false
                         }, "add")
                         .then(() => {
                             req.session.success = { "message": "Fun Olympics: User created successfully!" };
@@ -265,13 +267,14 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
     } else if (action == "Edit") {
         if (email != req.session.login.user.email) {
             admin
-                .updateUser(uid, displayName, phoneNumber || null, Config.returnBool(disabled) || false)
+                .updateUser(uid, displayName, phoneNumber || null, returnBool(disabled) || false)
                 .then(() => {
                     User
                         .set(email, {
                             email,
                             country: country,
-                            role: role
+                            role: role,
+                            disabled: returnBool(disabled)
                         }, "Update")
                         .then(() => {
                             req.session.success = { "message": "Fun Olympics: User updated successfully!" };

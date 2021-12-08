@@ -190,7 +190,8 @@ authRouter.post('/register', HasAccess,
                     user.set(email, {
                         email: email,
                         country: country,
-                        role: "User"
+                        role: "User",
+                        disabled: false,
                     }, "add")
                         .then(data => {
                             flag = true
@@ -285,12 +286,50 @@ authRouter.get('/dashboard', isLoggedIn, HasAccess, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;
-        res.render('Pages/Dashboard', dataSet({
-            title: 'Dashboard',
-            login: req.session.login,
-            success,
-            status: req.session.status
-        }));
+        // #TODO - Fetch user count, along with disabled Count
+        user
+            .get()
+            .then(userData => {
+                let usersDataSet = userData.docs
+                let list = {
+                    total_count: usersDataSet.length,
+                    admin_count: 0,
+                    developer_count: 0,
+                    guest_count: 0,
+                    user_count: 0,
+                    disabled_count: 0,
+                }
+                for (let index = 0; index < usersDataSet.length; index++) {
+                    const user_info = usersDataSet[index].data();
+                    if (user_info.role == "Admin") {
+                        list.admin_count += 1
+                    }
+                    if (user_info.role == "Developer") {
+                        list.developer_count += 1
+                    }
+                    if (user_info.role == "Guest") {
+                        list.guest_count += 1
+                    }
+                    if (user_info.role == "User") {
+                        list.user_count += 1
+                    }
+                    if (user_info.disabled == true) {
+                        list.disabled_count += 1
+                    }
+                }
+                // #TODO - Fetch stream count with archived, upcoming and live count
+                res.render('Pages/Dashboard', dataSet({
+                    title: 'Dashboard',
+                    login: req.session.login,
+                    success,
+                    status: req.session.status,
+                    user_stats: list
+                }));
+                // #TODO - Fetch recent profanity in comments
+                // #TODO - Fetch recent comments
+            })
+
+
     } else {
         res.redirect('/login');
     }
