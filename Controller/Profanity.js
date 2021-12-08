@@ -29,7 +29,6 @@ profanityRouter.get('/profanity', isLoggedIn,
                         word: element.data().word,
                     }
                 })
-                console.log(profanity_dataset)
                 res.render('Pages/Profanity', dataSet({
                     title: 'Profanity',
                     success,

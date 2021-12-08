@@ -38,6 +38,6 @@ export default {
     },
     HideMiddleWords: function (value, options) {
         if (value)
-            return value[0].toUpperCase() + '*'.repeat(value.slice(1, value.length - 2).length) + value[value.length - 1];
+            return value[0].toUpperCase() + '*'.repeat(value.slice(1, value.length - 1).length) + value[value.length - 1];
     }
 }
