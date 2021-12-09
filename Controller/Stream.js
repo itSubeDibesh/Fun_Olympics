@@ -14,7 +14,6 @@ const
     streamRouter = express.Router(),
     {
         Video,
-        User,
         Comments,
         Profanity,
         Reminder,
@@ -88,7 +87,6 @@ streamRouter.get('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
                     createdAt: comment.data().createdAt.toDate()
                 }
             })
-            console.log(mapped_comments)
             res.send({ status: true, comments: mapped_comments })
         })
         .catch(err => {
@@ -125,10 +123,13 @@ streamRouter.get('/stream/initial', isLoggedIn, HasAccess, (req, res) => {
 
 streamRouter
     .get('/stream/editor', isLoggedIn, HasAccess, (req, res) => {
-        Stream
-            .get()
-            .then(stream => {
-                let stream_data = stream.docs.map(stream => {
+        Promise
+            .all([
+                Stream.get(),
+                Comments.get()
+            ])
+            .then(([stream, comments]) => {
+                const stream_data = stream.docs.map(stream => {
                     return {
                         id: stream.id,
                         title: stream.data().title,
@@ -139,6 +140,19 @@ streamRouter
                         isLive: stream.data().isLive,
                     }
                 });
+                // Comment Mapping
+                const comment_data = comments.docs.map(comment => {
+                    return {
+                        id: comment.id,
+                        comment: comment.data().comment,
+                        video_id: comment.data().video_id,
+                        title: comment.data().title,
+                        hasProfanity: comment.data().hasProfanity,
+                        email: comment.data().email,
+                        createdAt: comment.data().createdAt.toDate()
+                    }
+                })
+
                 const success = req.session.success,
                     error = req.session.error,
                     warning = req.session.warning;
@@ -152,7 +166,8 @@ streamRouter
                     success,
                     error,
                     warning,
-                    stream: stream_data
+                    stream: stream_data,
+                    comment: comment_data
                 }));
             })
             .catch(err => {
@@ -164,6 +179,21 @@ streamRouter
                 }));
             })
     });
+
+streamRouter.get('/stream/comment/delete', isLoggedIn, HasAccess, (req, res) => {
+    const { id } = req.query;
+    Comments
+        .deleteDoc(id)
+        .then(() => {
+            Notice.deleteDoc(id)
+            req.session.success = { message: "Comment Deleted Successfully" };
+            res.redirect('/stream/editor');
+        })
+        .catch(err => {
+            req.session.error = err;
+            res.redirect('/stream/editor');
+        })
+})
 
 streamRouter
     .get('/stream/editor/:action', isLoggedIn, HasAccess, (req, res) => {

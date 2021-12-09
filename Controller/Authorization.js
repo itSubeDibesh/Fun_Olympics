@@ -19,7 +19,8 @@ const {
     auth = firebase_auth,
     // Setting Firebase DB
     user = Db_Collection.User,
-    stream = Db_Collection.Video;
+    stream = Db_Collection.Video,
+    comment = Db_Collection.Comments;
 
 authRouter.get('/', (req, res) => {
 
@@ -314,49 +315,101 @@ authRouter.get('/dashboard', isLoggedIn, HasAccess, (req, res) => {
     if (req.session.login && req.session.status == "LoggedIn") {
         const success = req.session.success;
         req.session.success = null;
-        // #TODO - Fetch user count, along with disabled Count
-        user
-            .get()
-            .then(userData => {
-                let usersDataSet = userData.docs
-                let list = {
-                    total_count: usersDataSet.length,
-                    admin_count: 0,
-                    developer_count: 0,
-                    guest_count: 0,
-                    user_count: 0,
-                    disabled_count: 0,
+
+        Promise
+        .all([
+            user.get(),
+            stream.get(),
+            comment.get()
+        ])
+        .then(([users, streams, comments]) =>{
+            let usersDataSet = users.docs
+            let streamsDataSet = streams.docs
+            let commentsDataSet = comments.docs
+
+            let usersData = {
+                total_count: usersDataSet.length,
+                admin_count: 0,
+                developer_count: 0,
+                guest_count: 0,
+                user_count: 0,
+                disabled_count: 0,
+            }
+            let streamsData = {
+                total_count: streamsDataSet.length,
+                archived_count: 0,
+                live_count: 0,
+                upcoming_count: 0,
+            }
+
+            let profanityData =[]
+
+            // User Data Count
+            for (let index = 0; index < usersDataSet.length; index++) {
+                const user_info = usersDataSet[index].data();
+                if (user_info.role == "Admin") {
+                    usersData.admin_count += 1
                 }
-                for (let index = 0; index < usersDataSet.length; index++) {
-                    const user_info = usersDataSet[index].data();
-                    if (user_info.role == "Admin") {
-                        list.admin_count += 1
-                    }
-                    if (user_info.role == "Developer") {
-                        list.developer_count += 1
-                    }
-                    if (user_info.role == "Guest") {
-                        list.guest_count += 1
-                    }
-                    if (user_info.role == "User") {
-                        list.user_count += 1
-                    }
-                    if (user_info.disabled == true) {
-                        list.disabled_count += 1
-                    }
+                if (user_info.role == "Developer") {
+                    usersData.developer_count += 1
                 }
-                // #TODO - Fetch stream count with archived, upcoming and live count
-                res.render('Pages/Dashboard', dataSet({
-                    title: 'Dashboard',
-                    login: req.session.login,
-                    success,
-                    status: req.session.status,
-                    user_stats: list
-                }));
-                // #TODO - Fetch recent profanity in comments
-                // #TODO - Fetch recent comments
+                if (user_info.role == "Guest") {
+                    usersData.guest_count += 1
+                }
+                if (user_info.role == "User") {
+                    usersData.user_count += 1
+                }
+                if (user_info.disabled == true) {
+                    usersData.disabled_count += 1
+                }
+            }
+
+            // Stream Data Count
+            for (let index = 0; index < streamsDataSet.length; index++) {
+                const stream_info = streamsDataSet[index].data();
+                if (stream_info.type == "Archived") {
+                    streamsData.archived_count+=1
+                }
+                if (stream_info.type == "Live") {
+                    streamsData.live_count+=1
+                }
+                if (stream_info.type == "Upcoming") {
+                    streamsData.upcoming_count+=1
+                }
+            }
+
+            // Profanity Data
+            for(let index = 0; index < commentsDataSet.length; index++){
+                const comment_info = commentsDataSet[index].data();
+                if(comment_info.hasProfanity == true){
+                    profanityData.push(comment_info)
+                }
+            }
+
+            // Comment Mapping
+            const mapped_comments = commentsDataSet.map(comment => {
+                return {
+                    comment: comment.data().comment,
+                    video_id: comment.data().video_id,
+                    title: comment.data().title,
+                    hasProfanity: comment.data().hasProfanity,
+                    email: comment.data().email,
+                    createdAt: comment.data().createdAt.toDate()
+                }
             })
 
+            res.render('Pages/Dashboard', dataSet({
+                title: 'Dashboard',
+                login: req.session.login,
+                success,
+                status: req.session.status,
+                user_stats: usersData,
+                stream_stats:streamsData,
+                profanityData,
+                comments: mapped_comments
+            }));
+
+        })
 
     } else {
         res.redirect('/login');

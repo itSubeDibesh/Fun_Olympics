@@ -57,32 +57,32 @@
                 </div>
                 <div class="card-body text-dark overflow-auto" style="height: 18rem;">
                     <div class="div text-center">
-                        <a href="/users" class="btn link-success"><b> Streams</b></a>
+                        <a href="/stream/editor" class="btn link-success"><b> Streams</b></a>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Total</div>
                             </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
+                            <span class="badge bg-primary rounded-pill">{{stream_stats.total_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Archived</div>
                             </div>
-                            <span class="badge bg-success rounded-pill">14</span>
+                            <span class="badge bg-success rounded-pill">{{stream_stats.archived_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Upcoming</div>
                             </div>
-                            <span class="badge bg-danger rounded-pill">14</span>
+                            <span class="badge bg-danger rounded-pill">{{stream_stats.upcoming_count}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">Live</div>
                             </div>
-                            <span class="badge bg-warning rounded-pill text-dark">14</span>
+                            <span class="badge bg-warning rounded-pill text-dark">{{stream_stats.live_count}}</span>
                         </li>
                         <ul />
                 </div>
@@ -95,27 +95,16 @@
                 </div>
                 <div class="card-body text-dark overflow-auto" style="height: 18rem;">
                     <ol class="list-group list-group-numbered">
+                        {{#each profanityData}}
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">Xyz@gmail.com</div>
-                                F****
+                                <div class="fw-bold">{{this.email}}</div>
+                                {{this.comment}}
                             </div>
-                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
+                            <a href="/users/edit?email={{this.email}}"><span class="badge bg-primary rounded-pill">Block
+                                    User</span></a>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Xyz@gmail.com</div>
-                                B****
-                            </div>
-                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Xyz@gmail.com</div>
-                                A****
-                            </div>
-                            <a href="/"><span class="badge bg-primary rounded-pill">Block User</span></a>
-                        </li>
+                        {{/each}}
                     </ol>
                 </div>
             </div>
@@ -127,28 +116,22 @@
                 </div>
                 <div class="card-body overflow-auto" style="height: 20rem;">
                     <ol class="list-group list-group-numbered">
+                        {{#each comments}}
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">What a match, i need user.</div>
-                                Manchester United vs Liverpool
-                                <span class="badge bg-danger rounded-pill">king@inss.com</span>
+                                <div class="fw-bold">{{this.comment}}</div>
+                                {{this.title}}
+                                <span class="badge bg-primary rounded-pill">{{this.email}}</span>
+                                &nbsp;
+                                <span class="badge bg-success rounded-pill">{{this.category}}</span>
+                                {{#if this.hasProfanity}}
+                                &nbsp;
+                                <span class="badge bg-danger rounded-pill">Profanity</span>
+                                {{/if}}
                             </div>
-                            <span class="badge bg-primary rounded-pill">2 min ago</span>
+                            <span class="badge bg-primary rounded-pill">{{this.createdAt}}</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">2 min ago</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">2 min ago</span>
-                        </li>
+                        {{/each}}
                     </ol>
                 </div>
             </div>

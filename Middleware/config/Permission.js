@@ -105,6 +105,18 @@ const
             type: ["Basic"],
         },
         {
+            path: "/stream/comment",
+            name: "stream",
+            methods: ["GET"],
+            type: ["Basic"],
+        },
+        {
+            path: "/stream/comment/delete",
+            name: "stream",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
             path: "/stream/editor",
             name: "stream_editor",
             methods: ["GET"],

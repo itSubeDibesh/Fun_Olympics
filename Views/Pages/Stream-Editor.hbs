@@ -59,20 +59,18 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
                                 <th scope="col">Comment</th>
-                                <th scope="col">Disable User</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each users}}
+                            {{#each comment}}
                             <tr>
                                 <th scope="row">{{SN @index}}</th>
-                                <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
-                                <td>{{this.displayName}}</td>
+                                <td>{{this.comment}}</td>
                                 <td><a class="btn btn-sm btn-danger" type="button"
-                                        href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
-                                                class="bi bi-person-x-fill"></i></strong></a></td>
+                                        href="/stream/comment/delete?id={{this.id}}"><strong><i
+                                                class="bi bi-file-earmark-x-fill"></i></strong></a></td>
                             </tr>
                             {{/each}}
                         </tbody>
