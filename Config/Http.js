@@ -5,8 +5,8 @@ import isLoggedIn from '../Middleware/IsLoggedIn.js'
 import { HasAccess, get_role_permission, Privilege, Roles, Access } from '../Middleware/HasAccess.js'
 import Auth from '../Controller/core/Auth_Access_Firebase.js';
 import Admin from '../Controller/core/Admin_Access_Firebase.js'
-import { Video, User, Profanity, Role, Comments, Archive, Notice, FAQ } from '../Controller/core/Collections.js'
-import { dataSet, returnBool } from './helper.js'
+import { Video, User, Profanity, Role, Comments, Reminder, Notice, FAQ } from '../Controller/core/Collections.js'
+import { dataSet, returnBool, extractVideoID, random_number } from './helper.js'
 
 // Enabling dotenv
 dotenv.config();
@@ -25,7 +25,7 @@ const Db_Collection =
     Profanity: new Profanity(),
     Role: new Role(),
     Comments: new Comments(),
-    Archive: new Archive(),
+    Reminder: new Reminder(),
     Notice: new Notice(),
     FAQ: new FAQ()
 }
@@ -46,6 +46,8 @@ export default {
     get_role_permission, Privilege, Roles, Access,
     dataSet,
     returnBool,
+    random_number,
+    extractVideoID,
     firebase_admin,
     firebase_auth,
     Db_Collection

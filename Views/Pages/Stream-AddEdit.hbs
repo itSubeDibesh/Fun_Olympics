@@ -1,0 +1,76 @@
+<div class="container py-lg-3 mt-lg-3">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+        <a class="btn btn-primary" type="button" href="/stream/editor"><strong><i class="bi bi-arrow-left"></i> Back To
+                Editor <i class="bi bi-film"></i>
+            </strong></a>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+            {{#if action}}
+            <div class="card">
+                <div class="card-header">
+                    <h5> {{action}} Stream <i class="bi bi-film"></i></h5>
+                </div>
+                <div class="card-body">
+                    <form class="form" action="/stream/editor/entry" method="post">
+                        <input type="hidden" name="action" value="{{action}}">
+                        {{#ifEquals action 'Edit'}}
+                        <input type="hidden" name="id" value="{{stream.id}}">
+                        <input type="hidden" name="link" value="https://youtu.be/{{stream.videoId}}">
+                        {{/ifEquals }}
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="title" name="title" required
+                                placeholder="Nepal vs India - Jabbing" value="{{stream.title}}">
+                            <label for="title">Stream title</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="category" name="category" required
+                                placeholder="Jabbing" value="{{stream.category}}">
+                            <label for="category">Category</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="url" class="form-control" id="link" name="link" required {{#ifEquals
+                                action 'Edit' }}disabled{{/ifEquals}}
+                                value="{{#ifEquals action 'Edit'}}https://youtu.be/{{stream.videoId}}{{/ifEquals}}">
+                            <label for="link">Youtube link</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="date" name="date" value="{{stream.date}}"
+                                required>
+                            <label for="date">Stream Date</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="type" name="type" required>
+                                <option disabled>Select Type</option>
+                                <option value="Live" {{#ifEquals stream.type 'Live' }}selected{{/ifEquals}}>Live
+                                </option>
+                                <option value="Upcoming" {{#ifEquals stream.type 'Upcoming' }}selected{{/ifEquals}}>
+                                    Upcoming</option>
+                                <option value="Archived" {{#ifEquals stream.type 'Archived' }}selected{{/ifEquals}}>
+                                    Archived
+                                </option>
+                            </select>
+                            <label for="role" class="form-label">Stream Type</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" role="switch" type="checkbox" name="isLive" id="isLive"
+                                {{#if stream.isLive}}checked{{/if}}>
+                            <label class="form-check-label" for="isLive">
+                                Is Live
+                            </label>
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary text-center"><i
+                                    class="bi bi-pencil-square"></i> {{#ifEquals
+                                action 'Add' }}Submit{{/ifEquals}}{{#ifEquals action 'Edit'
+                                }}Update{{/ifEquals}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

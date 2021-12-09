@@ -1,0 +1,90 @@
+<div class="container py-lg-3 mt-lg-3">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+        <a class="btn btn-primary" type="button" href="/stream"><strong>Back to Stream <i
+                    class="bi bi-arrow-left"></i></strong></a>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5> Stream <i class="bi bi-cast"></i></h5>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                        <a class="btn btn-primary" type="button" href="/stream/editor/add"><strong>Add Stream <i
+                                    class="bi bi-cast"></i></strong> </a>
+                    </div>
+                    <table class="table table-hover caption-top">
+                        <caption class="text-center"><strong>Stream's List <i class="bi bi-cast"></i></strong>
+                        </caption>
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Category</th>
+                                <th scope="col"> <i class="bi bi-cast"></i> Type</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each stream}}
+                            <tr>
+                                <th scope="row">{{SN @index}}</th>
+                                <td>{{this.title}}</td>
+                                <td>{{this.category}}</td>
+                                <td>{{this.type}}</td>
+                                <td><a class="btn btn-sm btn-dark" type="button"
+                                        href="/stream/editor/edit?id={{this.id}}"><strong><i
+                                                class="bi bi-pencil-square"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-danger" type="button"
+                                        href="/stream/editor/delete?id={{this.id}}"><strong><i
+                                                class="bi bi-folder-x"></i></strong></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5> Comments <i class="bi bi-chat-left-text"></i></h5>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover caption-top">
+                        <caption class="text-center"><strong>Comments <i class="bi bi-chat-left-text"></i></strong>
+                        </caption>
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Has Profanity</th>
+                                <th scope="col">User Disabled</th>
+                                <th scope="col">Disable User</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users}}
+                            <tr>
+                                <th scope="row">{{SN @index}}</th>
+                                <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
+                                <td>{{this.displayName}}</td>
+                                <td>{{this.displayName}}</td>
+                                <td><a class="btn btn-sm btn-danger" type="button"
+                                        href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
+                                                class="bi bi-person-x-fill"></i></strong></a></td>
+                                <td><a class="btn btn-sm btn-danger" type="button"
+                                        href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
+                                                class="bi bi-person-x-fill"></i></strong></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

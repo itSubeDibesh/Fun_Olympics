@@ -6,6 +6,7 @@
 <div class="container py-lg-3 mt-lg-3">
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6 ">
+            {{#ifNotEquals status "LoggedIn"}}
             <div class="card mb-2">
                 <div class="card-body text-center">
                     <h4 class="card-title">
@@ -20,6 +21,7 @@
 
                 </div>
             </div>
+            {{/ifNotEquals}}
             <div class="carousel slide d-none d-md-block" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -50,44 +52,27 @@
                             <strong>Upcoming Events</strong>
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Set Reminder</span></a>
-                                </li>
-                            </ol>
+                            <div class="row">
+                                {{#each stream_data}}
+                                {{#ifEquals this.type 'Upcoming'}}
+                                <div class="col-sm-12 m-1">
+                                    <a href="/login"
+                                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">{{this.title}}</div>
+                                            {{this.category}}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">{{this.date}}</span>
+                                        &nbsp;
+                                        <span class="badge bg-success rounded-pill">Set Reminder</span>
+                                    </a>
+                                </div>
+                                {{/ifEquals}}
+                                {{/each}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,35 +85,25 @@
                             </strong>
                         </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                            </ol>
+                            <div class="row">
+                                {{#each stream_data}}
+                                {{#ifEquals this.type 'Live'}}
+                                <div class="col-sm-12 m-1">
+                                    <a href="/login"
+                                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">{{this.title}}</div>
+                                            {{this.category}}
+                                        </div>
+                                        <span class="badge bg-success rounded-pill">Watch Now</span>
+                                    </a>
+                                </div>
+                                {{/ifEquals}}
+                                {{/each}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,41 +117,24 @@
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <ol class="list-group list-group-numbered list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Manchester Vs Laila</div>
-                                        Football
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Subheading</div>
-                                        Content for list item
-                                    </div>
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-danger rounded-pill">14/01/2021</span></a>
-                                    &nbsp;
-                                    <a href="/login" class="text-decoration-none"><span
-                                            class="badge bg-success rounded-pill">Watch Now</span></a>
-                                </li>
-                            </ol>
+                            <div class="row">
+                                {{#each stream_data}}
+                                {{#ifEquals this.type 'Archived'}}
+                                <div class="col-sm-12 m-1">
+                                    <a href="/login"
+                                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">{{this.title}}</div>
+                                            {{this.category}}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">{{this.date}}</span>
+                                        &nbsp;
+                                        <span class="badge bg-success rounded-pill">Watch Now</span>
+                                    </a>
+                                </div>
+                                {{/ifEquals}}
+                                {{/each}}
+                            </div>
                         </div>
                     </div>
                 </div>

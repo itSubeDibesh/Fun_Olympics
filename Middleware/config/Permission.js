@@ -93,6 +93,12 @@ const
             type: ["Basic"],
         },
         {
+            path: "/stream/editor",
+            name: "stream_editor",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
             path: "/notice",
             name: "notice",
             methods: ["GET"],

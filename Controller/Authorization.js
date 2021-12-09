@@ -18,24 +18,52 @@ const {
     // Setting Firebase Auth
     auth = firebase_auth,
     // Setting Firebase DB
-    user = Db_Collection.User;
+    user = Db_Collection.User,
+    stream = Db_Collection.Video;
 
 authRouter.get('/', (req, res) => {
-    const error = req.session.error;
-    req.session.error = null;
-    const warning = req.session.warning;
-    req.session.warning = null;
-    const success = req.session.success;
-    req.session.success = null;
-    if (req.session.role == undefined) req.session.role = "Guest"
-    res.render('Pages/Home', dataSet({
-        title: 'Home',
-        login: req.session.login,
-        status: req.session.status,
-        error,
-        warning,
-        success
-    }));
+
+    stream
+        .get()
+        .then(dataset => {
+            let stream_data = dataset.docs.map(element => {
+                return {
+                    id: element.id,
+                    title: element.data().title,
+                    videoId: element.data().videoId,
+                    date: element.data().date,
+                    type: element.data().type,
+                    category: element.data().category,
+                    isLive: element.data().isLive,
+                }
+            });
+
+            const error = req.session.error;
+            req.session.error = null;
+            const warning = req.session.warning;
+            req.session.warning = null;
+            const success = req.session.success;
+            req.session.success = null;
+            if (req.session.role == undefined) req.session.role = "Guest"
+            res.render('Pages/Home', dataSet({
+                title: 'Home',
+                login: req.session.login,
+                status: req.session.status,
+                error,
+                warning,
+                success,
+                stream_data
+            }));
+
+        })
+        .catch(err => {
+            res.render('Pages/Home', dataSet({
+                title: 'Home',
+                login: req.session.login,
+                status: req.session.status,
+                error: err
+            }));
+        });
 });
 
 authRouter.get('/login', HasAccess, (req, res) => {
