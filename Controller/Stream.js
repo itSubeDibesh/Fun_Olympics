@@ -6,8 +6,8 @@ const
         isLoggedIn,
         HasAccess,
         dataSet,
-        random_number,
         extractVideoID,
+        has_profanity,
         Db_Collection
     } = Config,
     // Setting Application Routes
@@ -15,7 +15,7 @@ const
     {
         Video,
         User,
-        Comment,
+        Comments,
         Profanity,
         Reminder,
         Notice
@@ -23,24 +23,81 @@ const
     Stream = Video;
 
 streamRouter
-    .get('/stream', (req, res) => {
+    .get('/stream', isLoggedIn, HasAccess, (req, res) => {
         const success = req.session.success,
             error = req.session.error,
             warning = req.session.warning;
         req.session.success = null;
         req.session.error = null;
         req.session.warning = null;
-        res.render('Pages/Stream', dataSet({
-            title: 'Stream',
-            login: req.session.login,
-            status: req.session.status,
-            success,
-            error,
-            warning
-        }));
+        let profanity_dataset = []
+        Profanity
+            .get()
+            .then(profanity => {
+                const pf = profanity.docs
+                for (let index = 0; index < pf.length; index++) {
+                    const element = pf[index].data();
+                    profanity_dataset.push(element.word)
+                }
+                req.session.profanity_dataset = profanity_dataset
+                res.render('Pages/Stream', dataSet({
+                    title: 'Stream',
+                    login: req.session.login,
+                    status: req.session.status,
+                    success,
+                    error,
+                    warning
+                }));
+            })
     });
 
-streamRouter.get('/stream/initial', (req, res) => {
+streamRouter.post('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
+    const data = req.body;
+    const { profanity_dataset, login } = req.session;
+    const hasProfanity = has_profanity(data.comment, profanity_dataset)
+    console.log(data, hasProfanity)
+    Comments.add({
+        comment: data.comment,
+        video_id: data.video_id,
+        title: data.title,
+        hasProfanity,
+        email: login.user.email,
+    })
+        .then(() => {
+            res.send({ status: true })
+        })
+        .catch(err => {
+            res.send({ status: false })
+        })
+})
+
+streamRouter.get('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
+    const { video_id } = req.query;
+    console.log(video_id)
+    Comments
+        .getByQuery('video_id', '==', video_id, 'createdAt', 'desc')
+        .then(comments => {
+            console.log(comments)
+            const mapped_comments = comments.docs.map(comment => {
+                return {
+                    comment: comment.data().comment,
+                    video_id: comment.data().video_id,
+                    title: comment.data().title,
+                    hasProfanity: comment.data().hasProfanity,
+                    email: comment.data().email,
+                    createdAt: comment.data().createdAt.toDate()
+                }
+            })
+            console.log(mapped_comments)
+            res.send({ status: true, comments: mapped_comments })
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ status: false, message: 'Something went wrong' })
+        })
+})
+
+streamRouter.get('/stream/initial', isLoggedIn, HasAccess, (req, res) => {
     Promise
         .all([
             // Get Streams
@@ -61,14 +118,13 @@ streamRouter.get('/stream/initial', (req, res) => {
                 }
             })
             res.send({
-                StreamData:stream_data
+                StreamData: stream_data
             })
         })
 })
 
-
 streamRouter
-    .get('/stream/editor', (req, res) => {
+    .get('/stream/editor', isLoggedIn, HasAccess, (req, res) => {
         Stream
             .get()
             .then(stream => {
@@ -110,7 +166,7 @@ streamRouter
     });
 
 streamRouter
-    .get('/stream/editor/:action', (req, res) => {
+    .get('/stream/editor/:action', isLoggedIn, HasAccess, (req, res) => {
         const { action } = req.params;
         const { id } = req.query;
         if (action.toLowerCase() === 'add') {
@@ -168,7 +224,7 @@ streamRouter
 
 
 streamRouter
-    .post('/stream/editor/entry', (req, res) => {
+    .post('/stream/editor/entry', isLoggedIn, HasAccess, (req, res) => {
         const { id, title, link, isLive, date, category, type, action } = req.body;
         if (action.toLowerCase() === 'add') {
             const videoId = extractVideoID(link);

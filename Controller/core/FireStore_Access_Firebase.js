@@ -34,9 +34,9 @@ export default class FireStore extends FIREBASE_ADMIN {
      * @memberof FireStore
      */
     set(uniqueDocId, data, method = "add") {
-        if(method.toLowerCase() == "add")
+        if (method.toLowerCase() == "add")
             data.createdAt = this.FieldValue.serverTimestamp()
-        else 
+        else
             data.updatedAt = this.FieldValue.serverTimestamp()
         return this.collection.doc(uniqueDocId).set(data)
     }
@@ -67,14 +67,17 @@ export default class FireStore extends FIREBASE_ADMIN {
         return this.collection.doc(docId).get()
     }
 
-    get(){
+    get() {
         return this.collection.get()
     }
 
-    getByQuery(field, condition, value) {
-        return this.collection.where(field, condition, value).get()
+    getByQuery(field, condition, value, orderBy, order) {
+        if (orderBy && order)
+            return this.collection.where(field, condition, value).orderBy(orderBy, order).get()
+        else
+            return this.collection.where(field, condition, value).get()
     }
-    
+
     observe(docId, callback) {
         return this.collection.doc(docId).onSnapshot(callback)
     }
@@ -88,15 +91,15 @@ export default class FireStore extends FIREBASE_ADMIN {
     }
 
     detach(docId) {
-        return this.collection.doc(docId).onSnapshot(() => {})
+        return this.collection.doc(docId).onSnapshot(() => { })
     }
 
     detachByQuery(field, condition, value) {
-        return this.collection.where(field, condition, value).onSnapshot(() => {})
+        return this.collection.where(field, condition, value).onSnapshot(() => { })
     }
 
     detachAll() {
-        return this.collection.onSnapshot(() => {})
+        return this.collection.onSnapshot(() => { })
     }
 
 }

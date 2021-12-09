@@ -6,7 +6,7 @@ import { HasAccess, get_role_permission, Privilege, Roles, Access } from '../Mid
 import Auth from '../Controller/core/Auth_Access_Firebase.js';
 import Admin from '../Controller/core/Admin_Access_Firebase.js'
 import { Video, User, Profanity, Role, Comments, Reminder, Notice, FAQ } from '../Controller/core/Collections.js'
-import { dataSet, returnBool, extractVideoID, random_number } from './helper.js'
+import { dataSet, returnBool, extractVideoID, random_number,has_profanity } from './helper.js'
 
 // Enabling dotenv
 dotenv.config();
@@ -46,6 +46,7 @@ export default {
     get_role_permission, Privilege, Roles, Access,
     dataSet,
     returnBool,
+    has_profanity,
     random_number,
     extractVideoID,
     firebase_admin,

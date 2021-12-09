@@ -4,7 +4,7 @@
                     class="bi bi-arrow-left"></i></strong></a>
     </div>
     <div class="row">
-        <div class="col-sm-12 col-md-8 col-lg-8">
+        <div class="col-sm-12 col-md-7 col-lg-7">
             <div class="card">
                 <div class="card-header">
                     <h5> Stream <i class="bi bi-cast"></i></h5>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-md-5 col-lg-5">
             <div class="card">
                 <div class="card-header">
                     <h5> Comments <i class="bi bi-chat-left-text"></i></h5>
@@ -59,11 +59,9 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Has Profanity</th>
-                                <th scope="col">User Disabled</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Comment</th>
                                 <th scope="col">Disable User</th>
-                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,10 +70,6 @@
                                 <th scope="row">{{SN @index}}</th>
                                 <td><a href="mailto:{{this.email}}" class="btn btn-primary">{{this.email}}</a></td>
                                 <td>{{this.displayName}}</td>
-                                <td>{{this.displayName}}</td>
-                                <td><a class="btn btn-sm btn-danger" type="button"
-                                        href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
-                                                class="bi bi-person-x-fill"></i></strong></a></td>
                                 <td><a class="btn btn-sm btn-danger" type="button"
                                         href="/users/user/delete?email={{this.email}}&uid={{this.uid}}"><strong><i
                                                 class="bi bi-person-x-fill"></i></strong></a></td>

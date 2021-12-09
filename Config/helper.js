@@ -25,3 +25,13 @@ export function extractVideoID(url) {
 export function random_number(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function has_profanity(text,array){
+    var result = false;
+    array.forEach(function(item){
+        if(text.toLowerCase().indexOf(item.toLowerCase()) > -1){
+            result = true;
+        }
+    });
+    return result;
+}

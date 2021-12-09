@@ -93,9 +93,33 @@ const
             type: ["Basic"],
         },
         {
+            path: "/stream/initial",
+            name: "stream",
+            methods: ["GET"],
+            type: ["Basic"],
+        },
+        {
+            path: "/stream/comment",
+            name: "stream",
+            methods: ["POST"],
+            type: ["Basic"],
+        },
+        {
             path: "/stream/editor",
             name: "stream_editor",
             methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/stream/editor/:action",
+            name: "stream_editor",
+            methods: ["GET"],
+            type: ["Moderate"],
+        },
+        {
+            path: "/stream/editor/entry",
+            name: "stream_editor",
+            methods: ["POST"],
             type: ["Moderate"],
         },
         {
