@@ -3,6 +3,9 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
         <a class="btn btn-primary" type="button" href="/stream/editor"><strong>Editor <i class="bi bi-film"></i>
             </strong></a>
+        <button class="btn btn-primary" type="button" onclick="refreshStreamList()"><strong>Refresh <i
+                    class="bi bi-arrow-clockwise"></i></i>
+            </strong></button>
     </div>
     {{!-- {{/Includes}} --}}
     <div class="row">
@@ -15,30 +18,21 @@
                                 <div class="row">
                                     <span class="col-sm-12 col-md-6 col-lg-6">
                                         <strong>
-                                            Now Playing:
+                                            Streaming Now :
                                         </strong>
-                                        <span class="text-danger">{{play.title}}</span>
+                                        <span class="text-danger" id="stream_title"></span>
                                     </span>
-                                    <span class="col-sm-12 col-md-6 col-lg-6 text-end">
-                                        {{#ifEquals play.type 'Live'}}
-                                            Live {{>Live}}
-                                            {{else}}
-                                            {{#ifEquals play.type 'Archived'}}
-                                                <strong>Archived <i class="bi bi-projector-fill"></i></strong>
-                                                {{else}}
-                                                <strong>Upcoming <i class="bi bi-camera-reels-fill"></i></strong>
-                                            {{/ifEquals}}
-                                        {{/ifEquals}}
+                                    <span class="col-sm-12 col-md-6 col-lg-6 text-end" id="stream_type">
                                     </span>
                                 </div>
                             </h5>
                         </div>
                         <div class="card-body">
-                            <div id="player" class="border border-primary mb-2">
-                                <div class="ratio ratio-16x9">
-                                    <iframe src="https://www.youtube.com/embed/QsAQkMoGTn0?rel=0" title="YouTube video"
+                            <div class="border border-primary bg-dark mb-2">
+                                <div class="ratio ratio-16x9" id="player">
+                                    {{!-- <iframe src="https://www.youtube.com/embed/ ?rel=0" title="YouTube video"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                                        allowfullscreen></iframe> --}}
                                 </div>
                             </div>
                         </div>
@@ -75,30 +69,10 @@
                                     <strong>Upcoming <i class="bi bi-camera-reels-fill"></i></strong>
                                 </button>
                             </h2>
-                            <div id="flush-collapseOne"
-                                class="accordion-collapse collapse  {{#ifEquals play.type 'Upcoming'}} show {{/ifEquals}}"
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body overflow-auto">
-                                    <ol class="list-group list-group-numbered list-group-flush">
-                                        {{#each stream}}
-                                        {{#ifEquals this.type 'Upcoming'}}
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-start   {{#ifEquals this.title ../play.title}}bg-dark text-light{{/ifEquals}}">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold">{{this.title}}</div>
-                                                {{this.category}}
-                                            </div>
-                                            <span
-                                                class="badge  {{#ifEquals this.title ../play.title}} bg-danger {{else}} bg-primary{{/ifEquals}} rounded-pill">{{this.date}}</span>
-                                            &nbsp;
-                                            {{#ifEquals this.title ../play.title}}
-                                            <span class="badge bg-danger rounded-pill">Watching</span>
-                                            {{else}}
-                                            <span class="badge bg-success rounded-pill">Watch Now</span>
-                                            {{/ifEquals}}
-                                        </li>
-                                        {{/ifEquals}}
-                                        {{/each}}
+                                    <ol class="list-group list-group-numbered list-group-flush" id="UpcomingList">
                                     </ol>
                                 </div>
                             </div>
@@ -113,27 +87,10 @@
                                     </strong>
                                 </button>
                             </h2>
-                            <div id="flush-collapseTwo"
-                                class="accordion-collapse collapse  {{#ifEquals play.type 'Live'}} show {{/ifEquals}}"
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse show"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body overflow-auto">
-                                    <ol class="list-group list-group-numbered list-group-flush">
-                                        {{#each stream}}
-                                        {{#ifEquals this.type 'Live'}}
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-start   {{#ifEquals this.title ../play.title}}bg-dark text-light{{/ifEquals}}">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold">{{this.title}}</div>
-                                                {{this.category}}
-                                            </div>
-                                            {{#ifEquals this.title ../play.title}}
-                                            <span class="badge bg-danger rounded-pill">Watching</span>
-                                            {{else}}
-                                            <span class="badge bg-success rounded-pill">Watch Now</span>
-                                            {{/ifEquals}}
-                                        </li>
-                                        {{/ifEquals}}
-                                        {{/each}}
+                                    <ol class="list-group list-group-numbered list-group-flush" id="LiveList">
                                     </ol>
                                 </div>
                             </div>
@@ -146,30 +103,10 @@
                                     <strong>Archived <i class="bi bi-projector-fill"></i></strong>
                                 </button>
                             </h2>
-                            <div id="flush-collapseThree"
-                                class="accordion-collapse collapse  {{#ifEquals play.type 'Archived'}} show {{/ifEquals}}"
+                            <div id="flush-collapseThree" class="accordion-collapse collapse "
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body overflow-auto">
-                                    <ol class="list-group list-group-numbered list-group-flush">
-                                        {{#each stream}}
-                                        {{#ifEquals this.type 'Archived'}}
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-start   {{#ifEquals this.title ../play.title}}bg-dark text-light{{/ifEquals}}">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold">{{this.title}}</div>
-                                                {{this.category}}
-                                            </div>
-                                            <span
-                                                class="badge  {{#ifEquals this.title ../play.title}} bg-danger {{else}} bg-primary{{/ifEquals}} rounded-pill">{{this.date}}</span>
-                                            &nbsp;
-                                            {{#ifEquals this.title ../play.title}}
-                                            <span class="badge bg-danger rounded-pill">Watching</span>
-                                            {{else}}
-                                            <span class="badge bg-success rounded-pill">Watch Now</span>
-                                            {{/ifEquals}}
-                                        </li>
-                                        {{/ifEquals}}
-                                        {{/each}}
+                                    <ol class="list-group list-group-numbered list-group-flush" id="ArchivedList">
                                     </ol>
                                 </div>
                             </div>
@@ -223,3 +160,17 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function refreshStreamList() {
+        fetch('/stream/initial')
+            .then(response => response.json())
+            .then(data => {
+                const stream = data.StreamData;
+                inject_stream(stream);
+            })
+    }
+    refreshStreamList()
+
+</script>

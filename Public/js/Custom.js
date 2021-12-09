@@ -91,4 +91,58 @@ function removeAlerts() {
     });
 }
 
+const inject_stream = (stream) => {
+    const
+        Archived_List = document.getElementById('ArchivedList'),
+        LiveList = document.getElementById('LiveList'),
+        UpcomingList = document.getElementById('UpcomingList');
+    LiveList.innerHTML = '';
+    UpcomingList.innerHTML = '';
+    ArchivedList.innerHTML = '';
+    for (let i = 0; i < stream.length; i++) {
+        if (stream[i].type === 'Live') {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-start';
+            li.innerHTML = `<div class="ms-2 me-auto">
+                                    <div class="fw-bold">${stream[i].title}</div>
+                                    ${stream[i].category}
+                                </div>
+                                <button onclick='load("${stream[i].videoId}")' class="btn btn-sm"><span class="badge bg-success rounded-pill">Watch Now</span></button>`;
+            LiveList.appendChild(li);
+        }
+        else if (stream[i].type === 'Upcoming') {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-start';
+            li.innerHTML = `<div class="ms-2 me-auto">
+                                    <div class="fw-bold">${stream[i].title}</div>
+                                    ${stream[i].category}
+                                </div>
+                                <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                                &nbsp;
+                                <span class="badge bg-success rounded-pill">Set reminder</span>`;
+            UpcomingList.appendChild(li);
+        }
+        else if (stream[i].type === 'Archived') {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-start';
+            li.innerHTML = `<div class="ms-2 me-auto">
+                                    <div class="fw-bold">${stream[i].title}</div>
+                                    ${stream[i].category}
+                                </div>
+                                <span class="badge bg-danger rounded-pill">${stream[i].date}</span>
+                                &nbsp;
+                            <button onclick='load("${stream[i].videoId}")' class="btn btn-sm"><span class="badge bg-success rounded-pill">Watch Now</span></button>`;
+            Archived_List.appendChild(li);
+        }
+    }
+}
+
+const load = (videoId) => {
+    console.log(videoId);
+    const player = document.getElementById('player');
+    player.innerHTML = ''
+    player.innerHTML = `<iframe height="450" src="https://www.youtube.com/embed/${videoId}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen" allowfullscreen></iframe>`
+}
+
 removeAlerts()

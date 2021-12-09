@@ -4,6 +4,7 @@
   "description": "An online registration system for audiences to gain access to FunOlympic Games",
   "main": "server.init.js",
   "scripts": {
+    "start": "node server.init.js",
     "dev": "open-cli http://localhost:8080 && nodemon --ignore Public/ --ignore Tests/ server.init",
     "serve": "open-cli http://localhost:8080 && node server.init",
     "test": "jest"

@@ -24,46 +24,48 @@ const
 
 streamRouter
     .get('/stream', (req, res) => {
-        Stream
-            .get()
-            .then(stream => {
-                let stream_data = stream.docs.map(stream => {
-                    return {
-                        id: stream.id,
-                        title: stream.data().title,
-                        videoId: stream.data().videoId,
-                        date: stream.data().date,
-                        type: stream.data().type,
-                        category: stream.data().category,
-                        isLive: stream.data().isLive,
-                    }
-                });
-                const success = req.session.success,
-                    error = req.session.error,
-                    warning = req.session.warning;
-                req.session.success = null;
-                req.session.error = null;
-                req.session.warning = null;
-                res.render('Pages/Stream', dataSet({
-                    title: 'Stream',
-                    login: req.session.login,
-                    status: req.session.status,
-                    success,
-                    error,
-                    warning,
-                    stream: stream_data,
-                    play: stream_data[random_number(0, stream_data.length - 1)],
-                }));
-            })
-            .catch(err => {
-                res.render('Pages/Stream', dataSet({
-                    title: 'Stream',
-                    login: req.session.login,
-                    status: req.session.status,
-                    error: err
-                }));
-            })
+        const success = req.session.success,
+            error = req.session.error,
+            warning = req.session.warning;
+        req.session.success = null;
+        req.session.error = null;
+        req.session.warning = null;
+        res.render('Pages/Stream', dataSet({
+            title: 'Stream',
+            login: req.session.login,
+            status: req.session.status,
+            success,
+            error,
+            warning
+        }));
     });
+
+streamRouter.get('/stream/initial', (req, res) => {
+    Promise
+        .all([
+            // Get Streams
+            Stream.get(),
+        ])
+        .then(([
+            StreamData
+        ]) => {
+            const stream_data = StreamData.docs.map(stream => {
+                return {
+                    id: stream.data()._id,
+                    title: stream.data().title,
+                    category: stream.data().category,
+                    isLive: stream.data().isLive,
+                    type: stream.data().type,
+                    videoId: stream.data().videoId,
+                    date: stream.data().date,
+                }
+            })
+            res.send({
+                StreamData:stream_data
+            })
+        })
+})
+
 
 streamRouter
     .get('/stream/editor', (req, res) => {
@@ -150,6 +152,7 @@ streamRouter
             Stream
                 .deleteDoc(id)
                 .then(() => {
+                    Notice.deleteDoc(id)
                     req.session.success = { message: "Stream Deleted Successfully" };
                     res.redirect('/stream/editor');
                 })
@@ -178,6 +181,14 @@ streamRouter
                     type,
                     isLive: isLive === 'on' ? true : false
                 }).then(() => {
+                    Notice.set(videoId, {
+                        action: 'Add',
+                        expire: new Date().toISOString().split('T')[0],
+                        title,
+                        date,
+                        type,
+                        isLive: isLive === 'on' ? true : false
+                    })
                     req.session.success = { message: "Stream Added Successfully" };
                     res.redirect('/stream/editor');
                 }).catch(err => {
@@ -196,6 +207,14 @@ streamRouter
                     isLive: isLive === 'on' ? true : false
                 })
                 .then(() => {
+                    Notice.set(videoId, {
+                        action: 'Edit',
+                        expire: new Date().toISOString().split('T')[0],
+                        title,
+                        date,
+                        type,
+                        isLive: isLive === 'on' ? true : false
+                    })
                     req.session.success = { message: "Stream Edited Successfully" };
                     res.redirect('/stream/editor');
                 }
@@ -205,7 +224,6 @@ streamRouter
                 })
         }
     })
-
 
 
 export default streamRouter;
