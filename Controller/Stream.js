@@ -96,9 +96,12 @@ streamRouter.get('/stream/initial', isLoggedIn, HasAccess, (req, res) => {
         .all([
             // Get Streams
             Stream.get(),
+            // Reminder Data
+            Reminder.get(),
         ])
         .then(([
-            StreamData
+            StreamData,
+            ReminderData
         ]) => {
             const stream_data = StreamData.docs.map(stream => {
                 return {
@@ -111,8 +114,19 @@ streamRouter.get('/stream/initial', isLoggedIn, HasAccess, (req, res) => {
                     date: stream.data().date,
                 }
             })
+            const reminder_data = ReminderData.docs.map(reminder => {
+                return {
+                    id: reminder.data()._id,
+                    title: reminder.data().title,
+                    type: reminder.data().type,
+                    videoId: reminder.data().video_id,
+                    date: reminder.data().date,
+                    email: reminder.data().email
+                }})
+
             res.send({
-                StreamData: stream_data
+                StreamData: stream_data,
+                ReminderData: reminder_data
             })
         })
 })
@@ -248,6 +262,35 @@ streamRouter
         }
     })
 
+streamRouter.post('/stream/reminder', isLoggedIn, HasAccess, (req, res) => {
+    const data = req.body;
+    const {login} = req.session;
+    Promise.all([
+        Reminder.add({
+            title: data.title,
+            date: data.date,
+            video_id: data.video_id,
+            type: data.type,
+            email: login.user.email,
+        }),
+        Notice.add({
+            title: data.title,
+            date: data.date,
+            video_id: data.video_id,
+            type: data.type,
+            email: login.user.email,
+            comment_type: 'Reminder',
+            expire: data.date,
+        })
+    ])
+    .then(()=>{
+        res.send({status: true, message: 'Reminder Added Successfully'})
+    })
+    .catch(err => {
+        res.send({status: false, message: "Something Went Wrong"})
+    })
+})
+
 
 streamRouter
     .post('/stream/editor/entry', isLoggedIn, HasAccess, (req, res) => {
@@ -265,6 +308,8 @@ streamRouter
                 }).then(() => {
                     Notice.set(videoId, {
                         action: 'Add',
+                        comment_type: 'Stream',
+                        videoId: videoId,
                         expire: new Date().toISOString().split('T')[0],
                         title,
                         date,
@@ -291,6 +336,8 @@ streamRouter
                 .then(() => {
                     Notice.set(videoId, {
                         action: 'Edit',
+                        comment_type: 'Stream',
+                        videoId: videoId,
                         expire: new Date().toISOString().split('T')[0],
                         title,
                         date,

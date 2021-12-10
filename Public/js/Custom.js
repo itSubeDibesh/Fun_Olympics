@@ -83,6 +83,7 @@ if (page_title == 'users - edit') {
 
 //  Removing Alerts After Interval
 function removeAlerts() {
+    config.alertList = document.querySelectorAll(".alert");
     config.alertList.forEach(element => {
         if (!element.classList.contains("alert-fixed")) {
             var bsAlert = new bootstrap.Alert(element);
@@ -97,8 +98,10 @@ let Stream_List = []
 
 let currentVideo = {}
 
-function inject_stream(stream) {
+function inject_stream(data) {
     const
+        stream = data.StreamData,
+        reminder = data.ReminderData,
         Archived_List = document.getElementById('ArchivedList'),
         LiveList = document.getElementById('LiveList'),
         UpcomingList = document.getElementById('UpcomingList');
@@ -120,18 +123,30 @@ function inject_stream(stream) {
             LiveList.appendChild(li);
         }
         else if (stream[i].type === 'Upcoming') {
-            const li = document.createElement('div');
-            li.className = 'col-sm-12 m-1';
-            li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">${stream[i].title}</div>
-                                    ${stream[i].category}
-                                </div>
-                                <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
-                                &nbsp;
-                                <span class="badge bg-success rounded-pill">Set reminder</span>
-                            </a>`;
-            UpcomingList.appendChild(li);
+            for (let j = 0; j < reminder.length; j++) {
+                const li = document.createElement('div');
+                li.className = 'col-sm-12 m-1';
+                if (reminder[j].videoId === stream[i].videoId) {
+                    li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">${stream[i].title}</div>
+                                            ${stream[i].category}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                                    </a>`;
+                } else {
+                    li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">${stream[i].title}</div>
+                                            ${stream[i].category}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                                        &nbsp;
+                                        <span class="badge bg-success rounded-pill">Set reminder</span>
+                                    </a>`;
+                }
+                UpcomingList.appendChild(li);
+            }
         }
         else if (stream[i].type === 'Archived') {
             const li = document.createElement('div');
@@ -178,8 +193,7 @@ function refreshStreamList() {
     fetch('/stream/initial')
         .then(response => response.json())
         .then(data => {
-            const stream = data.StreamData;
-            inject_stream(stream);
+            inject_stream(data);
         })
 }
 
@@ -209,6 +223,41 @@ function load(videoId) {
     disable_enable_comment()
     stream_title.innerHTML = video_details.title;
     player.innerHTML = `<iframe height="450" src="https://www.youtube.com/embed/${video_details.videoId}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen" allowfullscreen></iframe>`
+}
+
+function set_reminder(video_id) {
+    const
+        video_details = get_video_details(video_id);
+    const data = {
+        video_id: video_details.videoId,
+        title: video_details.title,
+        date: video_details.date,
+        type: video_details.type
+    }
+    fetch('/stream/reminder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status) {
+                dom_success_alert('Reminder set for ' + video_details.title, type = 'success')
+            }
+        }).catch(err => {
+            if (err)
+                dom_success_alert('Problem setting reminder, please try again later.', type = 'danger')
+        })
+}
+
+function reminderAdded(video_id){
+    if(video_id){
+        const video_details = get_video_details(video_id);
+        dom_success_alert('Reminder already set for ' + video_details.title, type = 'warning')
+    }
+    
 }
 
 function submit_comment(event) {
@@ -273,8 +322,27 @@ function load_comments(video_id) {
         })
 }
 
-if (page_title === 'stream') {
+function dom_success_alert(message, type = "success") {
+    const alert_dom = document.getElementById('alert_dom');
+    const alert = `
+        <div class ='alert alert-${type} alert-dismissible fade show d-flex align-items-center' role='alert'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-check-circle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="${type}:">
+                <path
+                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                <div>
+                ${message}
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    alert_dom.appendChild(htmlToElem(alert));
+    removeAlerts()
+}
 
+
+if (page_title === 'stream') {
     // Extract video id from url 
     const videoId = window.location.href.split('/').pop().split('?')[1];
     if (videoId !== undefined) {
@@ -285,11 +353,13 @@ if (page_title === 'stream') {
                 load(exact_id)
             }, 1000)
         } else {
+            refreshStreamList()
             disable_enable_comment()
         }
-    }else{
+    } else {
+        refreshStreamList()
         disable_enable_comment()
     }
-    refreshStreamList()
 }
+
 removeAlerts()

@@ -105,6 +105,12 @@ const
             type: ["Basic"],
         },
         {
+            path: "/stream/reminder",
+            name: "stream",
+            methods: ["POST"],
+            type: ["Basic"],
+        },
+        {
             path: "/stream/comment",
             name: "stream",
             methods: ["GET"],
