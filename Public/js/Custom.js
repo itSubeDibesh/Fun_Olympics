@@ -98,6 +98,8 @@ let Stream_List = []
 
 let currentVideo = {}
 
+let todays_reminder = []
+
 function inject_stream(data) {
     const
         stream = data.StreamData,
@@ -126,6 +128,9 @@ function inject_stream(data) {
             for (let j = 0; j < reminder.length; j++) {
                 const li = document.createElement('div');
                 li.className = 'col-sm-12 m-1';
+                if (reminder[j].date == new Date().toISOString().split('T')[0]) {
+                    todays_reminder.push(reminder[j])
+                }
                 if (reminder[j].videoId === stream[i].videoId) {
                     li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
@@ -163,7 +168,22 @@ function inject_stream(data) {
             Archived_List.appendChild(li);
         }
     }
+    show_reminder()
+
 }
+
+function show_reminder() {
+    if (todays_reminder.length > 0) {
+        for (let i = 0; i < todays_reminder.length; i++) {
+            dom_alert(
+                message = `You have a reminder: <a href="/stream?videoId=${todays_reminder[i].videoId}">${todays_reminder[i].title}</a>`,
+                type = "primary",
+                fixed = true
+            )
+        }
+    }
+}
+
 
 function get_video_details(videoId) {
     for (let i = 0; i < Stream_List.length; i++) {
@@ -244,20 +264,19 @@ function set_reminder(video_id) {
         .then(response => response.json())
         .then(data => {
             if (data.status) {
-                dom_success_alert('Reminder set for ' + video_details.title, type = 'success')
+                dom_alert('Reminder set for ' + video_details.title, type = 'success')
             }
         }).catch(err => {
             if (err)
-                dom_success_alert('Problem setting reminder, please try again later.', type = 'danger')
+                dom_alert(message = 'Problem setting reminder, please try again later.', type = 'danger', fixed = false)
         })
 }
 
-function reminderAdded(video_id){
-    if(video_id){
+function reminderAdded(video_id) {
+    if (video_id) {
         const video_details = get_video_details(video_id);
-        dom_success_alert('Reminder already set for ' + video_details.title, type = 'warning')
+        dom_alert(message = 'Reminder already set for ' + video_details.title, type = 'warning', fixed = false)
     }
-    
 }
 
 function submit_comment(event) {
@@ -322,10 +341,10 @@ function load_comments(video_id) {
         })
 }
 
-function dom_success_alert(message, type = "success") {
+function dom_alert(message, type = "success", fixed = false) {
     const alert_dom = document.getElementById('alert_dom');
     const alert = `
-        <div class ='alert alert-${type} alert-dismissible fade show d-flex align-items-center' role='alert'>
+        <div class ='alert alert-${type} ${fixed ? 'alert-fixed alert-dismissible' : 'alert-dismissible'}  fade show d-flex align-items-center' role='alert'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-check-circle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="${type}:">
                 <path
@@ -340,7 +359,6 @@ function dom_success_alert(message, type = "success") {
     alert_dom.appendChild(htmlToElem(alert));
     removeAlerts()
 }
-
 
 if (page_title === 'stream') {
     // Extract video id from url 
