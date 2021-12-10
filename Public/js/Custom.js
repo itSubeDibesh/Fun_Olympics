@@ -133,13 +133,15 @@ function inject_stream(data) {
                     todays_reminder.push(reminder[j])
                 }
                 if (reminder[j].videoId == stream[i].videoId) {
-                    li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold">${stream[i].title}</div>
-                                            ${stream[i].category}
-                                        </div>
-                                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
-                                    </a>`;
+                    if (reminder[j].email == UserEmail.value) {
+                        li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">${stream[i].title}</div>
+                            ${stream[i].category}
+                        </div>
+                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                    </a>`;
+                    }
                 } else {
                     li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
