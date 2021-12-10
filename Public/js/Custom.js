@@ -106,7 +106,8 @@ function inject_stream(data) {
         reminder = data.ReminderData,
         Archived_List = document.getElementById('ArchivedList'),
         LiveList = document.getElementById('LiveList'),
-        UpcomingList = document.getElementById('UpcomingList');
+        UpcomingList = document.getElementById('UpcomingList'),
+        UserEmail = document.getElementById('userEmail');
     LiveList.innerHTML = '';
     UpcomingList.innerHTML = '';
     ArchivedList.innerHTML = '';
@@ -131,7 +132,7 @@ function inject_stream(data) {
                 if (reminder[j].date == new Date().toISOString().split('T')[0]) {
                     todays_reminder.push(reminder[j])
                 }
-                if (reminder[j].videoId === stream[i].videoId) {
+                if (reminder[j].videoId == stream[i].videoId) {
                     li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
                                             <div class="fw-bold">${stream[i].title}</div>

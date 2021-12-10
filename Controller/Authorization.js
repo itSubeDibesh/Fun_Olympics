@@ -20,14 +20,30 @@ const {
     // Setting Firebase DB
     user = Db_Collection.User,
     stream = Db_Collection.Video,
-    comment = Db_Collection.Comments;
+    comment = Db_Collection.Comments,
+    notice = Db_Collection.Notice;
 
 authRouter.get('/', (req, res) => {
 
-    stream
-        .get()
-        .then(dataset => {
-            let stream_data = dataset.docs.map(element => {
+    Promise.all([
+        stream.get(),
+        notice.get()
+    ])
+        .then(([stream, notice]) => {
+
+            let notice_length = 0;
+            notice_length = notice.docs.length
+            if (notice_length > 0) {
+                for (let index = 0; index < notice.docs.length; index++) {
+                    if (notice.docs[index].data().email != undefined) {
+                        notice_length -= 1
+                    }
+                }
+            }
+
+            req.session.notice_length = notice_length
+
+            let stream_data = stream.docs.map(element => {
                 return {
                     id: element.id,
                     title: element.data().title,
@@ -50,6 +66,7 @@ authRouter.get('/', (req, res) => {
                 title: 'Home',
                 login: req.session.login,
                 status: req.session.status,
+                notice_length: req.session.notice_length,
                 error,
                 warning,
                 success,
@@ -62,6 +79,7 @@ authRouter.get('/', (req, res) => {
                 title: 'Home',
                 login: req.session.login,
                 status: req.session.status,
+                notice_length: req.session.notice_length,
                 error: err
             }));
         });
@@ -317,99 +335,113 @@ authRouter.get('/dashboard', isLoggedIn, HasAccess, (req, res) => {
         req.session.success = null;
 
         Promise
-        .all([
-            user.get(),
-            stream.get(),
-            comment.get()
-        ])
-        .then(([users, streams, comments]) =>{
-            let usersDataSet = users.docs
-            let streamsDataSet = streams.docs
-            let commentsDataSet = comments.docs
+            .all([
+                user.get(),
+                stream.get(),
+                comment.get(),
+                notice.get()
+            ])
+            .then(([users, streams, comments, notice]) => {
+                let usersDataSet = users.docs
+                let streamsDataSet = streams.docs
+                let commentsDataSet = comments.docs
 
-            let usersData = {
-                total_count: usersDataSet.length,
-                admin_count: 0,
-                developer_count: 0,
-                guest_count: 0,
-                user_count: 0,
-                disabled_count: 0,
-            }
-            let streamsData = {
-                total_count: streamsDataSet.length,
-                archived_count: 0,
-                live_count: 0,
-                upcoming_count: 0,
-            }
+                let usersData = {
+                    total_count: usersDataSet.length,
+                    admin_count: 0,
+                    developer_count: 0,
+                    guest_count: 0,
+                    user_count: 0,
+                    disabled_count: 0,
+                }
+                let streamsData = {
+                    total_count: streamsDataSet.length,
+                    archived_count: 0,
+                    live_count: 0,
+                    upcoming_count: 0,
+                }
 
-            let profanityData =[]
+                let profanityData = []
 
-            // User Data Count
-            for (let index = 0; index < usersDataSet.length; index++) {
-                const user_info = usersDataSet[index].data();
-                if (user_info.role == "Admin") {
-                    usersData.admin_count += 1
+                // User Data Count
+                for (let index = 0; index < usersDataSet.length; index++) {
+                    const user_info = usersDataSet[index].data();
+                    if (user_info.role == "Admin") {
+                        usersData.admin_count += 1
+                    }
+                    if (user_info.role == "Developer") {
+                        usersData.developer_count += 1
+                    }
+                    if (user_info.role == "Guest") {
+                        usersData.guest_count += 1
+                    }
+                    if (user_info.role == "User") {
+                        usersData.user_count += 1
+                    }
+                    if (user_info.disabled == true) {
+                        usersData.disabled_count += 1
+                    }
                 }
-                if (user_info.role == "Developer") {
-                    usersData.developer_count += 1
-                }
-                if (user_info.role == "Guest") {
-                    usersData.guest_count += 1
-                }
-                if (user_info.role == "User") {
-                    usersData.user_count += 1
-                }
-                if (user_info.disabled == true) {
-                    usersData.disabled_count += 1
-                }
-            }
 
-            // Stream Data Count
-            for (let index = 0; index < streamsDataSet.length; index++) {
-                const stream_info = streamsDataSet[index].data();
-                if (stream_info.type == "Archived") {
-                    streamsData.archived_count+=1
+                // Stream Data Count
+                for (let index = 0; index < streamsDataSet.length; index++) {
+                    const stream_info = streamsDataSet[index].data();
+                    if (stream_info.type == "Archived") {
+                        streamsData.archived_count += 1
+                    }
+                    if (stream_info.type == "Live") {
+                        streamsData.live_count += 1
+                    }
+                    if (stream_info.type == "Upcoming") {
+                        streamsData.upcoming_count += 1
+                    }
                 }
-                if (stream_info.type == "Live") {
-                    streamsData.live_count+=1
-                }
-                if (stream_info.type == "Upcoming") {
-                    streamsData.upcoming_count+=1
-                }
-            }
 
-            // Profanity Data
-            for(let index = 0; index < commentsDataSet.length; index++){
-                const comment_info = commentsDataSet[index].data();
-                if(comment_info.hasProfanity == true){
-                    profanityData.push(comment_info)
+                // Profanity Data
+                for (let index = 0; index < commentsDataSet.length; index++) {
+                    const comment_info = commentsDataSet[index].data();
+                    if (comment_info.hasProfanity == true) {
+                        profanityData.push(comment_info)
+                    }
                 }
-            }
 
-            // Comment Mapping
-            const mapped_comments = commentsDataSet.map(comment => {
-                return {
-                    comment: comment.data().comment,
-                    video_id: comment.data().video_id,
-                    title: comment.data().title,
-                    hasProfanity: comment.data().hasProfanity,
-                    email: comment.data().email,
-                    createdAt: comment.data().createdAt.toDate()
+                // Comment Mapping
+                const mapped_comments = commentsDataSet.map(comment => {
+                    return {
+                        comment: comment.data().comment,
+                        video_id: comment.data().video_id,
+                        title: comment.data().title,
+                        hasProfanity: comment.data().hasProfanity,
+                        email: comment.data().email,
+                        createdAt: comment.data().createdAt.toDate()
+                    }
+                })
+                let notice_length = 0;
+                notice_length = notice.docs.length
+                if (notice_length > 0) {
+                    for (let index = 0; index < notice.docs.length; index++) {
+                        if (notice.docs[index].data().email != undefined) {
+                            notice_length -= 1
+                        }
+                    }
                 }
+
+                req.session.notice_length = notice_length
+
+                res.render('Pages/Dashboard', dataSet({
+                    title: 'Dashboard',
+                    login: req.session.login,
+                    notice_length: req.session.notice_length,
+                    success,
+                    status: req.session.status,
+                    user_stats: usersData,
+                    stream_stats: streamsData,
+                    profanityData,
+                    comments: mapped_comments,
+                    notice_length
+                }));
+
             })
-
-            res.render('Pages/Dashboard', dataSet({
-                title: 'Dashboard',
-                login: req.session.login,
-                success,
-                status: req.session.status,
-                user_stats: usersData,
-                stream_stats:streamsData,
-                profanityData,
-                comments: mapped_comments
-            }));
-
-        })
 
     } else {
         res.redirect('/login');

@@ -6,7 +6,7 @@ import { HasAccess, get_role_permission, Privilege, Roles, Access } from '../Mid
 import Auth from '../Controller/core/Auth_Access_Firebase.js';
 import Admin from '../Controller/core/Admin_Access_Firebase.js'
 import { Video, User, Profanity, Role, Comments, Reminder, Notice, FAQ } from '../Controller/core/Collections.js'
-import { dataSet, returnBool, extractVideoID, random_number,has_profanity } from './helper.js'
+import { dataSet, returnBool, extractVideoID, random_number, has_profanity } from './helper.js'
 
 // Enabling dotenv
 dotenv.config();
@@ -38,9 +38,9 @@ export default {
     check,
     validationResult,
     express,
-    port,
-    app_name,
-    secret,
+    port: port || process.env.PORT,
+    app_name : app_name || "Fun Olympics",
+    secret: secret || "ThisIsMySessionSecret@2021",
     isLoggedIn,
     HasAccess,
     get_role_permission, Privilege, Roles, Access,

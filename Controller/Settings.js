@@ -23,6 +23,7 @@ settingsRouter.get('/settings', isLoggedIn, HasAccess, (req, res) => {
         title: 'Settings',
         login: req.session.login,
         status: req.session.status,
+        notice_length: req.session.notice_length,
         success: req.session.success,
         error: req.session.error,
         warning: req.session.warning

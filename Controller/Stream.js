@@ -43,6 +43,7 @@ streamRouter
                     title: 'Stream',
                     login: req.session.login,
                     status: req.session.status,
+                    notice_length: req.session.notice_length,
                     success,
                     error,
                     warning
@@ -173,6 +174,7 @@ streamRouter
                     title: 'Stream Editor',
                     login: req.session.login,
                     status: req.session.status,
+                    notice_length: req.session.notice_length,
                     success,
                     error,
                     warning,
@@ -185,6 +187,7 @@ streamRouter
                     title: 'Stream Editor',
                     login: req.session.login,
                     status: req.session.status,
+                    notice_length: req.session.notice_length,
                     error: err
                 }));
             })
@@ -214,6 +217,7 @@ streamRouter
                 title: 'Stream Editor',
                 action: 'Add',
                 login: req.session.login,
+                notice_length: req.session.notice_length,
                 status: req.session.status
             }));
         }
@@ -235,6 +239,7 @@ streamRouter
                         title: 'Stream Editor',
                         action: 'Edit',
                         stream: dataset,
+                        notice_length: req.session.notice_length,
                         login: req.session.login,
                         status: req.session.status
                     }));

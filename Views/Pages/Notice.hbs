@@ -1,38 +1,47 @@
 <div class="container py-lg-3 mt-lg-3">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
+            <h5>
+                Reminder
+            </h5>
             <ol class="list-group list-group-numbered list-group-flush">
+                {{#each notice_data}}
+                {{#ifEquals this.email ../login.user.email}}
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Manchester Vs Laila</div>
-                        Football
+                        <div class="fw-bold">{{this.title}}</div>
+                        <span class="badge  {{#ifEquals this.comment_type "Reminder"}} bg-success {{else}} bg-dark
+                            {{/ifEquals}} rounded-pill">{{this.comment_type}}</span>
+                        {{#if this.type}} <span class="badge bg-primary rounded-pill">{{this.type}}</span>{{/if}}
+                        <span class="badge bg-warning text-dark rounded-pill">{{this.date}}</span>
                     </div>
-                    <a href="/login" class="text-decoration-none"><span
-                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                    &nbsp;
-                    <a href="/login" class="text-decoration-none"><span class="badge bg-success rounded-pill">Mark Read</span></a>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        Content for list item
-                    </div>
-                    <a href="/login" class="text-decoration-none"><span
-                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                    &nbsp;
-                    <a href="/login" class="text-decoration-none"><span class="badge bg-success rounded-pill">Mark Read</span></a>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        Content for list item
-                    </div>
-                    <a href="/login" class="text-decoration-none"><span
-                            class="badge bg-primary rounded-pill">14/01/2021</span></a>
-                    &nbsp;
-                    <a href="/login" class="text-decoration-none"><span class="badge bg-success rounded-pill">Mark Read</span></a>
-                </li>
+                {{/ifEquals}}
+                {{/each}}
             </ol>
+            <hr>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h5>
+                Notice
+            </h5>
+            <ol class="list-group list-group-numbered list-group-flush">
+                {{#each notice_data}}
+                {{#NotHas this.email}}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">{{this.title}}</div>
+                        <span class="badge  {{#ifEquals this.comment_type "Reminder"}} bg-success {{else}} bg-dark
+                            {{/ifEquals}} rounded-pill">{{this.comment_type}}</span>
+                        {{#if this.type}} <span class="badge bg-primary rounded-pill">{{this.type}}</span>{{/if}}
+                        <span class="badge bg-danger rounded-pill">{{this.action}}</span>
+                        <span class="badge bg-warning text-dark rounded-pill">{{this.date}}</span>
+                    </div>
+                </li>
+                {{/NotHas}}
+                {{/each}}
+            </ol>
+            <hr>
         </div>
     </div>
 </div>

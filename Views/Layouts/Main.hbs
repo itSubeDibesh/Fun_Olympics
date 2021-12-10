@@ -23,6 +23,7 @@
 <body>
 
     {{>NavBar}}
+    <input type="hidden" id="userEmail" value="{{#if login.user.email}}{{login.user.email}}{{/if}}">
     <div class="container mt-2 mb-5">
         {{>Alerts}}
         {{{body}}}

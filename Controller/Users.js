@@ -51,6 +51,7 @@ usersRouter.get('/users', isLoggedIn, HasAccess, (req, res) => {
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
+                        notice_length: req.session.notice_length,
                         users: list,
                         success,
                         error,
@@ -67,6 +68,7 @@ usersRouter.get('/users', isLoggedIn, HasAccess, (req, res) => {
                 title: 'Users',
                 login: req.session.login,
                 status: req.session.status,
+                notice_length: req.session.notice_length,
                 error: error,
                 success: req.session.success,
                 warning: req.session.warning
@@ -119,6 +121,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                                     action: "Edit",
                                     login: req.session.login,
                                     status: req.session.status,
+                                    notice_length: req.session.notice_length,
                                     user: user_auth_details,
                                 }));
                             }).catch(err => {
@@ -130,6 +133,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                                     title: 'Users',
                                     login: req.session.login,
                                     status: req.session.status,
+                                    notice_length: req.session.notice_length,
                                     error: error
                                 }));
                             });
@@ -143,6 +147,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                             title: 'Users',
                             login: req.session.login,
                             status: req.session.status,
+                            notice_length: req.session.notice_length,
                             error: error
                         }));
                     });
@@ -165,6 +170,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
             title: 'Users',
             action: "Add",
             login: req.session.login,
+            notice_length: req.session.notice_length,
             status: req.session.status
         }));
     } else if (action == 'view') {
@@ -183,6 +189,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                                 action: "View",
                                 login: req.session.login,
                                 status: req.session.status,
+                                notice_length: req.session.notice_length,
                                 user: user_auth_details,
                             }));
                         }).catch(err => {
@@ -193,6 +200,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                             res.render('Pages/Users', dataSet({
                                 title: 'Users',
                                 login: req.session.login,
+                                notice_length: req.session.notice_length,
                                 status: req.session.status,
                                 error: error
                             }));
@@ -207,6 +215,7 @@ usersRouter.get('/users/:action', isLoggedIn, HasAccess, (req, res) => {
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
+                        notice_length: req.session.notice_length,
                         error: error
                     }));
                 });
@@ -249,6 +258,7 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
                                 title: 'Users',
                                 login: req.session.login,
                                 status: req.session.status,
+                                notice_length: req.session.notice_length,
                                 error: error
                             }));
                         });
@@ -262,6 +272,7 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
+                        notice_length: req.session.notice_length,
                         error: error
                     }));
                 });
@@ -296,6 +307,7 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
                                 title: 'Users',
                                 login: req.session.login,
                                 status: req.session.status,
+                                notice_length: req.session.notice_length,
                                 error: error
                             }));
                         });
@@ -309,6 +321,7 @@ usersRouter.post('/users/entry', isLoggedIn, HasAccess, (req, res) => {
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
+                        notice_length: req.session.notice_length,
                         error: error
                     }));
                 });
@@ -350,6 +363,7 @@ usersRouter.get('/users/user/delete', isLoggedIn, HasAccess, (req, res) => {
                                 title: 'Users',
                                 login: req.session.login,
                                 status: req.session.status,
+                                notice_length: req.session.notice_length,
                                 error: error
                             }));
                         });
@@ -363,6 +377,7 @@ usersRouter.get('/users/user/delete', isLoggedIn, HasAccess, (req, res) => {
                         title: 'Users',
                         login: req.session.login,
                         status: req.session.status,
+                        notice_length: req.session.notice_length,
                         error: error
                     }));
                 });

@@ -43,6 +43,7 @@ faqRouter.get('/faq', HasAccess, (req, res) => {
             res.render('Pages/FAQ', dataSet({
                 title: 'FAQ',
                 login: req.session.login,
+                notice_length: req.session.notice_length,
                 status: req.session.status,
                 mode,
                 success,
@@ -58,6 +59,7 @@ faqRouter.get('/faq', HasAccess, (req, res) => {
                 title: 'FAQ',
                 login: req.session.login,
                 status: req.session.status,
+                notice_length: req.session.notice_length,
                 mode,
                 error: req.session.error
             }));
@@ -73,6 +75,7 @@ faqRouter.get('/faq/:action', HasAccess, isLoggedIn, (req, res) => {
             action: 'Add',
             login: req.session.login,
             status: req.session.status,
+            notice_length: req.session.notice_length,
         }))
     } else if (action.toLowerCase() == "edit") {
         FAQ
@@ -89,6 +92,7 @@ faqRouter.get('/faq/:action', HasAccess, isLoggedIn, (req, res) => {
                     faq: dataset,
                     login: req.session.login,
                     status: req.session.status,
+                    notice_length: req.session.notice_length,
                 }))
             }).catch(err => {
                 const error = { message: err.message };
@@ -111,6 +115,7 @@ faqRouter.get('/faq/:action', HasAccess, isLoggedIn, (req, res) => {
                     faq: dataset,
                     login: req.session.login,
                     status: req.session.status,
+                    notice_length: req.session.notice_length,
                 }))
             })
             .catch(err => {
@@ -136,6 +141,7 @@ faqRouter.post('/faq/entry', HasAccess, isLoggedIn, [
             errors: errors.array(),
             login: req.session.login,
             status: req.session.status,
+            notice_length: req.session.notice_length,
         }))
     } else {
         if (action.toLowerCase() == 'add') {

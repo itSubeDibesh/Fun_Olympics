@@ -35,6 +35,7 @@ profanityRouter.get('/profanity', isLoggedIn,
                     error,
                     warning,
                     profanity: profanity_dataset,
+                    notice_length: req.session.notice_length,
                     login: req.session.login,
                     status: req.session.status
                 }));
@@ -44,7 +45,9 @@ profanityRouter.get('/profanity', isLoggedIn,
                     title: 'Profanity',
                     error: err,
                     login: req.session.login,
+                    notice_length: req.session.notice_length,
                     status: req.session.status
+                    
                 }));
             })
     });
@@ -59,6 +62,7 @@ profanityRouter.get('/profanity/:action', isLoggedIn,
                 title: 'Profanity',
                 action: 'Add',
                 login: req.session.login,
+                notice_length: req.session.notice_length,
                 status: req.session.status
             }));
         }
@@ -76,6 +80,7 @@ profanityRouter.get('/profanity/:action', isLoggedIn,
                         action: 'Edit',
                         profanity: dataset,
                         login: req.session.login,
+                        notice_length: req.session.notice_length,
                         status: req.session.status
                     }));
 

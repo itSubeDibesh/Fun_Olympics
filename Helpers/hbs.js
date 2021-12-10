@@ -5,6 +5,15 @@ export default {
         if (a == b) return options.fn(this);
         return options.inverse(this);
     },
+    Has: function (a, options) {
+        if(a) return options.fn(this);
+        return options.inverse(this);
+    },
+    NotHas: function (a, options) {
+        if(!a) return options.fn(this);
+        return options.inverse(this);
+    }
+    ,
     ifNotEquals: function (a, b, options) {
         if (a != b) return options.fn(this);
         return options.inverse(this);

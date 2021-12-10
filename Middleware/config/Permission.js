@@ -147,6 +147,12 @@ const
             type: ["Basic"],
         },
         {
+            path: "/notice/delete",
+            name: "notice",
+            methods: ["GET"],
+            type: ["Basic"],
+        },
+        {
             path: "/users",
             name: "users",
             methods: ["GET"],
