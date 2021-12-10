@@ -274,7 +274,22 @@ function load_comments(video_id) {
 }
 
 if (page_title === 'stream') {
+
+    // Extract video id from url 
+    const videoId = window.location.href.split('/').pop().split('?')[1];
+    if (videoId !== undefined) {
+        if (videoId.includes('videoId')) {
+            const exact_id = videoId.split('=')[1];
+            refreshStreamList()
+            setTimeout(() => {
+                load(exact_id)
+            }, 1000)
+        } else {
+            disable_enable_comment()
+        }
+    }else{
+        disable_enable_comment()
+    }
     refreshStreamList()
-    disable_enable_comment()
 }
 removeAlerts()

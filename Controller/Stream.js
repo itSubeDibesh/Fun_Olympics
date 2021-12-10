@@ -54,7 +54,6 @@ streamRouter.post('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
     const data = req.body;
     const { profanity_dataset, login } = req.session;
     const hasProfanity = has_profanity(data.comment, profanity_dataset)
-    console.log(data, hasProfanity)
     Comments.add({
         comment: data.comment,
         video_id: data.video_id,
@@ -72,11 +71,9 @@ streamRouter.post('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
 
 streamRouter.get('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
     const { video_id } = req.query;
-    console.log(video_id)
     Comments
         .getByQuery('video_id', '==', video_id, 'createdAt', 'desc')
         .then(comments => {
-            console.log(comments)
             const mapped_comments = comments.docs.map(comment => {
                 return {
                     comment: comment.data().comment,
@@ -90,7 +87,6 @@ streamRouter.get('/stream/comment', isLoggedIn, HasAccess, (req, res) => {
             res.send({ status: true, comments: mapped_comments })
         })
         .catch(err => {
-            console.log(err)
             res.send({ status: false, message: 'Something went wrong' })
         })
 })
