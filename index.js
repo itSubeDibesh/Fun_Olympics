@@ -75,13 +75,13 @@ Application.use(config.express.urlencoded({ extended: true }))
 Application.use(config.express.json())
 
 // Setting up Static Folder
-Application.use(config.express.static(__dirname + '\\Public'))
+Application.use(config.express.static(__dirname + '/Public'))
 // Extracting Static Folder
-const nodeModulePath = __dirname + '\\node_modules\\'
+const nodeModulePath = __dirname + '/node_modules'
 const StaticPaths = {
-    "css": ['bootstrap\\dist\\css', 'bootstrap-icons\\font'],
-    "js": ['bootstrap\\dist\\js'],
-    'vendors': ['lightbox2\\dist']
+    "css": ['/bootstrap/dist/css', '/bootstrap-icons/font'],
+    "js": ['/bootstrap/dist/js'],
+    'vendors': ['/lightbox2/dist']
 }
 StaticPaths['css'].forEach(path => {
     Application.use('/css/', config.express.static(nodeModulePath + path))
