@@ -31,7 +31,7 @@ const Db_Collection =
 }
 
 // Extracting env variables
-const { port, secret, app_name } = process.env;
+const { port } = process.env;
 
 
 export default {
@@ -39,8 +39,8 @@ export default {
     validationResult,
     express,
     port: port || process.env.PORT,
-    app_name : app_name || "Fun Olympics",
-    secret: secret || "ThisIsMySessionSecret@2021",
+    app_name : "Fun Olympics",
+    secret: "ThisIsMySessionSecret@2021",
     isLoggedIn,
     HasAccess,
     get_role_permission, Privilege, Roles, Access,
