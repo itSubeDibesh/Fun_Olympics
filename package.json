@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "open-cli http://localhost:8080 && nodemon --ignore Public/ --ignore Tests/ index.js",
     "serve": "open-cli http://localhost:8080 && node index.js",
-    "test": "jest"
+    "test": "jest",
+    "testDev": "jest --detectOpenHandles --watch"
   },
   "type": "module",
   "repository": {
@@ -47,10 +48,14 @@
     "@babel/core": "^7.16.0",
     "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.4.4",
     "express-list-endpoints": "^6.0.0",
-    "jest": "^27.4.3",
+    "jest": "^27.4.4",
+    "jest-cli": "^27.4.4",
     "nodemon": "^2.0.15",
     "npm": "^8.2.0",
-    "open-cli": "^7.0.1"
+    "open-cli": "^7.0.1",
+    "puppeteer": "^13.0.0",
+    "regenerator-runtime": "^0.13.9"
   }
 }

@@ -1,10 +1,16 @@
-import Config from '../Config/Http.js';
+import Config from '../../Config/Http.js';
 
 const
     FAQ = Config.Db_Collection.FAQ,
     DummyEntryData = {
-        question: 'aAa',
+        question: 'a mock test',
         answer: `Creating user is easy. Just follow the steps below.
+                        1. Go to the admin panel.
+                    `
+    },
+    DummyUpdateData = {
+        question: 'a mock test',
+        answer: `Creating user is easy. Just follow the steps below to create new user.
                         1. Go to the admin panel.
                         2. Click on the "Users" tab.
                         3. Click on the "Add User" button.
@@ -13,17 +19,11 @@ const
                         6. You will be redirected to the "Users" tab.
                         7. You will see the new user in the list.
                     `
-    },
-    DummyUpdateData = {
-        question: 'aAa',
-        answer: `Creating user is easy. Just follow the steps below to create new user.
-                        1. Go to the admin panel.
-                    `
     };
 
 describe('FAQ - CRUD 🛠🎯🧪', () => {
-    describe("FAQ - Create ➕", () => {
-        it('should create a new faq', () => {
+    describe.skip("FAQ - Create ➕", () => {
+        it.skip('should create a new faq', () => {
             return FAQ
                 .set(DummyEntryData.question, DummyEntryData)
                 .then(
@@ -50,7 +50,7 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                     expect(dataset['question']).not.toBeNull()
                 })
         })
-        it("fetch faq data using respective question", () => {
+        it.skip("fetch faq data using respective question", () => {
             return FAQ
                 .getByQuery('question', '==', DummyUpdateData.question)
                 .then(faq => {
@@ -58,8 +58,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-    describe("FAQ - Update 🔧", () => {
-        it('should update existing faq', () => {
+    describe.skip("FAQ - Update 🔧", () => {
+        it.skip('should update existing faq', () => {
             return FAQ
                 .set(DummyUpdateData.question, DummyUpdateData)
                 .then(
@@ -70,8 +70,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe("FAQ - Delete ❌", () => {
-        it('should delete existing faq', () => {
+    describe.skip("FAQ - Delete ❌", () => {
+        it.skip('should delete existing faq', () => {
             return FAQ
                 .deleteDoc(DummyUpdateData.question)
                 .then(
