@@ -1,9 +1,7 @@
-name: 'Coverage Report Fun Olympics'
+name: Coverage Report Fun Olympics
 on:
-    pull_request:
-        branches:
-            - master
-            - main
+    push:
+        branches: [main]
 jobs:
     coverage:
         strategy:
