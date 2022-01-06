@@ -3,8 +3,8 @@ import Config from '../../Config/Http.js';
 const
     Notice = Config.Db_Collection.Notice,
     DummyEntryData = {
-        videoId:'tMPWEcciRoA',
-        title:'Dummy Title',
+        videoId: 'tMPWEcciRoA',
+        title: 'Dummy Title',
         comment_type: 'Stream',
         date: new Date(),
         expire: new Date(),
@@ -13,9 +13,9 @@ const
         action: "Edit"
     };
 
-describe('Notice - CRUD 🛠🎯🧪', () => {
-    describe("Notice - Create ➕", () => {
-        it('should create a new notice', () => {
+describe.skip('Notice - CRUD 🛠🎯🧪', () => {
+    describe.skip("Notice - Create ➕", () => {
+        it.skip('should create a new notice', () => {
             return Notice
                 .set(DummyEntryData.videoId, DummyEntryData)
                 .then(
@@ -26,8 +26,8 @@ describe('Notice - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe("Notice - Read 📖", () => {
-        it("should return all the notice data", () => {
+    describe.skip("Notice - Read 📖", () => {
+        it.skip("should return all the notice data", () => {
             return Notice
                 .get()
                 .then(data => {
@@ -35,7 +35,7 @@ describe('Notice - CRUD 🛠🎯🧪', () => {
                     expect(dataset).not.toBeNull()
                 })
         })
-        it("should return notice by videoId", () => {
+        it.skip("should return notice by videoId", () => {
             return Notice
                 .getByDoc('videoId').then(data => {
                     const dataset = data.data

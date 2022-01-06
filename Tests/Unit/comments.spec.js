@@ -4,15 +4,15 @@ const
     Comments = Config.Db_Collection.Comments,
     DummyEntryData = {
         comment: 'This is a dummy comment',
-        email:'dummyEmail@gmail.com',
+        email: 'dummyEmail@gmail.com',
         hasProfanity: false,
-        video_id:'tMPWEcciRoA',
-        title:'Dummy Title',
+        video_id: 'tMPWEcciRoA',
+        title: 'Dummy Title',
     };
 
-describe('Comments - CRUD 🛠🎯🧪', () => {
-    describe("Comments - Create ➕", () => {
-        it('should create a new comments', () => {
+describe.skip('Comments - CRUD 🛠🎯🧪', () => {
+    describe.skip("Comments - Create ➕", () => {
+        it.skip('should create a new comments', () => {
             return Comments
                 .add(DummyEntryData)
                 .then(
@@ -22,8 +22,8 @@ describe('Comments - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe("Comments - Read 📖", () => {
-        it("should return all the comments data", () => {
+    describe.skip("Comments - Read 📖", () => {
+        it.skip("should return all the comments data", () => {
             return Comments
                 .get()
                 .then(Comments => {
@@ -31,14 +31,14 @@ describe('Comments - CRUD 🛠🎯🧪', () => {
                     expect(dataset).not.toBeNull()
                 })
         })
-        it("should return Comments by comment", () => {
+        it.skip("should return Comments by comment", () => {
             return Comments
                 .getByDoc('comment').then(Comments => {
                     const dataset = Comments.data
                     expect(dataset['comment']).not.toBeNull()
                 })
         })
-        it("fetch comments data using respective comment", () => {
+        it.skip("fetch comments data using respective comment", () => {
             return Comments
                 .getByQuery('comment', '==', DummyEntryData.comment)
                 .then(Comments => {
@@ -46,19 +46,19 @@ describe('Comments - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-    describe("Comments - Delete ❌", () => {
-        it('should delete existing comments', () => {
+    describe.skip("Comments - Delete ❌", () => {
+        it.skip('should delete existing comments', () => {
             return Comments
                 .getByQuery('comment', '==', DummyEntryData.comment)
                 .then(response => {
                     Comments
-                    .deleteDoc(response.docs[0].id)
-                    .then(
-                        Comments => {
-                            expect(Comments).not.toBeNull();
-                            expect(Comments).toHaveProperty('_writeTime')
-                        }
-                    )
+                        .deleteDoc(response.docs[0].id)
+                        .then(
+                            Comments => {
+                                expect(Comments).not.toBeNull();
+                                expect(Comments).toHaveProperty('_writeTime')
+                            }
+                        )
                 })
         })
     })

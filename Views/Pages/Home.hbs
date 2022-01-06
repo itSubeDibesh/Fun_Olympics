@@ -93,7 +93,7 @@
                                 {{#each stream_data}}
                                 {{#ifEquals this.type 'Live'}}
                                 <div class="col-sm-12 m-1">
-                                    <a href="{{#ifNotEquals ../status " LoggedIn"}}/login{{/ifNotEquals}}{{#ifEquals
+                                    <a href="{{#ifNotEquals ../status "LoggedIn"}}/login{{/ifNotEquals}}{{#ifEquals
                                         ../status "LoggedIn" }}/stream?videoId={{this.videoId}}{{/ifEquals}}"
                                         class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
@@ -123,7 +123,7 @@
                                 {{#each stream_data}}
                                 {{#ifEquals this.type 'Archived'}}
                                 <div class="col-sm-12 m-1">
-                                    <a href="{{#ifNotEquals ../status " LoggedIn"}}/login{{/ifNotEquals}}{{#ifEquals
+                                    <a href="{{#ifNotEquals ../status "LoggedIn"}}/login{{/ifNotEquals}}{{#ifEquals
                                         ../status "LoggedIn" }}/stream?videoId={{this.videoId}}{{/ifEquals}}"
                                         class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">

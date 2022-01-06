@@ -21,9 +21,9 @@ const
                     `
     };
 
-describe('FAQ - CRUD 🛠🎯🧪', () => {
-    describe("FAQ - Create ➕", () => {
-        it('should create a new faq', () => {
+describe.skip('FAQ - CRUD 🛠🎯🧪', () => {
+    describe.skip("FAQ - Create ➕", () => {
+        it.skip('should create a new faq', () => {
             return FAQ
                 .set(DummyEntryData.question, DummyEntryData)
                 .then(
@@ -34,8 +34,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe("FAQ - Read 📖", () => {
-        it("should return all the faq data", () => {
+    describe.skip("FAQ - Read 📖", () => {
+        it.skip("should return all the faq data", () => {
             return FAQ
                 .get()
                 .then(faq => {
@@ -43,14 +43,14 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                     expect(dataset).not.toBeNull()
                 })
         })
-        it("should return faq by question", () => {
+        it.skip("should return faq by question", () => {
             return FAQ
                 .getByDoc('question').then(faq => {
                     const dataset = faq.data
                     expect(dataset['question']).not.toBeNull()
                 })
         })
-        it("fetch faq data using respective question", () => {
+        it.skip("fetch faq data using respective question", () => {
             return FAQ
                 .getByQuery('question', '==', DummyUpdateData.question)
                 .then(faq => {
@@ -58,8 +58,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-    describe("FAQ - Update 🔧", () => {
-        it('should update existing faq', () => {
+    describe.skip("FAQ - Update 🔧", () => {
+        it.skip('should update existing faq', () => {
             return FAQ
                 .set(DummyUpdateData.question, DummyUpdateData)
                 .then(
@@ -70,8 +70,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe("FAQ - Delete ❌", () => {
-        it('should delete existing faq', () => {
+    describe.skip("FAQ - Delete ❌", () => {
+        it.skip('should delete existing faq', () => {
             return FAQ
                 .deleteDoc(DummyUpdateData.question)
                 .then(

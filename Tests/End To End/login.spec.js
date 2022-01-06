@@ -33,9 +33,9 @@ const
         },
     };
 
-describe('Login Check 🔓🔑', () => {
+describe.skip('Login Check 🔓🔑', () => {
     for (const [key, value] of Object.entries(test_case)) {
-        it(`${value.name}`, async () => {
+        it.skip(`${value.name}`, async () => {
             jest.setTimeout(10e3);
             const browser = await puppeteer.launch({
                 headless: true,
