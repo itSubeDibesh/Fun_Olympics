@@ -14,8 +14,8 @@ const
     }
 
 describe('User - CRUD 🛠🎯🧪', () => {
-    describe.skip("User - Create ➕", () => {
-        it.skip('should create a new user', () => {
+    describe("User - Create ➕", () => {
+        it('should create a new user', () => {
             return User
                 .set(DummyEntryData.email, DummyEntryData)
                 .then(
@@ -42,7 +42,7 @@ describe('User - CRUD 🛠🎯🧪', () => {
                     expect(dataset['email']).not.toBeNull()
                 })
         })
-        it.skip("fetch user data using respective email", () => {
+        it("fetch user data using respective email", () => {
             return User
                 .getByQuery('email', '==', 'amockData@ismt.edu.np')
                 .then(users => {
@@ -50,8 +50,8 @@ describe('User - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-    describe.skip("User - Update 🔧", () => {
-        it.skip('should update existing user', () => {
+    describe("User - Update 🔧", () => {
+        it('should update existing user', () => {
             return User
                 .set(DummyUpdateData.email, DummyUpdateData)
                 .then(
@@ -62,8 +62,8 @@ describe('User - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe.skip("User - Delete ❌", () => {
-        it.skip('should delete field from user', () => {
+    describe("User - Delete ❌", () => {
+        it('should delete field from user', () => {
             return User
                 .deleteField(DummyUpdateData.email, 'country')
                 .then(user => {
@@ -71,7 +71,7 @@ describe('User - CRUD 🛠🎯🧪', () => {
                     expect(user).toHaveProperty('_writeTime')
                 })
         })
-        it.skip('should delete existing user', () => {
+        it('should delete existing user', () => {
             return User
                 .deleteDoc(DummyUpdateData.email)
                 .then(

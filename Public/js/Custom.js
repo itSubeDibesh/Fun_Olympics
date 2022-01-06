@@ -126,24 +126,23 @@ function inject_stream(data) {
             LiveList.appendChild(li);
         }
         else if (stream[i].type === 'Upcoming') {
-            for (let j = 0; j < reminder.length; j++) {
-                const li = document.createElement('div');
-                li.className = 'col-sm-12 m-1';
-                if (reminder[j].date == new Date().toISOString().split('T')[0]) {
-                    todays_reminder.push(reminder[j])
-                }
-                if (reminder[j].videoId == stream[i].videoId) {
-                    if (reminder[j].email == UserEmail.value) {
-                        li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">${stream[i].title}</div>
-                            ${stream[i].category}
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
-                    </a>`;
+            const li = document.createElement('div');
+            if (reminder.length > 0) {
+                for (let j = 0; j < reminder.length; j++) {
+                    li.className = 'col-sm-12 m-1';
+                    if (reminder[j].date == new Date().toISOString().split('T')[0]) {
+                        todays_reminder.push(reminder[j])
                     }
-                } else {
-                    li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                    if (reminder[j].videoId == stream[i].videoId && reminder[j].email == UserEmail.value) {
+                        li.innerHTML = `<a onclick="reminderAdded('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">${stream[i].title}</div>
+                                ${stream[i].category}
+                            </div>
+                            <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                        </a>`;
+                    } else {
+                        li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="ms-2 me-auto">
                                             <div class="fw-bold">${stream[i].title}</div>
                                             ${stream[i].category}
@@ -152,9 +151,21 @@ function inject_stream(data) {
                                         &nbsp;
                                         <span class="badge bg-success rounded-pill">Set reminder</span>
                                     </a>`;
+                    }
+                    UpcomingList.appendChild(li);
                 }
-                UpcomingList.appendChild(li);
+            } else {
+                li.innerHTML = `<a onclick="set_reminder('${stream[i].videoId}')" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">${stream[i].title}</div>
+                                            ${stream[i].category}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${stream[i].date}</span>
+                                        &nbsp;
+                                        <span class="badge bg-success rounded-pill">Set reminder</span>
+                                    </a>`;
             }
+            UpcomingList.appendChild(li);
         }
         else if (stream[i].type === 'Archived') {
             const li = document.createElement('div');
@@ -273,6 +284,7 @@ function set_reminder(video_id) {
             if (err)
                 dom_alert(message = 'Problem setting reminder, please try again later.', type = 'danger', fixed = false)
         })
+        .finally(() => refreshStreamList())
 }
 
 function reminderAdded(video_id) {

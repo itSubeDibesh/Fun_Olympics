@@ -23,10 +23,11 @@ const users = [
     }
 ];
 
-describe.skip('Role Check ⚙👥', () => {
+describe('Role Check ⚙👥', () => {
     for (let index = 0; index < users.length; index++) {
         const user = users[index];
-        it.skip(`${user.name}}`, async () => {
+        it(`${user.name}}`, async () => {
+            jest.setTimeout(10e3);
             const browser = await puppeteer.launch({
                 headless: true,
                 // slowMo: 100,

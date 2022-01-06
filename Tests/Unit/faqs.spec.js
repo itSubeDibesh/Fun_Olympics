@@ -22,8 +22,8 @@ const
     };
 
 describe('FAQ - CRUD 🛠🎯🧪', () => {
-    describe.skip("FAQ - Create ➕", () => {
-        it.skip('should create a new faq', () => {
+    describe("FAQ - Create ➕", () => {
+        it('should create a new faq', () => {
             return FAQ
                 .set(DummyEntryData.question, DummyEntryData)
                 .then(
@@ -50,7 +50,7 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                     expect(dataset['question']).not.toBeNull()
                 })
         })
-        it.skip("fetch faq data using respective question", () => {
+        it("fetch faq data using respective question", () => {
             return FAQ
                 .getByQuery('question', '==', DummyUpdateData.question)
                 .then(faq => {
@@ -58,8 +58,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 })
         })
     })
-    describe.skip("FAQ - Update 🔧", () => {
-        it.skip('should update existing faq', () => {
+    describe("FAQ - Update 🔧", () => {
+        it('should update existing faq', () => {
             return FAQ
                 .set(DummyUpdateData.question, DummyUpdateData)
                 .then(
@@ -70,8 +70,8 @@ describe('FAQ - CRUD 🛠🎯🧪', () => {
                 )
         })
     })
-    describe.skip("FAQ - Delete ❌", () => {
-        it.skip('should delete existing faq', () => {
+    describe("FAQ - Delete ❌", () => {
+        it('should delete existing faq', () => {
             return FAQ
                 .deleteDoc(DummyUpdateData.question)
                 .then(

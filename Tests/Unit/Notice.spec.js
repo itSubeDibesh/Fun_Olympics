@@ -14,8 +14,8 @@ const
     };
 
 describe('Notice - CRUD 🛠🎯🧪', () => {
-    describe.skip("Notice - Create ➕", () => {
-        it.skip('should create a new notice', () => {
+    describe("Notice - Create ➕", () => {
+        it('should create a new notice', () => {
             return Notice
                 .set(DummyEntryData.videoId, DummyEntryData)
                 .then(
