@@ -35,14 +35,14 @@
                         {{/each}}
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="question" name="question" required {{#ifEquals
+                            <input type="text" class="form-control" id="question" name="question" {{#ifEquals
                                 action 'View' }}disabled{{/ifEquals}} placeholder="How to create user?"
                                 value="{{faq.question}}">
                             <label for="question">Question</label>
                         </div>
                         <div class="mb-3">
                             <label for="answer" class="form-label">Answer</label>
-                            <textarea class="form-control editor" id="answer" name="answer" style="height: 250px" required
+                            <textarea class="form-control editor" id="answer" name="answer" style="height: 250px"
                                 {{#ifEquals action 'View' }}disabled{{/ifEquals}}>{{faq.answer}}</textarea>
                         </div>
                         {{#ifNotEquals action 'View'}}

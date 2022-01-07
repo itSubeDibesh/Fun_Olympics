@@ -201,7 +201,7 @@ const
             type: ["Moderate"],
         },
         {
-            path: "/faq/delete",
+            path: "/faq/delete/:id",
             name: "faq_delete",
             methods: ["GET"],
             type: ["Moderate"],
