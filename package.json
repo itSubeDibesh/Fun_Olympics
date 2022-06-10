@@ -53,7 +53,7 @@
     "jest": "^27.4.4",
     "jest-cli": "^27.4.4",
     "nodemon": "^2.0.15",
-    "npm": "^8.2.0",
+    "npm": "^8.11.0",
     "open-cli": "^7.0.1",
     "puppeteer": "^13.0.0",
     "regenerator-runtime": "^0.13.9"
