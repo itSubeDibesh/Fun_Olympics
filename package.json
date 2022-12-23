@@ -39,7 +39,7 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.13.0",
     "firebase": "^9.5.0",
-    "firebase-admin": "^10.0.0",
+    "firebase-admin": "^11.4.1",
     "helmet": "^4.6.0",
     "lightbox2": "^2.11.3",
     "xss-clean": "^0.1.1"
